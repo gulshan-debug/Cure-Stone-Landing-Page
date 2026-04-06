@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #EBF4FD;
+  --bg2: #EDF5FE;
+  --white: #fff;
+  --blue: #2B5CE6;
+  --blue-dark: #1E46C9;
+  --blue-light: #EEF3FF;
+  --blue-mid: #3B6EF8;
+  --text: #0f172a;
+  --text-mid: #374151;
+  --text-light: #6B7280;
+  --border: #E5E7EB;
+  --border-light: #F3F4F6;
+  --green: #16A34A;
+  --green-bg: #DCFCE7;
+  --red: #DC2626;
+  --red-bg: #FEE2E2;
+  --orange: #EA580C;
+  --orange-bg: #FFF7ED;
+  --yellow-bg: #FFFBEB;
+  --yellow-border: #FDE68A;
+  --shadow: 0 2px 16px rgba(0, 0, 0, .07);
+  --shadow-md: 0 8px 32px rgba(0, 0, 0, .1);
+  --shadow-lg: 0 24px 64px rgba(0, 0, 0, .14);
+  --radius: 12px;
+  --radius-lg: 20px;
+}
+
+@theme {
+  --color-background: var(--bg);
+  --color-foreground: var(--text);
+  --color-primary: var(--blue);
+  --color-primary-dark: var(--blue-dark);
+  --color-primary-light: var(--blue-light);
+  --color-secondary: var(--blue-mid);
+  --color-accent: var(--green);
+  --color-accent-light: var(--green-bg);
+  --color-danger: var(--red);
+  --color-danger-light: var(--red-bg);
+  --color-warning: var(--orange);
+  --color-warning-light: var(--orange-bg);
+  --color-text-mid: var(--text-mid);
+  --color-text-light: var(--text-light);
+  --color-border: var(--border);
+  --color-border-light: var(--border-light);
+  --radius-xl: var(--radius);
+  --radius-2xl: var(--radius-lg);
+  --shadow-sm: var(--shadow);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+
+  --font-sans: var(--font-poppins);
+
+  --animate-fade-in: fade-in 0.6s ease-out forwards;
+  --animate-bounce-slow: bounce-slow 3s ease-in-out infinite;
+
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes bounce-slow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+}
+
+@layer base {
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-feature-settings: "ss01", "ss02", "cv01", "cv02";
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+}
