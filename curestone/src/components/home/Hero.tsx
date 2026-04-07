@@ -41,7 +41,7 @@ const SCENES: Scene[] = [
     end: 1,
     title: "Take Control of Your Health",
     subtitle: "Consult India's leading kidney specialist today at CureStone.",
-    badge: "Book Appointment"
+    badge: "Book Free Consultation "
   }
 ];
 

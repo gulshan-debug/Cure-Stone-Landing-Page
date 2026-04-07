@@ -28,7 +28,7 @@ const Footer = () => {
       title: "Quick Links",
       links: [
         { label: "AI Symptom Checker", href: "/checker" },
-        { label: "Book Appointment", href: "/book" },
+        { label: "Book Free Consultation ", href: "/book" },
         { label: "Patient Portal", href: "/portal" },
         { label: "Health Blog", href: "/blog" },
         { label: "Admin Login", href: "/admin" },

@@ -20,10 +20,10 @@ const DoctorProfile = () => {
   ];
 
   const achievements = [
-    { icon: "🏆", text: "1st Rank Holder in MCh Urology — RML Hospital, New Delhi" },
-    { icon: "🥇", text: "Pioneer of Fans-RIRS (Fluoroscopy-free) in North India" },
-    { icon: "🎓", text: "MS General Surgery from PGIMS Rohtak — Haryana's premier institute" },
-    { icon: "⭐", text: "4.9★ Google Rating — 1,000+ verified patient reviews" },
+    { icon: "", text: "1st Rank Holder in MCh Urology — RML Hospital, New Delhi" },
+    { icon: "", text: "Pioneer of Fans-RIRS (Fluoroscopy-free) in North India" },
+    { icon: "", text: "MS General Surgery from PGIMS Rohtak — Haryana's premier institute" },
+    { icon: "", text: "4.9★ Google Rating — 1,000+ verified patient reviews" },
   ];
 
   return (
@@ -87,7 +87,7 @@ const DoctorProfile = () => {
               </p>
               
               <div className="inline-flex items-center gap-3 bg-warning-light border border-warning/30 px-4 py-2 rounded-xl text-xs font-black text-warning">
-                🏆 MCh Urology — 1st Rank Holder, RML Hospital
+                 MCh Urology — 1st Rank Holder, RML Hospital
               </div>
             </div>
 
@@ -115,9 +115,7 @@ const DoctorProfile = () => {
               <div className="grid gap-4">
                 {achievements.map((item, i) => (
                   <div key={i} className="flex items-start gap-4">
-                    <div className="w-8 h-8 rounded-lg bg-primary/5 flex items-center justify-center text-sm">
-                      {item.icon}
-                    </div>
+
                     <p className="text-sm text-text-mid font-medium leading-relaxed leading-6">{item.text}</p>
                   </div>
                 ))}
@@ -140,7 +138,7 @@ const DoctorProfile = () => {
             {/* CTAs */}
             <div className="flex flex-wrap gap-4 pt-4">
               <button className="px-8 py-4 bg-primary text-white font-black rounded-2xl shadow-xl shadow-primary/20 hover:bg-primary-dark transition-all hover:-translate-y-1 active:scale-95">
-                📅 Book Appointment
+                Book Free Consultation 
               </button>
               <a 
                 href="https://wa.me/918800263884" 
