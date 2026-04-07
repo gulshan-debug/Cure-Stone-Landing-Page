@@ -157,7 +157,7 @@ export default function KidneyChatBot() {
                   {/* Scaled Logo Container */}
                   <div className="w-11 h-11 rounded-2xl bg-white border border-slate-100 flex items-center justify-center overflow-hidden shadow-lg shadow-slate-200/50">
                     <Image 
-                      src="/Cure Stone wm.png" 
+                      src="/Curestone wm.png" 
                       alt="Cure Stone AI" 
                       width={40} 
                       height={40}
