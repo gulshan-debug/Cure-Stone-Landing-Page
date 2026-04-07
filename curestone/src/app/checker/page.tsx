@@ -76,7 +76,6 @@ export default function KidneyChatBot() {
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const scrollRef = useRef<HTMLDivElement>(null);
 
   // Initialize client-side state to avoid hydration mismatch
   useEffect(() => {
@@ -84,12 +83,6 @@ export default function KidneyChatBot() {
     setMessages([{ ...INITIAL_MESSAGE, timestamp: new Date() }]);
   }, []);
 
-  // Auto-scroll logic whenever messages change
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [messages, isTyping]);
 
   const handleReset = () => {
     setMessages([{ ...INITIAL_MESSAGE, timestamp: new Date() }]);
@@ -250,7 +243,7 @@ export default function KidneyChatBot() {
                 </div>
               )}
               
-              <div ref={scrollRef} className="h-2" />
+              
             </div>
 
             {/* Input Form Area */}
