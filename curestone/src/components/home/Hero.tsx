@@ -15,16 +15,16 @@ const SCENES: Scene[] = [
     id: 1,
     start: 0,
     end: 0.15,
-    title: "Revolutionary Kidney Care",
-    subtitle: "Experience 1st Ever Fans-RIRS Laser Treatment in North India.",
+    title: "Welcome to Cure Stone",
+    subtitle: "",
     badge: "Dr. Deepanshu Gupta"
   },
   {
     id: 2,
     start: 0.25,
     end: 0.45,
-    title: "Technological Precision",
-    subtitle: "Advanced Fluoroscopy-free Laser Surgery. No cuts, no scans, no radiation.",
+    title: "India's Best Kidney Stone Treatment",
+    subtitle: "1st Ever to start Fans-RIRS in North India — By Dr. Deepanshu Gupta.",
     badge: "Precision Care"
   },
   {
