@@ -10,6 +10,7 @@ import Services from "@/components/home/Services";
 import WhyRIRS from "@/components/home/WhyRIRS";
 import TreatmentTracker from "@/components/home/TreatmentTracker";
 import PatientStories from "@/components/home/PatientStories";
+import AppointmentForm from "@/components/home/AppointmentForm";
 import Footer from "@/components/layout/Footer";
 
 export default function Home() {
@@ -27,6 +28,7 @@ export default function Home() {
         <Services />
         <WhyRIRS />
         <TreatmentTracker />
+        <AppointmentForm />
       </main>
       <Footer />
     </div>

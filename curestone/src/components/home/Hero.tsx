@@ -220,7 +220,17 @@ export default function ScrollCanvasHero() {
               
               {activeScene.id === 4 && (
                 <div className="pt-8 pointer-events-auto">
-                   <button className="px-10 py-5 bg-primary text-white font-black rounded-2xl shadow-2xl shadow-primary/40 hover:bg-primary-dark transition-all hover:scale-105 active:scale-95">
+                   <button 
+                    onClick={() => {
+                      const element = document.getElementById('appointment-section');
+                      if (element) {
+                        element.scrollIntoView({ behavior: 'smooth' });
+                      } else {
+                        window.location.href = '/book';
+                      }
+                    }}
+                    className="px-10 py-5 bg-primary text-white font-black rounded-2xl shadow-2xl shadow-primary/40 hover:bg-primary-dark transition-all hover:scale-105 active:scale-95"
+                   >
                       📅 BOOK FREE CONSULTATION
                    </button>
                 </div>

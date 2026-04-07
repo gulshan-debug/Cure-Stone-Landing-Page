@@ -67,13 +67,13 @@ export default function GlobalReach() {
 
           {/* Right Content: Photo-Collage Map */}
           <div className="relative group">
-            <div className="relative z-10 animate-float transition-transform duration-1000 group-hover:scale-105">
+            <div className="relative z-10  transition-transform duration-1000">
               <Image 
                 src="/Website World Map Cropped.png" 
                 alt="Global Reach Patient Stories Collage Map" 
                 width={1000} 
                 height={800} 
-                className="w-full h-auto drop-shadow-[0_20px_50px_rgba(0,0,0,0.3)] saturate-[1.1]"
+                className="w-full h-auto drop-shadow-[0_20px_50px_rgba(0,0,0,0.3)] saturate-[1.1] scale-140"
                 priority
               />
             </div>
@@ -86,19 +86,19 @@ export default function GlobalReach() {
         {/* Separator Line */}
         <div className="h-px w-full bg-gradient-to-r from-transparent via-white/20 to-transparent my-16" />
 
-        {/* Statistics Bar */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          {STATS.map((stat, idx) => (
-            <div key={idx} className="text-center md:text-left space-y-1">
-              <div className="text-4xl lg:text-5xl font-black text-white tracking-tighter">
-                {stat.value}
-              </div>
-              <div className="text-sm font-bold text-blue-100/60 uppercase tracking-widest">
-                {stat.label}
-              </div>
-            </div>
-          ))}
-        </div>
+       {/* Statistics Bar */}
+<div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center justify-items-center">
+  {STATS.map((stat, idx) => (
+    <div key={idx} className="space-y-1">
+      <div className="text-4xl lg:text-5xl font-black text-white tracking-tighter">
+        {stat.value}
+      </div>
+      <div className="text-sm font-bold text-blue-100/60 uppercase tracking-widest">
+        {stat.label}
+      </div>
+    </div>
+  ))}
+</div>
       </div>
 
       <style jsx>{`
