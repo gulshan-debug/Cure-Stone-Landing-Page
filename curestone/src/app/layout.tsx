@@ -13,7 +13,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "CureStone — India's Best Kidney Stone Treatment",
+  title: "Cure Stone — India's Best Kidney Stone Treatment",
   description: "Advanced RIRS Laser Surgery for kidney stones. No cuts, no scars, 98% success rate.",
   icons: {
     icon: [

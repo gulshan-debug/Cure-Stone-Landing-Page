@@ -18,7 +18,7 @@ const STORIES: Story[] = [
     id: 1,
     badge: "SUCCESS STORY",
     title: "Life After RIRS Surgery: A Transparent Journey",
-    description: "Follow our patients through their first 24 hours post-operation. Witness the rapid recovery and specialized care that defines the CureStone experience.",
+    description: "Follow our patients through their first 24 hours post-operation. Witness the rapid recovery and specialized care that defines the Cure Stone experience.",
     stats: [
       { label: "Stone Clearance", value: "99.9%" },
       { label: "Success Rate", value: "98%" },
@@ -173,7 +173,7 @@ export default function PatientStories() {
                       <div className="space-y-3">
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-[10px] font-black text-white">CS</div>
-                          <p className="text-white/40 text-[10px] font-black uppercase tracking-[0.2em]">CureStone Exclusive Vlog</p>
+                          <p className="text-white/40 text-[10px] font-black uppercase tracking-[0.2em]">Cure Stone Exclusive Vlog</p>
                         </div>
                         <h4 className="text-white font-black text-2xl lg:text-3xl tracking-tight leading-none group-hover:text-primary transition-colors">
                           {story.videoTitle}

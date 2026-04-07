@@ -16,7 +16,7 @@ const VIDEOS: Video[] = [
     ytId: "K5va1bE282M",
     title: "How RIRS Laser Surgery Works — Complete Guide",
     tag: "Surgery Guide",
-    meta: "Dr. Deepanshu Gupta · CureStone",
+    meta: "Dr. Deepanshu Gupta · Cure Stone",
     bgColor: "bg-blue-900",
   },
   {
@@ -24,7 +24,7 @@ const VIDEOS: Video[] = [
     ytId: "qobqvzQ6za4",
     title: "DJ Stent Removal — Is It Painful?",
     tag: "Post Surgery",
-    meta: "Dr. Deepanshu Gupta · CureStone",
+    meta: "Dr. Deepanshu Gupta · Cure Stone",
     bgColor: "bg-emerald-900",
   },
   {
@@ -32,7 +32,7 @@ const VIDEOS: Video[] = [
     ytId: "aHsGua3WaVM",
     title: "Kidney Stone Prevention — Diet & Hydration",
     tag: "Prevention",
-    meta: "Dr. Deepanshu Gupta · CureStone",
+    meta: "Dr. Deepanshu Gupta · Cure Stone",
     bgColor: "bg-orange-900",
   },
 ];

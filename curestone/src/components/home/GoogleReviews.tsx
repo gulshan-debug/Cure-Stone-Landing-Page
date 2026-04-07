@@ -41,7 +41,7 @@ export default function GoogleReviews() {
   const [stats, setStats] = useState({ rating: 5.0, total: 586 });
   const [loading, setLoading] = useState(true);
 
-  // PLACE ID for CureStone Hospital (Sector 51, Gurgaon)
+  // PLACE ID for Cure Stone Hospital (Sector 51, Gurgaon)
   // User should update this if necessary
   const PLACE_ID = "ChIJ-w-L-A-LDTkRs-0-0-0-0-0"; 
 

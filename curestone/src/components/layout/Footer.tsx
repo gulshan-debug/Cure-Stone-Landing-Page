@@ -50,13 +50,13 @@ const Footer = () => {
               <div className="w-10 h-10 relative overflow-hidden transition-transform duration-300 group-hover:scale-110">
                 <Image 
                   src="/PNG-Black-e1664728676618.png" 
-                  alt="CureStone Logo" 
+                  alt="Cure Stone Logo" 
                   fill
                   className="object-contain invert brightness-200"
                 />
               </div>
               <div>
-                <h1 className="text-xl font-black uppercase tracking-tighter text-white line-height-1">CureStone</h1>
+                <h1 className="text-xl font-black uppercase tracking-tighter text-white line-height-1">Cure Stone</h1>
                 <p className="text-[10px] font-medium text-white/50 uppercase tracking-[0.2em] -mt-1 italic">Kidney Care Expert</p>
               </div>
             </Link>
@@ -95,7 +95,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-8">
           <p className="text-xs font-bold text-white/30 uppercase tracking-widest text-center md:text-left">
-            © 2025 CureStone. All rights reserved. <br className="md:hidden" />
+            © 2025 Cure Stone. All rights reserved. <br className="md:hidden" />
             <span className="text-white/50">Designed with ♥ by Gulshan Chawla.</span>
           </p>
           <div className="flex items-center gap-8">

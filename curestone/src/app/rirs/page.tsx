@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "RIRS Kidney Stone Surgery | CureStone — Laser Treatment Delhi",
+  title: "RIRS Kidney Stone Surgery | Cure Stone — Laser Treatment Delhi",
   description: "RIRS (Retrograde Intrarenal Surgery) is India's most advanced kidney stone treatment. No cuts, no radiation, 98% success rate. Book with Dr. Deepanshu Gupta.",
 };
 
@@ -81,7 +81,7 @@ export default function RIRSPage() {
                   RIRS stands for <strong>Retrograde Intrarenal Surgery</strong>. A thin, flexible ureteroscope (3mm diameter) is passed through the urethra, bladder and ureter to reach stones inside the kidney — without any incisions.
                 </p>
                 <p className="text-lg text-text-mid font-medium leading-relaxed mb-8">
-                  A Holmium or Thulium Fiber laser then pulverises the stone into fine dust, which passes out naturally in urine. CureStone uses FANS-RIRS — <strong>Fluoroscopy-free RIRS</strong> — meaning zero X-ray radiation during surgery.
+                  A Holmium or Thulium Fiber laser then pulverises the stone into fine dust, which passes out naturally in urine. Cure Stone uses FANS-RIRS — <strong>Fluoroscopy-free RIRS</strong> — meaning zero X-ray radiation during surgery.
                 </p>
                 <div className="grid grid-cols-2 gap-4">
                   {["Zero X-Ray Radiation","Flexible Scope Technology","Real-time Visualisation","Same-Day Discharge Available"].map((item, i) => (

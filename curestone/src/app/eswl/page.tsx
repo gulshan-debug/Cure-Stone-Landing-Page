@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "ESWL Lithotripsy | CureStone — Non-Invasive Kidney Stone Treatment",
+  title: "ESWL Lithotripsy | Cure Stone — Non-Invasive Kidney Stone Treatment",
   description: "ESWL uses shock waves to break kidney stones without surgery. Learn about candidacy, procedure and recovery. Delhi NCR.",
 };
 

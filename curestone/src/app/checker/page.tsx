@@ -143,7 +143,7 @@ export default function KidneyChatBot() {
           
           <div className="hidden md:block mb-6 text-center">
             <h1 className="text-3xl font-black text-slate-900 tracking-tight">
-              CureStone <span className="text-primary italic">Intelligence</span>
+              Cure Stone <span className="text-primary italic">Intelligence</span>
             </h1>
           </div>
 
@@ -157,7 +157,7 @@ export default function KidneyChatBot() {
                   {/* Scaled Logo Container */}
                   <div className="w-11 h-11 rounded-2xl bg-white border border-slate-100 flex items-center justify-center overflow-hidden shadow-lg shadow-slate-200/50">
                     <Image 
-                      src="/Curestone wm.png" 
+                      src="/Cure Stone wm.png" 
                       alt="Cure Stone AI" 
                       width={40} 
                       height={40}
@@ -208,7 +208,7 @@ export default function KidneyChatBot() {
                       {msg.role === "bot" ? renderMarkdown(msg.content) : msg.content}
                     </div>
                     <span className="text-[10px] font-bold text-slate-400 px-2 uppercase tracking-tighter">
-                      {msg.role === "user" ? "You" : "CureStone AI"} • {mounted ? msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "--:--"}
+                      {msg.role === "user" ? "You" : "Cure Stone AI"} • {mounted ? msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "--:--"}
                     </span>
                   </div>
                 </div>

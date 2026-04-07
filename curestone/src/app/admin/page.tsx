@@ -37,7 +37,7 @@ export default function AdminPage() {
               </svg>
             </div>
             <h1 className="text-2xl font-black text-white mb-1">Admin Login</h1>
-            <p className="text-sm text-white/40 font-medium">CureStone Clinical Management System</p>
+            <p className="text-sm text-white/40 font-medium">Cure Stone Clinical Management System</p>
           </div>
 
           <div className="bg-white/5 border border-white/10 backdrop-blur-2xl rounded-[2rem] p-8 shadow-2xl">
@@ -48,7 +48,7 @@ export default function AdminPage() {
                   <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                   <input
                     type="email" required value={email} onChange={e => setEmail(e.target.value)}
-                    placeholder="admin@curestone.in"
+                    placeholder="admin@Cure Stone.in"
                     className="w-full pl-11 pr-5 py-3.5 bg-white/10 border border-white/10 rounded-xl outline-none focus:border-primary transition-all text-white placeholder-white/30 font-medium"
                   />
                 </div>

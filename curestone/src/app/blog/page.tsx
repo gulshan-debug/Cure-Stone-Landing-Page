@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Health Blog | CureStone — Kidney Stone & Urology Insights",
+  title: "Health Blog | Cure Stone — Kidney Stone & Urology Insights",
   description: "Expert articles on kidney stones, RIRS surgery, diet, prevention and urological health from Dr. Deepanshu Gupta's team.",
 };
 
@@ -102,7 +102,7 @@ export default function BlogPage() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(43,92,230,0.25),transparent_70%)]" />
         <div className="absolute top-20 right-0 w-80 h-80 bg-primary/15 blur-[100px] rounded-full pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10 text-center">
-          <span className="inline-block px-4 py-1.5 mb-6 text-[10px] font-black tracking-widest text-primary bg-primary/10 border border-primary/20 rounded-full uppercase">CureStone Health Library</span>
+          <span className="inline-block px-4 py-1.5 mb-6 text-[10px] font-black tracking-widest text-primary bg-primary/10 border border-primary/20 rounded-full uppercase">Cure Stone Health Library</span>
           <h1 className="text-5xl md:text-7xl font-black tracking-tight text-white leading-[1.05] mb-6">
             Expert <span className="text-primary italic">Kidney Health</span> Insights
           </h1>

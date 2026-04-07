@@ -43,7 +43,7 @@ const TreatmentTracker = () => {
       riskClass = "bg-error/10 text-error border-error/20";
       tag = "URGENT";
       title = "PCNL or Staged Procedure";
-      text = `Stones >20mm require PCNL or RIRS Staged Procedure. Call +91 88002 63884 immediately or visit CureStone Gurugram.`;
+      text = `Stones >20mm require PCNL or RIRS Staged Procedure. Call +91 88002 63884 immediately or visit Cure Stone Gurugram.`;
     }
 
     if (pain >= 8 && !isRecovery) {

@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "URSL Treatment | CureStone — Ureteric Stone Laser Surgery Delhi",
+  title: "URSL Treatment | Cure Stone — Ureteric Stone Laser Surgery Delhi",
   description: "URSL (Ureteroscopic Lithotripsy) uses a rigid/semi-rigid scope to treat ureteric stones with laser. Fast, effective, stone-free results.",
 };
 
