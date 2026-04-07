@@ -37,32 +37,33 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="relative bg-foreground pt-24 pb-12 overflow-hidden">
+    <footer className="relative bg-foreground pt-24 pb-12 overflow-hidden text-white">
       {/* Background Glow */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 blur-[120px] rounded-full -mr-32 -mt-32 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/10 blur-[100px] rounded-full -ml-32 -mb-32 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
         <div className="grid lg:grid-cols-[2fr_1fr_1fr_1fr] gap-16 mb-20">
+          
           {/* Brand Col */}
           <div className="space-y-8">
-            <Link href="/" className="flex items-center gap-3 no-underline group">
-              <div className="w-10 h-10 relative overflow-hidden transition-transform duration-300 group-hover:scale-110">
+            <Link href="/" className="inline-block group no-underline">
+              <div className="relative w-40 h-14">
                 <Image 
-                  src="/PNG-Black-e1664728676618.png" 
+                  src="https://theCurestone.com/wp-content/uploads/2021/05/PNG-Black-e1664728676618.png" 
                   alt="Cure Stone Logo" 
                   fill
-                  className="object-contain invert brightness-200"
+                  // Added brightness-0 invert to make the black logo pure white for the dark footer
+                  className="object-contain object-left brightness-0 invert" 
+                  unoptimized
                 />
               </div>
-              <div>
-                <h1 className="text-xl font-black uppercase tracking-tighter text-white line-height-1">Cure Stone</h1>
-                <p className="text-[10px] font-medium text-white/50 uppercase tracking-[0.2em] -mt-1 italic">Kidney Care Expert</p>
-              </div>
             </Link>
+
             <p className="text-white/60 font-medium leading-relaxed max-w-sm">
               Pioneering excellence in urology and kidney stone care across Delhi NCR. Advanced treatment, compassionate service, and transparent pricing.
             </p>
+            
             <div className="flex gap-4">
               {['f', 'in', '𝕏', '💬'].map((social, i) => (
                 <a key={i} href="#" className="w-10 h-10 border border-white/20 rounded-xl flex items-center justify-center text-white/80 hover:bg-primary transition-all hover:border-primary hover:text-white group">
@@ -78,7 +79,7 @@ const Footer = () => {
               <h4 className="text-[11px] font-black text-white/40 uppercase tracking-[0.2em]">
                 {section.title}
               </h4>
-              <ul className="space-y-4">
+              <ul className="space-y-4 list-none p-0">
                 {section.links.map((link, lIdx) => (
                   <li key={lIdx}>
                     <Link href={link.href} className="text-sm font-medium text-white/70 hover:text-primary transition-colors no-underline flex items-center gap-2 group">
@@ -96,7 +97,7 @@ const Footer = () => {
         <div className="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-8">
           <p className="text-xs font-bold text-white/30 uppercase tracking-widest text-center md:text-left">
             © 2025 Cure Stone. All rights reserved. <br className="md:hidden" />
-            <span className="text-white/50">Designed with ♥ by Gulshan Chawla.</span>
+            <span className="text-white/50 ml-1">Designed with ♥ by Gulshan Chawla.</span>
           </p>
           <div className="flex items-center gap-8">
              <Link href="/terms" className="text-[10px] font-black text-white/30 hover:text-white uppercase tracking-widest no-underline">Terms</Link>
