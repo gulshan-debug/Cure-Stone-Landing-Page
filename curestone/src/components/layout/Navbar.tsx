@@ -58,7 +58,7 @@ export default function Navbar() {
       scrolled ? "w-28 h-10" : "w-32 h-12"
     }`}>
     <Image 
-      src="https://theCure Stone.com/wp-content/uploads/2021/05/PNG-Black-e1664728676618.png" 
+      src="https://theCurestone.com/wp-content/uploads/2021/05/PNG-Black-e1664728676618.png" 
       alt="Cure Stone Logo" 
       fill
       // Using object-left ensures it stays aligned with the start of the nav
