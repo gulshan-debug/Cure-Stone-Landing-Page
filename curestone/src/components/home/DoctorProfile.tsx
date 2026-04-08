@@ -1,151 +1,221 @@
 import React from 'react';
 import Image from 'next/image';
+import { 
+  Users, 
+  BookOpen, 
+  Award, 
+  History, 
+  CheckCircle2, 
+  Stethoscope, 
+  MapPin, 
+  Star,
+  MessageCircle,
+  CalendarCheck2,
+  Trophy,
+  GraduationCap,
+  ShieldCheck
+} from 'lucide-react';
 
 const DoctorProfile = () => {
   const stats = [
-    { label: "Patients Treated", value: "30K+", color: "text-primary" },
-    { label: "Publications", value: "200+", color: "text-primary" },
-    { label: "Awards", value: "22+", color: "text-primary" },
-    { label: "Years Experience", value: "15+", color: "text-primary" },
+    { label: "Patients Treated", value: "30K+", icon: Users, color: "text-blue-600", bg: "bg-blue-50" },
+    { label: "Publications", value: "200+", icon: BookOpen, color: "text-indigo-600", bg: "bg-indigo-50" },
+    { label: "Awards Won", value: "22+", icon: Trophy, color: "text-amber-500", bg: "bg-amber-50" },
+    { label: "Years Experience", value: "15+", icon: History, color: "text-emerald-600", bg: "bg-emerald-50" },
   ];
 
   const expertises = [
     "Fans-RIRS Laser Surgery",
-    "PCNL",
-    "URSL",
-    "ESWL",
+    "PCNL (Mini/Ultra)",
+    "URSL (Ureteroscopy)",
+    "ESWL (Extracorporeal)",
     "Gallstone Surgery",
     "Urology & Andrology",
     "Renal Transplant",
   ];
 
   const achievements = [
-    { icon: "", text: "1st Rank Holder in MCh Urology — RML Hospital, New Delhi" },
-    { icon: "", text: "Pioneer of Fans-RIRS (Fluoroscopy-free) in North India" },
-    { icon: "", text: "MS General Surgery from PGIMS Rohtak — Haryana's premier institute" },
-    { icon: "", text: "4.9★ Google Rating — 1,000+ verified patient reviews" },
+    { 
+      icon: GraduationCap, 
+      text: "1st Rank Holder in MCh Urology", 
+      subtext: "VMMC & Safdarjung Hospital (RML), New Delhi" 
+    },
+    { 
+      icon: ShieldCheck, 
+      text: "Pioneer of Fans-RIRS in North India", 
+      subtext: "Leading Fluoroscopy-free (radiation-free) laser surgery" 
+    },
+    { 
+      icon: Award, 
+      text: "MS General Surgery (Gold Medalist)", 
+      subtext: "PGIMS Rohtak — Premier medical institute of Haryana" 
+    },
+    { 
+      icon: Star, 
+      text: "4.9/5 Patient Satisfaction", 
+      subtext: "Based on 1,000+ verified Google & Practo reviews" 
+    },
   ];
 
   return (
-    <section className="relative py-20 bg-background overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5 pointer-events-none" 
-           style={{ backgroundImage: 'radial-gradient(circle, var(--color-primary) 1.5px, transparent 1.5px)', backgroundSize: '28px 28px' }}>
-      </div>
-
+    <section className="relative py-24 bg-[#EBF4FD] overflow-hidden">
+      {/* Decorative Background Elements */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] -mr-64 -mt-64 opacity-50"></div>
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-400/10 rounded-full blur-[100px] -ml-48 -mb-48 opacity-30"></div>
+      
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
-        <div className="text-center mb-16 animate-fade-in">
-          <span className="inline-block px-4 py-1.5 mb-4 text-[10px] font-black tracking-widest text-primary bg-primary/5 border border-primary/10 rounded-full uppercase">
-            Meet Your Doctor
-          </span>
-          <h2 className="text-3xl md:text-5xl font-black tracking-tight text-foreground">
-            The Doctor Behind <span className="text-primary">30,000 Stone-Free Lives</span>
+        {/* Header Section */}
+        <div className="text-center mb-20 animate-fade-in-up">
+          <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 bg-white/80 backdrop-blur-sm border border-blue-100 rounded-full shadow-sm">
+            <span className="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></span>
+            <span className="text-[11px] font-bold tracking-[0.1em] text-blue-700 uppercase">
+              Meet Your Specialist
+            </span>
+          </div>
+          <h2 className="text-4xl md:text-6xl font-black tracking-tight text-slate-900 leading-[1.1]">
+            Global Standard Care by <br />
+            <span className="bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent">
+              Dr. Deepanshu Gupta
+            </span>
           </h2>
-          <p className="mt-4 text-text-light font-medium max-w-2xl mx-auto">
-            Trusted by patients across India and abroad — for over 15 years of precision care.
+          <p className="mt-6 text-slate-600 font-medium max-w-2xl mx-auto text-lg leading-relaxed">
+            Combining 15+ years of clinical excellence with the world's most advanced laser technologies for kidney stone treatment.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-[450px_1fr] gap-16 items-center">
-          {/* LEFT: Photo Area */}
-          <div className="relative group">
-            <div className="relative aspect-[4/5] bg-white rounded-[2.5rem] overflow-hidden shadow-2xl transition-transform duration-500 group-hover:-translate-y-2">
-              <Image 
-                src="/assets/doctor.png"
-                alt="Dr. Deepanshu Gupta"
-                fill
-                className="object-cover object-top hover:scale-105 transition-transform duration-700"
-              />
-              
-              {/* Rating Overlay */}
-              <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-blue-900/90 via-blue-900/40 to-transparent p-8 text-center text-white">
-                <p className="text-xl font-black leading-tight">Dr. Deepanshu Gupta</p>
-                <p className="text-xs text-blue-200 mt-1">Senior Urologist & Kidney Stone Specialist</p>
-                <div className="mt-4 inline-flex items-center gap-3 bg-white/20 backdrop-blur-md border border-white/20 px-4 py-2 rounded-xl">
-                  <span className="text-yellow-400 text-sm tracking-widest">★★★★★</span>
-                  <span className="text-[10px] font-bold text-white/90 uppercase tracking-tighter">4.9 · 1,000+ Reviews</span>
+        <div className="grid lg:grid-cols-12 gap-12 items-start">
+          {/* LEFT: Profile Photo & Key Info */}
+          <div className="lg:col-span-5 relative animate-fade-in-up [animation-delay:200ms]">
+            <div className="relative group">
+              {/* Photo Card */}
+              <div className="relative aspect-[4/5] bg-white rounded-[3rem] overflow-hidden shadow-[0_32px_64px_-16px_rgba(43,92,230,0.15)] transition-all duration-700 group-hover:shadow-[0_48px_80px_-16px_rgba(43,92,230,0.2)]">
+                <Image 
+                  src="/assets/doctor.png"
+                  alt="Dr. Deepanshu Gupta"
+                  fill
+                  className="object-cover object-top group-hover:scale-105 transition-transform duration-1000 ease-out"
+                />
+                
+                {/* Visual Overlays */}
+                <div className="absolute inset-0 bg-gradient-to-t from-blue-950/90 via-blue-900/20 to-transparent"></div>
+                
+                {/* Bottom Overlay Content */}
+                <div className="absolute bottom-0 inset-x-0 p-8 md:p-10">
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => <Star key={i} size={14} fill="currentColor" />)}
+                    </div>
+                    <span className="text-blue-100 text-xs font-bold tracking-wider uppercase">4.9 Patient Rating</span>
+                  </div>
+                  <h3 className="text-3xl font-black text-white leading-tight mb-2">Dr. Deepanshu Gupta</h3>
+                  <div className="flex flex-col gap-1">
+                    <p className="text-blue-200 text-sm font-bold flex items-center gap-2">
+                       Senior Urologist & Laser Specialist
+                    </p>
+                    <p className="text-blue-200/60 text-[11px] font-medium leading-relaxed">
+                      MBBS · MS (Gold Medalist) · MCh Urology (Rank 1)
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Floatings Tags */}
+              <div className="absolute -top-6 -right-6 bg-white p-4 rounded-3xl shadow-xl flex items-center gap-3 border border-blue-50 animate-bounce-slow">
+                <div className="w-10 h-10 bg-green-50 rounded-2xl flex items-center justify-center">
+                  <CheckCircle2 className="text-green-500" size={20} />
+                </div>
+                <div>
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Status</p>
+                  <p className="text-xs font-bold text-slate-900 mt-1">Accepting Patients</p>
                 </div>
               </div>
             </div>
 
-            {/* Availability Chip */}
-            <div className="mt-6 bg-white border border-border/50 rounded-2xl p-4 flex items-center gap-4 shadow-sm hover:shadow-md transition-shadow">
-              <div className="w-3 h-3 bg-accent rounded-full animate-pulse shadow-[0_0_10px_var(--color-accent)]"></div>
-              <p className="text-xs font-bold text-text-mid uppercase tracking-wide">
-                Available for Consultation · Gurugram & Delhi NCR
-              </p>
+            {/* Quick Contact Card */}
+            <div className="mt-10 bg-white/70 backdrop-blur-md border border-white p-6 rounded-[2rem] shadow-sm">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-blue-200">
+                  <MapPin size={24} />
+                </div>
+                <div>
+                  <p className="text-[11px] font-black text-slate-400 uppercase tracking-[0.15em]">Primary Clinic Location</p>
+                  <p className="text-sm font-bold text-slate-800 mt-1">Gurugram & Delhi NCR Hubs</p>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* RIGHT: Content Area */}
-          <div className="flex flex-col gap-8">
-            <div className="space-y-4">
-              <h3 className="text-4xl font-black text-foreground leading-none">Dr. Deepanshu Gupta</h3>
-              <p className="text-sm font-semibold text-text-light leading-relaxed">
-                MBBS · MS (General Surgery), PGIMS Rohtak <br />
-                MCh Urology, RML Hospital, New Delhi
+          {/* RIGHT: Detailed Content */}
+          <div className="lg:col-span-7 flex flex-col gap-10 animate-slide-in-right [animation-delay:400ms]">
+            {/* Professional Summary */}
+            <div className="relative">
+              <div className="absolute -left-6 top-0 bottom-0 w-1.5 bg-gradient-to-b from-blue-600 to-indigo-500 rounded-full"></div>
+              <h4 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-3">
+                <Stethoscope className="text-blue-600" size={24} />
+                 Expert Overview
+              </h4>
+              <p className="text-lg text-slate-600 leading-relaxed font-medium">
+                Dr. Deepanshu Gupta is one of North India's most trusted urologists — renowned for his precision surgeries and compassionate approach. He <strong className="text-blue-700 font-extrabold underline decoration-blue-200 decoration-4 underline-offset-4 uppercase">pioneered Fluoroscopy-free Fans-RIRS in North India</strong>, enabling kidney stone treatment without a single cut, scar, or harmful radiation exposure.
               </p>
-              
-              <div className="inline-flex items-center gap-3 bg-warning-light border border-warning/30 px-4 py-2 rounded-xl text-xs font-black text-warning">
-                 MCh Urology — 1st Rank Holder, RML Hospital
-              </div>
             </div>
 
-            <div className="w-full h-px bg-border/50"></div>
-
-            <p className="text-base text-text-mid leading-relaxed italic border-l-4 border-primary pl-6">
-              Dr. Deepanshu Gupta is one of North India's most trusted urologists — known for his calm approach, precision surgeries, and genuine care for every patient. He <strong className="text-primary font-black uppercase">pioneered Fluoroscopy-free Fans-RIRS in North India</strong> — treating kidney stones without a single cut, scar, or radiation.
-            </p>
-
-            <div className="w-full h-px bg-border/50"></div>
-
             {/* Stats Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               {stats.map((stat, i) => (
-                <div key={i} className="bg-white border border-border/50 p-6 rounded-2xl text-center shadow-sm hover:border-primary/30 transition-all group">
-                  <p className={`text-2xl font-black ${stat.color} tracking-tighter group-hover:scale-110 transition-transform`}>{stat.value}</p>
-                  <p className="text-[10px] font-bold text-text-light uppercase tracking-widest mt-2">{stat.label}</p>
+                <div key={i} className="group bg-white border border-blue-50 p-6 rounded-[2rem] text-center transition-all duration-300 hover:shadow-xl hover:shadow-blue-900/5 hover:-translate-y-1">
+                  <div className={`w-12 h-12 ${stat.bg} ${stat.color} rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform`}>
+                    <stat.icon size={24} />
+                  </div>
+                  <p className={`text-2xl font-black text-slate-900 tracking-tight`}>{stat.value}</p>
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">{stat.label}</p>
                 </div>
               ))}
             </div>
 
-            {/* Achievements */}
-            <div className="space-y-6">
-              <p className="text-[10px] font-black text-foreground uppercase tracking-[0.2em] mb-4">Key Achievements</p>
-              <div className="grid gap-4">
+            {/* Achievements Section */}
+            <div>
+              <p className="text-xs font-black text-slate-950 uppercase tracking-[0.25em] mb-6">Distinguished Achievements</p>
+              <div className="grid sm:grid-cols-2 gap-4">
                 {achievements.map((item, i) => (
-                  <div key={i} className="flex items-start gap-4">
-
-                    <p className="text-sm text-text-mid font-medium leading-relaxed leading-6">{item.text}</p>
+                  <div key={i} className="flex gap-4 p-5 bg-white/40 border border-white rounded-[1.5rem] transition-all hover:bg-white/80 group">
+                    <div className="shrink-0 w-10 h-10 bg-white shadow-sm rounded-xl flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                      <item.icon size={20} />
+                    </div>
+                    <div>
+                      <p className="text-[13px] font-black text-slate-900 leading-tight">{item.text}</p>
+                      <p className="text-[11px] font-semibold text-slate-500 mt-1 leading-normal">{item.subtext}</p>
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Expertise */}
-            <div className="space-y-4">
-              <p className="text-[10px] font-black text-foreground uppercase tracking-[0.2em]">Expertise</p>
-              <div className="flex flex-wrap gap-2">
+            {/* Expertise Pills */}
+            <div>
+              <p className="text-xs font-black text-slate-950 uppercase tracking-[0.25em] mb-6">Surgical Expertise</p>
+              <div className="flex flex-wrap gap-2.5">
                 {expertises.map((exp, i) => (
-                  <span key={i} className="px-4 py-1.5 bg-white border border-border/70 rounded-full text-[11px] font-bold text-text-mid hover:border-primary/40 hover:text-primary transition-all cursor-default">
-                    <span className="inline-block w-1.5 h-1.5 bg-primary rounded-full mr-2 opacity-50"></span>
+                  <span key={i} className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600/5 border border-blue-600/10 rounded-2xl text-[12px] font-bold text-blue-700 hover:bg-blue-600 hover:text-white hover:shadow-lg hover:shadow-blue-200 transition-all cursor-default group">
+                    <span className="w-1.5 h-1.5 bg-blue-600 rounded-full group-hover:bg-white"></span>
                     {exp}
                   </span>
                 ))}
               </div>
             </div>
 
-            {/* CTAs */}
-            <div className="flex flex-wrap gap-4 pt-4">
-              <button className="px-8 py-4 bg-primary text-white font-black rounded-2xl shadow-xl shadow-primary/20 hover:bg-primary-dark transition-all hover:-translate-y-1 active:scale-95">
-                Book Free Consultation 
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 pt-6">
+              <button className="flex-1 px-8 py-5 bg-blue-600 text-white font-black rounded-3xl shadow-[0_20px_40px_-12px_rgba(43,92,230,0.4)] hover:bg-blue-700 hover:shadow-[0_24px_48px_-12px_rgba(43,92,230,0.5)] transition-all flex items-center justify-center gap-3 active:scale-[0.98]">
+                <CalendarCheck2 size={20} />
+                Book Consultation Free
               </button>
               <a 
                 href="https://wa.me/918800263884" 
                 target="_blank"
-                className="px-8 py-4 bg-white border-2 border-border/50 text-text-mid font-black rounded-2xl hover:border-primary/30 hover:text-primary hover:bg-primary/5 transition-all text-center no-underline"
+                className="flex-1 px-8 py-5 bg-white border-2 border-blue-100 text-slate-800 font-black rounded-3xl hover:border-blue-400 hover:bg-blue-50 transition-all flex items-center justify-center gap-3 no-underline shadow-sm"
               >
-                💬 WhatsApp Your Report
+                <MessageCircle className="text-green-600" size={20} />
+                WhatsApp Report
               </a>
             </div>
           </div>
@@ -156,3 +226,4 @@ const DoctorProfile = () => {
 };
 
 export default DoctorProfile;
+
