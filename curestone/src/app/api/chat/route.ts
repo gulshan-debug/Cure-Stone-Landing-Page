@@ -1,141 +1,69 @@
-import { NextRequest } from "next/server";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
+import { NextRequest, NextResponse } from "next/server";
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+// 1. Initialize Rate Limiter (Prevents Spam)
+// Create a free account at upstash.com to get these keys
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL!,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+});
 
-const SYSTEM_PROMPT = `You are "Cure Stone AI Assistant" — a friendly, professional kidney health chatbot for Cure Stone Hospital, led by Dr. Deepanshu Gupta, one of India's top urologists.
+const ratelimit = new Ratelimit({
+  redis: redis,
+  limiter: Ratelimit.slidingWindow(5, "1m"), // 5 requests per minute per IP
+  analytics: true,
+});
 
-YOUR ROLE:
-- Answer basic questions about kidney stones: types, causes, symptoms, prevention, diet tips, hydration, and general lifestyle advice.
-- Explain procedures briefly: RIRS (Retrograde Intrarenal Surgery), ESWL (Extracorporeal Shock Wave Lithotripsy), URSL (Ureteroscopic Lithotripsy), and PCNL.
-- Be warm, empathetic, and supportive. Use simple language patients can understand.
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+const SYSTEM_PROMPT = `Your existing prompt here...`;
 
-STRICT RULES:
-1. You are NOT a doctor. You provide general health information only.
-2. For ANY question that requires medical diagnosis, prescriptions, medication advice, treatment decisions, or involves serious/emergency symptoms (severe pain, blood in urine, high fever, vomiting, inability to urinate), you MUST:
-   - Clearly state you cannot provide medical advice for that specific concern
-   - Strongly recommend they consult Dr. Deepanshu Gupta or visit the Hospital
-   - Always include the Hospital phone number: +91 88002 63884
-   - Suggest booking an appointment at the Hospital
-3. NEVER prescribe medications, suggest dosages, or provide specific treatment plans.
-4. NEVER diagnose conditions.
-5. If someone describes an emergency (severe pain with fever, complete urinary blockage, blood clots in urine), tell them to call the emergency number IMMEDIATELY: +91 88002 63884 or visit the nearest hospital.
-6. Keep responses concise (2-4 short paragraphs max). Use bullet points when listing tips.
-7. Always end responses about symptoms or concerns with a reminder to consult a specialist.
+export async function POST(req: NextRequest) {
+  // --- SPAM PROTECTION ---
+  const ip = req.headers.get("x-forwarded-for") ?? "127.0.0.1";
+  const { success, limit, reset, remaining } = await ratelimit.limit(`chat_${ip}`);
 
-HOSPITAL INFO (share when relevant):
-- Hospital: Cure Stone — India's Leading Kidney Stone Treatment Center
-- Doctor: Dr. Deepanshu Gupta, Senior Urologist
-- Phone: +91 88002 63884
-- Specialties: RIRS Laser Surgery, ESWL, URSL, PCNL
-- USP: No cuts, no scars, 98% success rate, day-care procedures
-
-Format responses using markdown for readability (bold for emphasis, bullet lists, etc.)`;
-
-// Try multiple models in order — fallback if one hits quota
-const MODELS = [
-  "gemini-2.5-flash",
-  "gemini-2.5-pro",
-  "gemini-2.0-flash",
-];
-
-async function callGemini(model: string, geminiMessages: Array<{ role: string; parts: Array<{ text: string }> }>) {
-  const geminiPayload = {
-    system_instruction: {
-      parts: [{ text: SYSTEM_PROMPT }],
-    },
-    contents: geminiMessages,
-    generationConfig: {
-      temperature: 0.7,
-      topP: 0.9,
-      topK: 40,
-      maxOutputTokens: 1024,
-    },
-    safetySettings: [
-      { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
-      { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
-      { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
-      { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
-    ],
-  };
-
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`;
-
-  const res = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(geminiPayload),
-  });
-
-  return res;
-}
-
-export async function POST(request: NextRequest) {
-  if (!GEMINI_API_KEY) {
-    return Response.json(
-      { error: "Gemini API key not configured. Please set GEMINI_API_KEY in your environment variables." },
-      { status: 500 }
+  if (!success) {
+    return NextResponse.json(
+      { reply: "Slow down! You've sent too many messages. Try again in a minute." },
+      {
+        status: 429,
+        headers: { "X-RateLimit-Limit": limit.toString(), "X-RateLimit-Reset": reset.toString() }
+      }
     );
   }
 
   try {
-    const { messages } = await request.json();
+    const { messages } = await req.json();
 
-    if (!messages || !Array.isArray(messages)) {
-      return Response.json({ error: "Invalid request body" }, { status: 400 });
-    }
-
-    // Build Gemini-compatible conversation format
-    const geminiMessages = messages.map((msg: { role: string; content: string }) => ({
-      role: msg.role === "user" ? "user" : "model",
-      parts: [{ text: msg.content }],
+    // --- TOKEN OPTIMIZATION ---
+    // Only send the last 4 messages to stay under the 250k TPM limit
+    const optimizedHistory = messages.slice(-4).map((m: any) => ({
+      role: m.role === "user" ? "user" : "model",
+      parts: [{ text: m.content }],
     }));
 
-    // Try each model — fall back on quota/rate errors
-    let lastError = "";
-    for (const model of MODELS) {
-      try {
-        console.log(`Trying model: ${model}`);
-        const geminiResponse = await callGemini(model, geminiMessages);
+    const model = genAI.getGenerativeModel({
+      model: "gemini-2.5-flash-lite", // Fast, Cheap, and High Quota
+      systemInstruction: SYSTEM_PROMPT
+    });
 
-        if (geminiResponse.ok) {
-          const data = await geminiResponse.json();
-          const reply =
-            data?.candidates?.[0]?.content?.parts?.[0]?.text ||
-            "I'm sorry, I couldn't process your request right now. Please try again or call us directly at **+91 88002 63884**.";
-          return Response.json({ reply });
-        }
-
-        const status = geminiResponse.status;
-        const errorText = await geminiResponse.text();
-
-        // 429 = quota/rate limit — try the next model
-        if (status === 429) {
-          console.warn(`Model ${model} hit rate limit, trying next...`);
-          lastError = errorText;
-          continue;
-        }
-
-        // Other errors — don't retry
-        console.error(`Gemini API error (${model}):`, errorText);
-        lastError = errorText;
-        break;
-      } catch (fetchErr) {
-        console.error(`Fetch error for model ${model}:`, fetchErr);
-        lastError = String(fetchErr);
-        continue;
+    const result = await model.generateContent({
+      contents: optimizedHistory,
+      generationConfig: {
+        maxOutputTokens: 500, // Limit response length to save tokens
+        temperature: 0.5,     // Lower temp = more predictable & cheaper processing
       }
-    }
+    });
 
-    console.error("All models failed. Last error:", lastError);
-    return Response.json(
-      { error: "Our AI is temporarily busy. Please try again in a moment, or call us at **+91 88002 63884** for immediate help." },
-      { status: 502 }
-    );
-  } catch (error) {
-    console.error("Chat API error:", error);
-    return Response.json(
-      { error: "Something went wrong. Please try again or call us at +91 88002 63884." },
-      { status: 500 }
+    return NextResponse.json({ reply: result.response.text() });
+
+  } catch (error: any) {
+    console.error("API Error:", error);
+    return NextResponse.json(
+      { reply: "I'm temporarily busy. Please call us at +91 88002 63884 for help." },
+      { status: 200 } // Graceful failure
     );
   }
 }
