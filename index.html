@@ -7343,13 +7343,19 @@
         renderCalendar();
 
         // ─── AI CHAT ──────────────────────────────────
+
         let chatHistory = [];
         let chatInited = false;
+        let appointmentState = null;
 
         function initChat() {
             if (chatInited) return;
             chatInited = true;
-            addAIMsg("Hello! I'm **Dr. CureStone AI** 👋\n\nI'm here to help you assess kidney stone symptoms and understand your urological health. You can:\n\n• Describe your symptoms and I'll provide clinical guidance\n• Ask about treatments like RIRS, ESWL, or PCNL\n• Get hydration and prevention advice\n\nWhat would you like to know today?");
+            chatHistory = [];
+            appointmentState = null;
+            addAIMsg("Welcome! To assist you better, may I have your full name?");
+            appointmentState = { active: true, step: 1, data: {} };
+            document.getElementById('chatInput').placeholder = 'Enter your full name...';
         }
 
         function addAIMsg(text) {
@@ -7384,6 +7390,7 @@
             if (t) t.remove();
         }
 
+
         async function sendMessage() {
             const inp = document.getElementById('chatInput');
             const text = inp.value.trim();
@@ -7396,45 +7403,65 @@
             addTyping();
 
             try {
-                const res = await fetch('https://api.anthropic.com/v1/messages', {
+                // Use your Next.js API endpoint for chat
+                const res = await fetch('/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        model: 'claude-sonnet-4-20250514',
-                        max_tokens: 1000,
-                        system: `You are Dr. CureStone AI, an expert medical assistant specialising in kidney stones and urology at CureStone clinic in Gurugram, led by Dr. Deepanshu Gupta (15+ years, 30,000+ patients treated, 98% RIRS success rate).
-
-Your role: Assess symptoms, provide clinical guidance, and recommend appropriate treatments.
-
-Key protocols:
-- Stones <4mm: Conservative management (fluids, pain relief)
-- Stones 4-20mm: RIRS laser surgery (recommend CureStone's fluoroscopy-free RIRS)
-- Stones >20mm or complex: PCNL or RIRS Staged Procedure
-- Hematuria + pain: Likely renal colic, refer for CT KUB urgently
-- Fever + flank pain: Possible infected stone — URGENT care needed
-
-Always:
-1. Be empathetic and professional
-2. Ask clarifying questions when needed
-3. End with "Please consult Dr. Deepanshu Gupta at CureStone for a formal diagnosis via ultrasound or CT scan."
-4. Keep responses concise but thorough
-5. Format with markdown for readability
-6. If symptoms are severe/emergency, advise calling +91 88002 63884 immediately
-
-Never diagnose definitively — provide clinical guidance only.`,
-                        messages: chatHistory.slice(-10)
+                        messages: chatHistory,
+                        appointmentState: appointmentState
                     })
                 });
                 const data = await res.json();
                 removeTyping();
-                const reply = data.content?.[0]?.text || "I'm sorry, I couldn't process that. Please try again or call +91 88002 63884 directly.";
+                const reply = data.reply || "I'm sorry, I couldn't process that. Please try again or call +91 88002 63884 directly.";
                 chatHistory.push({ role: 'assistant', content: reply });
                 addAIMsg(reply);
+                appointmentState = data.appointmentState || null;
+
+                // Update input placeholder based on step
+                if (appointmentState && appointmentState.active) {
+                    if (appointmentState.step === 2) document.getElementById('chatInput').placeholder = 'Enter your phone number...';
+                    else if (appointmentState.step === 3) document.getElementById('chatInput').placeholder = 'Preferred date (YYYY-MM-DD)...';
+                    else if (appointmentState.step === 4) document.getElementById('chatInput').placeholder = 'Describe your problem...';
+                    else document.getElementById('chatInput').placeholder = 'Type your message...';
+                } else {
+                    document.getElementById('chatInput').placeholder = 'Type your message...';
+                }
+
+                // Show Book Appointment button if ready
+                if (appointmentState && appointmentState.readyToBook) {
+                    showBookAptButton();
+                } else {
+                    hideBookAptButton();
+                }
             } catch (err) {
                 removeTyping();
                 addAIMsg("I'm having trouble connecting right now. Please call us directly at **+91 88002 63884** or book a consultation.");
             }
             document.getElementById('chatSendBtn').disabled = false;
+        }
+
+        function showBookAptButton() {
+            let btn = document.getElementById('bookAptBtn');
+            if (!btn) {
+                btn = document.createElement('button');
+                btn.id = 'bookAptBtn';
+                btn.className = 'btn btn-primary btn-full';
+                btn.style.marginTop = '16px';
+                btn.textContent = 'Book Appointment';
+                btn.onclick = function() {
+                    document.getElementById('chatInput').value = 'yes';
+                    sendMessage();
+                };
+                document.querySelector('.chat-wrap').appendChild(btn);
+            }
+            btn.style.display = 'block';
+        }
+
+        function hideBookAptButton() {
+            const btn = document.getElementById('bookAptBtn');
+            if (btn) btn.style.display = 'none';
         }
 
         function sendQuickQ(q) {
