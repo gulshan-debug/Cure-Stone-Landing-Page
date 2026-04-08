@@ -98,15 +98,15 @@ export default function BlogPage() {
       <Navbar />
 
       {/* Hero */}
-      <section className="relative pt-44 pb-28 bg-foreground overflow-hidden">
+      <section className="relative pt-32 pb-20 md:pt-44 md:pb-28 bg-foreground overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(43,92,230,0.25),transparent_70%)]" />
         <div className="absolute top-20 right-0 w-80 h-80 bg-primary/15 blur-[100px] rounded-full pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10 text-center">
           <span className="inline-block px-4 py-1.5 mb-6 text-[10px] font-black tracking-widest text-primary bg-primary/10 border border-primary/20 rounded-full uppercase">Cure Stone Health Library</span>
-          <h1 className="text-5xl md:text-7xl font-black tracking-tight text-white leading-[1.05] mb-6">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight text-white leading-[1.1] md:leading-[1.05] mb-6">
             Expert <span className="text-primary italic">Kidney Health</span> Insights
           </h1>
-          <p className="text-lg text-white/60 font-medium max-w-2xl mx-auto mb-12">Evidence-based articles on kidney stones, urology, prevention and recovery — written by Dr. Deepanshu Gupta&apos;s clinical team.</p>
+          <p className="text-base md:text-lg text-white/60 font-medium max-w-2xl mx-auto mb-12">Evidence-based articles on kidney stones, urology, prevention and recovery — written by Dr. Deepanshu Gupta&apos;s clinical team.</p>
 
           {/* Search bar */}
           <div className="max-w-xl mx-auto relative">
@@ -124,9 +124,9 @@ export default function BlogPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
 
           {/* Category Filter */}
-          <div className="flex flex-wrap gap-2 mb-16">
+          <div className="flex overflow-x-auto pb-4 md:pb-0 md:flex-wrap gap-2 mb-12 md:mb-16 no-scrollbar">
             {categories.map(cat => (
-              <button key={cat} className={`px-5 py-2 rounded-full text-sm font-bold border transition-all hover:border-primary hover:text-primary ${cat === "All" ? "bg-primary text-white border-primary" : "bg-white text-slate-600 border-border/50"}`}>
+              <button key={cat} className={`whitespace-nowrap px-5 py-2 rounded-full text-xs md:text-sm font-bold border transition-all hover:border-primary hover:text-primary ${cat === "All" ? "bg-primary text-white border-primary" : "bg-white text-slate-600 border-border/50"}`}>
                 {cat}
               </button>
             ))}
@@ -134,24 +134,24 @@ export default function BlogPage() {
 
           {/* Featured Post */}
           <div className="mb-16 group cursor-pointer">
-            <div className="grid md:grid-cols-2 gap-0 bg-white rounded-[2rem] overflow-hidden shadow-xl border border-border/30 hover:shadow-2xl hover:border-primary/20 transition-all duration-500">
-              <div className={`bg-gradient-to-br ${posts[0].color} p-12 flex flex-col justify-end min-h-64`}>
-                <span className={`self-start px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border mb-4 ${tagColors[posts[0].tag]}`}>{posts[0].tag}</span>
+            <div className="grid md:grid-cols-2 gap-0 bg-white rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shadow-xl border border-border/30 hover:shadow-2xl hover:border-primary/20 transition-all duration-500">
+              <div className={`bg-gradient-to-br ${posts[0].color} p-8 md:p-12 flex flex-col justify-end min-h-[250px] md:min-h-64`}>
+                <span className={`self-start px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border mb-4 bg-white/20 text-white border-white/20`}>{posts[0].tag}</span>
                 <p className="text-[10px] font-black uppercase tracking-widest text-white/60 mb-2">{posts[0].category}</p>
-                <h2 className="text-2xl md:text-3xl font-black text-white leading-tight">{posts[0].title}</h2>
+                <h2 className="text-xl md:text-2xl lg:text-3xl font-black text-white leading-tight">{posts[0].title}</h2>
               </div>
-              <div className="p-10 flex flex-col justify-between">
+              <div className="p-8 md:p-10 flex flex-col justify-between">
                 <div>
-                  <p className="text-slate-500 font-medium leading-relaxed mb-6">{posts[0].excerpt}</p>
-                  <div className="flex items-center gap-4 text-xs font-bold text-slate-400">
-                    <span>✍️ {posts[0].author}</span>
-                    <span>·</span>
-                    <span>📅 {posts[0].date}</span>
-                    <span>·</span>
-                    <span>⏱ {posts[0].readTime}</span>
+                  <p className="text-sm md:text-base text-slate-500 font-medium leading-relaxed mb-6">{posts[0].excerpt}</p>
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-bold text-slate-400">
+                    <span className="flex items-center gap-1.5">✍️ {posts[0].author}</span>
+                    <span className="hidden xs:inline">·</span>
+                    <span className="flex items-center gap-1.5">📅 {posts[0].date}</span>
+                    <span className="hidden xs:inline">·</span>
+                    <span className="flex items-center gap-1.5">⏱ {posts[0].readTime}</span>
                   </div>
                 </div>
-                <Link href={posts[0].slug} className="inline-flex items-center gap-2 mt-8 text-primary font-black text-sm uppercase tracking-widest hover:gap-3 transition-all">
+                <Link href={posts[0].slug} className="inline-flex items-center gap-2 mt-8 text-primary font-black text-xs md:text-sm uppercase tracking-widest hover:gap-3 transition-all">
                   Read Article <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
                 </Link>
               </div>
@@ -183,15 +183,15 @@ export default function BlogPage() {
           </div>
 
           {/* Newsletter CTA */}
-          <div className="mt-20 bg-foreground rounded-[2rem] p-12 text-center relative overflow-hidden">
+          <div className="mt-20 bg-foreground rounded-[1.5rem] md:rounded-[2rem] p-8 md:p-12 text-center relative overflow-hidden">
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(43,92,230,0.3),transparent_70%)]" />
             <div className="relative z-10">
               <span className="inline-block px-4 py-1.5 mb-4 text-[10px] font-black tracking-widest text-primary bg-primary/10 border border-primary/20 rounded-full uppercase">Health Newsletter</span>
-              <h3 className="text-3xl md:text-4xl font-black text-white mb-4">Stay Updated on Kidney Health</h3>
-              <p className="text-white/60 font-medium mb-8 max-w-lg mx-auto">Get monthly insights on kidney stone prevention, new treatment research and patient success stories.</p>
+              <h3 className="text-2xl md:text-4xl font-black text-white mb-4">Stay Updated on Kidney Health</h3>
+              <p className="text-sm md:text-base text-white/60 font-medium mb-8 max-w-lg mx-auto">Get monthly insights on kidney stone prevention, new treatment research and patient success stories.</p>
               <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-                <input type="email" placeholder="Enter your email" className="flex-grow px-5 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/40 outline-none focus:border-primary transition-all" />
-                <button className="px-6 py-3 bg-primary text-white font-black rounded-xl hover:bg-primary-dark transition-all whitespace-nowrap">Subscribe Free</button>
+                <input type="email" placeholder="Enter your email" className="flex-grow px-5 py-3.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/40 outline-none focus:border-primary transition-all text-sm" />
+                <button className="px-6 py-3.5 bg-primary text-white font-black rounded-xl hover:bg-primary-dark transition-all whitespace-nowrap text-sm">Subscribe Free</button>
               </div>
               <p className="text-[10px] text-white/30 font-bold uppercase tracking-widest mt-4">No spam. Unsubscribe anytime.</p>
             </div>

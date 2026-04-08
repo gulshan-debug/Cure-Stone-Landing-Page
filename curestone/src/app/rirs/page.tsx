@@ -33,23 +33,23 @@ export default function RIRSPage() {
       <Navbar />
 
       {/* Hero */}
-      <section className="relative pt-48 pb-32 bg-foreground overflow-hidden">
+      <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 bg-foreground overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(43,92,230,0.4),transparent_60%)]" />
         <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-primary/10 blur-[120px] rounded-full pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
           <div className="max-w-3xl">
             <span className="inline-block px-4 py-1.5 mb-6 text-[10px] font-black tracking-widest text-primary bg-primary/10 border border-primary/20 rounded-full uppercase">Gold Standard Treatment</span>
-            <h1 className="text-5xl md:text-7xl font-black tracking-tight text-white leading-[1.05] mb-6">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight text-white leading-[1.1] md:leading-[1.05] mb-6">
               RIRS <span className="text-primary italic">Laser Surgery</span>
             </h1>
-            <p className="text-xl text-white/60 font-medium leading-relaxed max-w-2xl mb-10">
+            <p className="text-lg md:text-xl text-white/60 font-medium leading-relaxed max-w-2xl mb-10">
               Retrograde Intrarenal Surgery — the world&apos;s most advanced kidney stone treatment. A flexible laser scope passes through natural pathways. <strong className="text-white">Zero cuts. Zero radiation. 98% stone-free.</strong>
             </p>
-            <div className="flex flex-wrap gap-4">
-              <Link href="/book" className="px-8 py-4 bg-primary text-white font-black rounded-2xl shadow-xl shadow-primary/30 hover:bg-primary-dark hover:scale-105 active:scale-95 transition-all">
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link href="/book" className="px-8 py-4 bg-primary text-white font-black rounded-2xl shadow-xl shadow-primary/30 hover:bg-primary-dark hover:scale-105 active:scale-95 transition-all text-center">
                 Book RIRS Consultation →
               </Link>
-              <Link href="/checker" className="px-8 py-4 bg-white/10 border border-white/20 text-white font-black rounded-2xl hover:bg-white/20 transition-all backdrop-blur-sm">
+              <Link href="/checker" className="px-8 py-4 bg-white/10 border border-white/20 text-white font-black rounded-2xl hover:bg-white/20 transition-all backdrop-blur-sm text-center">
                 Check My Symptoms
               </Link>
             </div>
@@ -71,19 +71,19 @@ export default function RIRSPage() {
 
       <main className="flex-grow bg-background">
         {/* What Is RIRS */}
-        <section className="py-24 bg-white">
+        <section className="py-16 md:py-24 bg-white">
           <div className="max-w-7xl mx-auto px-6 lg:px-12">
-            <div className="grid lg:grid-cols-2 gap-20 items-center">
+            <div className="grid lg:grid-cols-2 gap-12 md:gap-20 items-center">
               <div>
                 <span className="inline-block px-4 py-1.5 mb-4 text-[10px] font-black tracking-widest text-primary bg-primary/5 border border-primary/10 rounded-full uppercase">What Is RIRS?</span>
-                <h2 className="text-4xl md:text-5xl font-black text-foreground leading-[1.1] mb-6">Surgery Through <span className="text-primary">Natural Pathways</span></h2>
-                <p className="text-lg text-text-mid font-medium leading-relaxed mb-6">
+                <h2 className="text-3xl md:text-5xl font-black text-foreground leading-[1.1] mb-6">Surgery Through <span className="text-primary">Natural Pathways</span></h2>
+                <p className="text-base md:text-lg text-text-mid font-medium leading-relaxed mb-6">
                   RIRS stands for <strong>Retrograde Intrarenal Surgery</strong>. A thin, flexible ureteroscope (3mm diameter) is passed through the urethra, bladder and ureter to reach stones inside the kidney — without any incisions.
                 </p>
-                <p className="text-lg text-text-mid font-medium leading-relaxed mb-8">
+                <p className="text-base md:text-lg text-text-mid font-medium leading-relaxed mb-8">
                   A Holmium or Thulium Fiber laser then pulverises the stone into fine dust, which passes out naturally in urine. Cure Stone uses FANS-RIRS — <strong>Fluoroscopy-free RIRS</strong> — meaning zero X-ray radiation during surgery.
                 </p>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {["Zero X-Ray Radiation","Flexible Scope Technology","Real-time Visualisation","Same-Day Discharge Available"].map((item, i) => (
                     <div key={i} className="flex items-center gap-2">
                       <svg className="w-5 h-5 text-primary shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>
@@ -93,8 +93,8 @@ export default function RIRSPage() {
                 </div>
               </div>
 
-              <div className="bg-primary/5 border border-primary/10 rounded-3xl p-8">
-                <h3 className="text-xl font-black text-foreground mb-6">RIRS is ideal when…</h3>
+              <div className="bg-primary/5 border border-primary/10 rounded-3xl p-6 md:p-8">
+                <h3 className="text-xl font-black text-foreground mb-6 text-center lg:text-left">RIRS is ideal when…</h3>
                 <div className="space-y-4">
                   {[
                     ["🎯", "Stone 5–20mm", "RIRS is the first-line treatment for stones in this common range."],
@@ -104,7 +104,7 @@ export default function RIRSPage() {
                     ["🌐", "Bilateral stones", "Both kidneys can be treated in a single session."],
                   ].map(([icon, title, desc], i) => (
                     <div key={i} className="flex items-start gap-4 p-4 bg-white rounded-2xl border border-border/30 shadow-sm">
-                      <span className="text-2xl">{icon}</span>
+                      <span className="text-2xl shrink-0">{icon}</span>
                       <div>
                         <p className="font-black text-sm text-slate-900">{title}</p>
                         <p className="text-xs text-slate-500 font-medium mt-0.5">{desc}</p>
@@ -118,17 +118,17 @@ export default function RIRSPage() {
         </section>
 
         {/* Procedure Steps */}
-        <section className="py-24 bg-background">
+        <section className="py-16 md:py-24 bg-background">
           <div className="max-w-7xl mx-auto px-6 lg:px-12">
-            <div className="text-center mb-16">
+            <div className="text-center mb-12 md:mb-16">
               <span className="inline-block px-4 py-1.5 mb-4 text-[10px] font-black tracking-widest text-primary bg-primary/5 border border-primary/10 rounded-full uppercase">The Procedure</span>
-              <h2 className="text-4xl md:text-5xl font-black text-foreground">Step-by-Step: What Happens <span className="text-primary">During RIRS</span></h2>
+              <h2 className="text-3xl md:text-5xl font-black text-foreground">Step-by-Step: What Happens <span className="text-primary">During RIRS</span></h2>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {steps.map((step, i) => (
                 <div key={i} className="bg-white border border-border/30 rounded-3xl p-8 shadow-sm hover:shadow-xl hover:border-primary/20 transition-all group">
-                  <span className="text-5xl font-black text-primary/20 group-hover:text-primary/40 transition-colors">{step.num}</span>
-                  <h3 className="text-xl font-black text-slate-900 mt-4 mb-2">{step.title}</h3>
+                  <span className="text-4xl md:text-5xl font-black text-primary/20 group-hover:text-primary/40 transition-colors">{step.num}</span>
+                  <h3 className="text-lg md:text-xl font-black text-slate-900 mt-4 mb-2">{step.title}</h3>
                   <p className="text-slate-500 font-medium leading-relaxed text-sm">{step.desc}</p>
                 </div>
               ))}
@@ -137,30 +137,30 @@ export default function RIRSPage() {
         </section>
 
         {/* Comparison Table */}
-        <section className="py-24 bg-white">
+        <section className="py-16 md:py-24 bg-white">
           <div className="max-w-7xl mx-auto px-6 lg:px-12">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-black text-foreground">RIRS vs <span className="text-primary">Alternatives</span></h2>
-              <p className="text-text-light font-medium mt-4 max-w-xl mx-auto">See how RIRS compares to other kidney stone treatments on every important parameter.</p>
+            <div className="text-center mb-12 md:mb-16">
+              <h2 className="text-3xl md:text-5xl font-black text-foreground">RIRS vs <span className="text-primary">Alternatives</span></h2>
+              <p className="text-sm md:text-base text-text-light font-medium mt-4 max-w-xl mx-auto">See how RIRS compares to other kidney stone treatments on every important parameter.</p>
             </div>
-            <div className="overflow-hidden rounded-3xl border border-border shadow-2xl bg-white">
+            <div className="overflow-hidden rounded-2xl md:rounded-3xl border border-border shadow-xl md:shadow-2xl bg-white">
               <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse">
+                <table className="w-full text-left border-collapse min-w-[600px]">
                   <thead>
                     <tr className="bg-foreground text-white">
-                      <th className="p-5 text-[10px] font-black uppercase tracking-widest">Feature</th>
-                      <th className="p-5 text-[10px] font-black uppercase tracking-widest text-primary">🏆 RIRS</th>
-                      <th className="p-5 text-[10px] font-black uppercase tracking-widest">ESWL</th>
-                      <th className="p-5 text-[10px] font-black uppercase tracking-widest">PCNL</th>
+                      <th className="p-4 md:p-5 text-[9px] md:text-[10px] font-black uppercase tracking-widest">Feature</th>
+                      <th className="p-4 md:p-5 text-[9px] md:text-[10px] font-black uppercase tracking-widest text-primary">🏆 RIRS</th>
+                      <th className="p-4 md:p-5 text-[9px] md:text-[10px] font-black uppercase tracking-widest">ESWL</th>
+                      <th className="p-4 md:p-5 text-[9px] md:text-[10px] font-black uppercase tracking-widest">PCNL</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-border/50">
                     {tableData.map((row, i) => (
                       <tr key={i} className="hover:bg-primary/5 transition-colors">
-                        <td className="p-5 text-[11px] font-black text-text-mid uppercase tracking-wide">{row.feature}</td>
-                        <td className="p-5 text-sm font-black text-accent bg-accent/5">{row.rirs}</td>
-                        <td className="p-5 text-sm font-medium text-text-light">{row.eswl}</td>
-                        <td className="p-5 text-sm font-bold text-text-mid">{row.pcnl}</td>
+                        <td className="p-4 md:p-5 text-[10px] md:text-[11px] font-black text-text-mid uppercase tracking-wide">{row.feature}</td>
+                        <td className="p-4 md:p-5 text-xs md:text-sm font-black text-accent bg-accent/5">{row.rirs}</td>
+                        <td className="p-4 md:p-5 text-xs md:text-sm font-medium text-text-light">{row.eswl}</td>
+                        <td className="p-4 md:p-5 text-xs md:text-sm font-bold text-text-mid">{row.pcnl}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -171,14 +171,14 @@ export default function RIRSPage() {
         </section>
 
         {/* CTA */}
-        <section className="py-24 bg-primary">
+        <section className="py-16 md:py-24 bg-primary">
           <div className="max-w-3xl mx-auto px-6 text-center">
-            <h2 className="text-4xl md:text-5xl font-black text-white mb-4">Ready to Be Stone-Free?</h2>
-            <p className="text-white/70 font-medium mb-10 text-lg">Book a free consultation with Dr. Deepanshu Gupta. Most patients are treated and discharged within 24 hours.</p>
-            <Link href="/book" className="inline-flex items-center gap-2 px-10 py-5 bg-white text-primary font-black rounded-2xl shadow-xl hover:scale-105 active:scale-95 transition-all text-lg">
+            <h2 className="text-3xl md:text-5xl font-black text-white mb-4">Ready to Be Stone-Free?</h2>
+            <p className="text-white/70 font-medium mb-10 text-base md:text-lg">Book a free consultation with Dr. Deepanshu Gupta. Most patients are treated and discharged within 24 hours.</p>
+            <Link href="/book" className="inline-flex items-center gap-2 px-8 md:px-10 py-4 md:py-5 bg-white text-primary font-black rounded-2xl shadow-xl hover:scale-105 active:scale-95 transition-all text-base md:text-lg">
               Book Free RIRS Consultation →
             </Link>
-            <p className="text-white/40 text-xs font-bold uppercase tracking-widest mt-6">+91 88002 63884 · Available 9 AM – 8 PM</p>
+            <p className="text-white/40 text-[10px] md:text-xs font-bold uppercase tracking-widest mt-6">+91 88002 63884 · Available 9 AM – 8 PM</p>
           </div>
         </section>
       </main>

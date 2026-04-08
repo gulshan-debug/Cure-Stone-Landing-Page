@@ -15,7 +15,6 @@ import {
   GraduationCap,
   ShieldCheck
 } from 'lucide-react';
-
 const DoctorProfile = () => {
   const stats = [
     { label: "Patients Treated", value: "30K+", icon: Users, color: "text-blue-600", bg: "bg-blue-50" },
@@ -26,34 +25,34 @@ const DoctorProfile = () => {
 
   const expertises = [
     "Fans-RIRS Laser Surgery",
-    "PCNL (Mini/Ultra)",
-    "URSL (Ureteroscopy)",
-    "ESWL (Extracorporeal)",
+    "PCNL",
+    "URSL",
+    "ESWL",
     "Gallstone Surgery",
-    "Urology & Andrology",
-    "Renal Transplant",
+    "Circumcision",
+    "TURP/HoLEP",
   ];
 
   const achievements = [
+    { 
+      icon: ShieldCheck, 
+      text: "Pioneer of Fans-RIRS in North India", 
+      subtext: "Leading North India's first Fluoroscopy-free (Radiation-free) laser program." 
+    },
     { 
       icon: GraduationCap, 
       text: "1st Rank Holder in MCh Urology", 
       subtext: "VMMC & Safdarjung Hospital (RML), New Delhi" 
     },
     { 
-      icon: ShieldCheck, 
-      text: "Pioneer of Fans-RIRS in North India", 
-      subtext: "Leading Fluoroscopy-free (radiation-free) laser surgery" 
-    },
-    { 
       icon: Award, 
       text: "MS General Surgery (Gold Medalist)", 
-      subtext: "PGIMS Rohtak — Premier medical institute of Haryana" 
+      subtext: "PGIMS Rohtak — Haryana's premier medical institute." 
     },
     { 
       icon: Star, 
       text: "4.9/5 Patient Satisfaction", 
-      subtext: "Based on 1,000+ verified Google & Practo reviews" 
+      subtext: "Based on 1,000+ verified patient reviews on Google & Practo" 
     },
   ];
 
@@ -110,7 +109,7 @@ const DoctorProfile = () => {
                   <h3 className="text-3xl font-black text-white leading-tight mb-2">Dr. Deepanshu Gupta</h3>
                   <div className="flex flex-col gap-1">
                     <p className="text-blue-200 text-sm font-bold flex items-center gap-2">
-                       Senior Urologist & Laser Specialist
+                       Senior Urologist & Kidney Stone Specialist
                     </p>
                     <p className="text-blue-200/60 text-[11px] font-medium leading-relaxed">
                       MBBS · MS (Gold Medalist) · MCh Urology (Rank 1)
