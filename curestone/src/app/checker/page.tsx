@@ -134,7 +134,7 @@ export default function KidneyChatBot() {
         body: JSON.stringify({
           userName,
           phoneNumber,
-          messages: messages.map(m => ({ role: m.role, content: m.content }))
+          messages: messages.filter(m => m.role === "user").map(m => ({ role: m.role, content: m.content }))
         })
       }).catch(console.error);
     }

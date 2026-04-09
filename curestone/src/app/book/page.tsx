@@ -6,12 +6,12 @@ import Footer from "@/components/layout/Footer";
 import Link from "next/link";
 
 const INDIAN_STATES = [
-  "Andaman and Nicobar Islands","Andhra Pradesh","Arunachal Pradesh","Assam","Bihar",
-  "Chandigarh","Chhattisgarh","Dadra and Nagar Haveli and Daman and Diu","Delhi","Goa",
-  "Gujarat","Haryana","Himachal Pradesh","Jammu and Kashmir","Jharkhand","Karnataka",
-  "Kerala","Ladakh","Lakshadweep","Madhya Pradesh","Maharashtra","Manipur","Meghalaya",
-  "Mizoram","Nagaland","Odisha","Puducherry","Punjab","Rajasthan","Sikkim","Tamil Nadu",
-  "Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal"
+  "Andaman and Nicobar Islands", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar",
+  "Chandigarh", "Chhattisgarh", "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Goa",
+  "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka",
+  "Kerala", "Ladakh", "Lakshadweep", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya",
+  "Mizoram", "Nagaland", "Odisha", "Puducherry", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu",
+  "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"
 ];
 
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbznh1P-N_hf16qop9l3squGsuPrf4nj03pVuWeYawZsdB8DBC1Oct-1SNX6KAZBHyVy8w/exec";
@@ -59,9 +59,9 @@ export default function BookPage() {
           </h1>
           <p className="text-lg text-white/60 font-medium max-w-2xl mx-auto mb-10">Speak directly with Dr. Deepanshu Gupta — India's leading FANS-RIRS expert. Free first consultation. No waiting. No cuts.</p>
           <div className="flex flex-wrap justify-center gap-4">
-            {["Call Back in 15 mins","Online & In-Clinic","Free First Consult","HIPAA Compliant"].map((t,i)=>(
+            {["Call Back in 15 mins", "Online & In-Clinic", "Free First Consult", "HIPAA Compliant"].map((t, i) => (
               <span key={i} className="flex items-center gap-2 px-4 py-2 bg-white/10 border border-white/10 rounded-full text-sm font-bold text-white/70">
-                <svg className="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
+                <svg className="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
                 {t}
               </span>
             ))}
@@ -78,7 +78,7 @@ export default function BookPage() {
               {submitted ? (
                 <div className="bg-white/70 backdrop-blur-2xl p-14 rounded-[2.5rem] border border-white shadow-2xl shadow-primary/5 text-center">
                   <div className="w-20 h-20 bg-green-500/10 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
+                    <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
                   </div>
                   <h2 className="text-4xl font-black text-slate-900 mb-3">Booking <span className="text-primary italic">Confirmed!</span></h2>
                   <p className="text-slate-500 font-medium mb-8 max-w-md mx-auto">Our coordinator will call you within 15 minutes to finalize your appointment slot.</p>
@@ -92,11 +92,11 @@ export default function BookPage() {
                     <div className="grid md:grid-cols-2 gap-5">
                       <div className="space-y-1.5">
                         <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Full Name *</label>
-                        <input name="fullName" required type="text" placeholder="Your Name" className="w-full px-5 py-3.5 bg-white border border-slate-100 rounded-xl outline-none focus:border-primary transition-all text-slate-900 font-medium"/>
+                        <input name="fullName" required type="text" placeholder="Your Name" className="w-full px-5 py-3.5 bg-white border border-slate-100 rounded-xl outline-none focus:border-primary transition-all text-slate-900 font-medium" />
                       </div>
                       <div className="space-y-1.5">
                         <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Phone Number *</label>
-                        <input name="phone" required type="tel" placeholder="+91 XXXXX XXXXX" className="w-full px-5 py-3.5 bg-white border border-slate-100 rounded-xl outline-none focus:border-primary transition-all text-slate-900 font-medium"/>
+                        <input name="phone" required type="tel" placeholder="+91 XXXXX XXXXX" className="w-full px-5 py-3.5 bg-white border border-slate-100 rounded-xl outline-none focus:border-primary transition-all text-slate-900 font-medium" />
                       </div>
                     </div>
                     <div className="grid md:grid-cols-2 gap-5">
@@ -104,33 +104,33 @@ export default function BookPage() {
                         <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">State *</label>
                         <select name="state" required className="w-full px-5 py-3.5 bg-white border border-slate-100 rounded-xl outline-none focus:border-primary transition-all text-slate-900 font-medium appearance-none">
                           <option value="">Select State</option>
-                          {INDIAN_STATES.map(s=><option key={s} value={s}>{s}</option>)}
+                          {INDIAN_STATES.map(s => <option key={s} value={s}>{s}</option>)}
                         </select>
                       </div>
                       <div className="space-y-1.5">
                         <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Stone Size</label>
                         <select name="stoneSize" className="w-full px-5 py-3.5 bg-white border border-slate-100 rounded-xl outline-none focus:border-primary transition-all text-slate-900 font-medium appearance-none">
                           <option value="">Select Range</option>
-                          {["Less than 5mm","5mm – 10mm","10mm – 15mm","15mm – 20mm","20mm – 30mm","Greater than 30mm","Unknown"].map(s=><option key={s}>{s}</option>)}
+                          {["Less than 5mm", "5mm – 10mm", "10mm – 15mm", "15mm – 20mm", "20mm – 30mm", "Greater than 30mm", "Unknown"].map(s => <option key={s}>{s}</option>)}
                         </select>
                       </div>
                     </div>
                     <div className="space-y-1.5">
                       <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Consultation Type</label>
                       <select name="consultationType" className="w-full px-5 py-3.5 bg-white border border-slate-100 rounded-xl outline-none focus:border-primary transition-all text-slate-900 font-medium appearance-none">
-                        {["Kidney Stone Treatment","Gall Bladder Stone Treatment","Urology Treatment","Andrology Treatment","Second Opinion","Online Video Consult"].map(s=><option key={s}>{s}</option>)}
+                        {["Kidney Stone Treatment", "Gall Bladder Stone Treatment", "Urology Treatment", "Andrology Treatment", "Second Opinion", "Online Video Consult"].map(s => <option key={s}>{s}</option>)}
                       </select>
                     </div>
                     <div className="space-y-1.5">
                       <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Brief Description</label>
-                      <textarea name="description" rows={3} placeholder="Describe symptoms or previous treatments..." className="w-full px-5 py-3.5 bg-white border border-slate-100 rounded-xl outline-none focus:border-primary transition-all text-slate-900 font-medium resize-none"/>
+                      <textarea name="description" rows={3} placeholder="Describe symptoms or previous treatments..." className="w-full px-5 py-3.5 bg-white border border-slate-100 rounded-xl outline-none focus:border-primary transition-all text-slate-900 font-medium resize-none" />
                     </div>
                     <button disabled={loading} type="submit" className="w-full py-4 bg-primary text-white font-black rounded-xl shadow-xl shadow-primary/20 hover:scale-[1.01] active:scale-95 disabled:opacity-70 transition-all text-base tracking-wide uppercase">
                       {loading ? "Sending..." : "Schedule Free Consultation"}
                     </button>
                     <p className="text-[9px] text-center text-slate-400 font-bold uppercase tracking-widest flex items-center justify-center gap-2">
-                       <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm0 17.91c-3.71-.94-6-4.79-6-8.91V6.3l6-2.25 6 2.25V11c0 4.12-2.29 7.97-6 8.91z"/></svg>
-                       Secure & Confidential · HIPAA Compliant
+                      <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm0 17.91c-3.71-.94-6-4.79-6-8.91V6.3l6-2.25 6 2.25V11c0 4.12-2.29 7.97-6 8.91z" /></svg>
+                      Secure & Confidential · HIPAA Compliant
                     </p>
                   </form>
                 </div>
@@ -140,13 +140,13 @@ export default function BookPage() {
               <div className="space-y-6">
                 <h3 className="text-2xl font-black text-foreground">Frequently Asked Questions</h3>
                 <div className="space-y-3">
-                  {faqs.map((faq,i)=>(
+                  {faqs.map((faq, i) => (
                     <div key={i} className="bg-white border border-border/50 rounded-2xl overflow-hidden">
-                      <button className="w-full flex items-center justify-between px-6 py-4 text-left font-bold text-slate-800 hover:text-primary transition-colors" onClick={()=>setOpenFaq(openFaq===i?null:i)}>
+                      <button className="w-full flex items-center justify-between px-6 py-4 text-left font-bold text-slate-800 hover:text-primary transition-colors" onClick={() => setOpenFaq(openFaq === i ? null : i)}>
                         <span>{faq.q}</span>
-                        <svg className={`w-5 h-5 transition-transform duration-300 ${openFaq===i?"rotate-45":""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4"/></svg>
+                        <svg className={`w-5 h-5 transition-transform duration-300 ${openFaq === i ? "rotate-45" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" /></svg>
                       </button>
-                      {openFaq===i && <div className="px-6 pb-5 text-sm text-slate-500 font-medium leading-relaxed border-t border-border/30 pt-4">{faq.a}</div>}
+                      {openFaq === i && <div className="px-6 pb-5 text-sm text-slate-500 font-medium leading-relaxed border-t border-border/30 pt-4">{faq.a}</div>}
                     </div>
                   ))}
                 </div>
@@ -160,7 +160,7 @@ export default function BookPage() {
                 <p className="text-[10px] font-black uppercase tracking-widest text-white/40 mb-5">Direct Contact</p>
                 <a href="tel:+918800263884" className="flex items-center gap-3 group mb-5">
                   <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center group-hover:bg-primary transition-colors shrink-0">
-                    <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                    <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
                   </div>
                   <div><p className="font-black text-white text-lg">+91 88002 63884</p><p className="text-[10px] text-white/50 font-bold uppercase tracking-widest">Available 9 AM – 8 PM</p></div>
                 </a>
@@ -178,7 +178,7 @@ export default function BookPage() {
                   <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3">Our Location</p>
                   <div className="flex items-start gap-3">
                     <div className="w-8 h-8 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0 mt-0.5">
-                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                     </div>
                     <div>
                       <p className="font-bold text-sm text-slate-900 leading-tight">Cure Stone Kidney Clinic</p>
@@ -192,10 +192,10 @@ export default function BookPage() {
               {/* Features Card */}
               <div className="bg-primary/5 border border-primary/10 p-8 rounded-3xl space-y-4">
                 <p className="text-[10px] font-black uppercase tracking-widest text-primary">Why Cure Stone</p>
-                {["98% Stone-Free Rate","15,000+ Successful Surgeries","Zero Radiation RIRS","International Patients Welcome"].map((item,i)=>(
+                {["98% Stone-Free Rate", "15,000+ Successful Surgeries", "Zero Radiation RIRS", "International Patients Welcome"].map((item, i) => (
                   <div key={i} className="flex items-center gap-3">
                     <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                      <svg className="w-3 h-3 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>
+                      <svg className="w-3 h-3 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
                     </div>
                     <span className="text-sm font-bold text-slate-700">{item}</span>
                   </div>
@@ -203,8 +203,8 @@ export default function BookPage() {
               </div>
 
               <Link href="/checker" className="flex items-center justify-center gap-3 w-full py-5 bg-foreground text-white font-black rounded-2xl hover:bg-slate-800 transition-all text-sm uppercase tracking-widest">
-                AI Symptom Checker
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                Cure Stone AI
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
               </Link>
             </div>
           </div>

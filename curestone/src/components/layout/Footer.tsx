@@ -27,7 +27,7 @@ const Footer = () => {
     {
       title: "Quick Links",
       links: [
-        { label: "AI Symptom Checker", href: "/checker" },
+        { label: "Cure Stone AI", href: "/checker" },
         { label: "Book Free Consultation ", href: "/book" },
         { label: "Patient Portal", href: "/portal" },
         { label: "Health Blog", href: "/blog" },
@@ -44,17 +44,17 @@ const Footer = () => {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
         <div className="grid lg:grid-cols-[2fr_1fr_1fr_1fr] gap-16 mb-20">
-          
+
           {/* Brand Col */}
           <div className="space-y-8">
             <Link href="/" className="inline-block group no-underline">
               <div className="relative w-40 h-14">
-                <Image 
-                  src="https://theCurestone.com/wp-content/uploads/2021/05/PNG-Black-e1664728676618.png" 
-                  alt="Cure Stone Logo" 
+                <Image
+                  src="https://theCurestone.com/wp-content/uploads/2021/05/PNG-Black-e1664728676618.png"
+                  alt="Cure Stone Logo"
                   fill
                   // Added brightness-0 invert to make the black logo pure white for the dark footer
-                  className="object-contain object-left brightness-0 invert" 
+                  className="object-contain object-left brightness-0 invert"
                   unoptimized
                 />
               </div>
@@ -63,7 +63,7 @@ const Footer = () => {
             <p className="text-white/60 font-medium leading-relaxed max-w-sm">
               Pioneering excellence in urology and kidney stone care across Delhi NCR. Advanced treatment, compassionate service, and transparent pricing.
             </p>
-            
+
             <div className="flex gap-4">
               {['f', 'in', '𝕏', '💬'].map((social, i) => (
                 <a key={i} href="#" className="w-10 h-10 border border-white/20 rounded-xl flex items-center justify-center text-white/80 hover:bg-primary transition-all hover:border-primary hover:text-white group">
@@ -100,9 +100,9 @@ const Footer = () => {
             <span className="text-white/50 ml-1">Designed with ♥ by Gulshan Chawla.</span>
           </p>
           <div className="flex items-center gap-8">
-             <Link href="/terms" className="text-[10px] font-black text-white/30 hover:text-white uppercase tracking-widest no-underline">Terms</Link>
-             <Link href="/privacy" className="text-[10px] font-black text-white/30 hover:text-white uppercase tracking-widest no-underline">Privacy</Link>
-             <Link href="/sitemap" className="text-[10px] font-black text-white/30 hover:text-white uppercase tracking-widest no-underline">Sitemap</Link>
+            <Link href="/terms" className="text-[10px] font-black text-white/30 hover:text-white uppercase tracking-widest no-underline">Terms</Link>
+            <Link href="/privacy" className="text-[10px] font-black text-white/30 hover:text-white uppercase tracking-widest no-underline">Privacy</Link>
+            <Link href="/sitemap" className="text-[10px] font-black text-white/30 hover:text-white uppercase tracking-widest no-underline">Sitemap</Link>
           </div>
         </div>
       </div>
