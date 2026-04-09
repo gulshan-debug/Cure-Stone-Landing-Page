@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface Testimonial {
   id: number;
@@ -89,11 +90,11 @@ export default function PatientMosaic() {
   }, [activeVideo]);
 
   return (
-    <section className="py-16 sm:py-20 lg:py-24 bg-[#F8FAFC]">
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
+    <section className="py-16 sm:py-20 lg:py-24 bg-[#F8FAFC] overflow-hidden">
+      <div className="max-w-[1440px] mx-auto">
         
-        {/* Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-10 lg:mb-12 gap-6 lg:gap-8">
+        {/* Header - Horizontal Padding kept here */}
+        <div className="px-4 sm:px-6 flex flex-col lg:flex-row lg:items-end justify-between mb-10 lg:mb-12 gap-6 lg:gap-8">
           <div className="max-w-2xl">
             <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight leading-[1]">
               Real Patients.{" "}
@@ -107,18 +108,18 @@ export default function PatientMosaic() {
           </p>
         </div>
 
-        {/* Responsive Grid */}
+        {/* Desktop/Tablet Grid View */}
         <div
           className="
-          grid 
-          grid-cols-1 
+          hidden
+          sm:grid 
           sm:grid-cols-2 
           lg:grid-cols-4 
           xl:grid-cols-5 
           gap-4 
-          auto-rows-[180px] 
-          sm:auto-rows-[200px] 
+          auto-rows-[200px] 
           lg:auto-rows-[220px]
+          px-4 sm:px-6
         "
         >
           {TESTIMONIALS.map((item) => (
@@ -135,25 +136,66 @@ export default function PatientMosaic() {
             </div>
           ))}
         </div>
+
+        {/* Mobile Auto-Scroll Carousel (Infinite Marquee) */}
+        <div className="sm:hidden relative">
+          <motion.div 
+            className="flex gap-4 px-4 pr-10"
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{ 
+              duration: 30, // Adjust speed here
+              ease: "linear",
+              repeat: Infinity
+            }}
+            style={{ width: "fit-content" }}
+          >
+            {/* Double the array for seamless infinite loop */}
+            {[...TESTIMONIALS, ...TESTIMONIALS].map((item, index) => (
+              <div
+                key={`${item.id}-${index}`}
+                className="w-[280px] h-[340px] shrink-0"
+              >
+                <TestimonialCard
+                  item={item}
+                  onClick={() => setActiveVideo(item.videoUrl)}
+                />
+              </div>
+            ))}
+          </motion.div>
+          
+          {/* Edge Gradients for smooth fade */}
+          <div className="absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-[#F8FAFC] to-transparent z-10 pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-[#F8FAFC] to-transparent z-10 pointer-events-none" />
+        </div>
       </div>
 
       {/* Video Modal */}
-      {activeVideo && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <div
-            className="absolute inset-0 bg-slate-950/70 backdrop-blur-xl"
-            onClick={() => setActiveVideo(null)}
-          />
-          <div className="relative w-full max-w-5xl aspect-video rounded-2xl sm:rounded-3xl overflow-hidden bg-black shadow-2xl animate-in zoom-in-95 duration-300">
-            <iframe
-              src={activeVideo}
-              className="w-full h-full"
-              allowFullScreen
-              allow="autoplay"
+      <AnimatePresence>
+        {activeVideo && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-slate-950/70 backdrop-blur-xl"
+              onClick={() => setActiveVideo(null)}
             />
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="relative w-full max-w-5xl aspect-video rounded-2xl sm:rounded-3xl overflow-hidden bg-black shadow-2xl z-10"
+            >
+              <iframe
+                src={activeVideo}
+                className="w-full h-full"
+                allowFullScreen
+                allow="autoplay"
+              />
+            </motion.div>
           </div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
     </section>
   );
 }
