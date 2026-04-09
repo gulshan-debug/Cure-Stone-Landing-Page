@@ -14,14 +14,14 @@ type Message = {
 
 const ONBOARDING = {
   en: {
-    name: "Hello! 👋 Welcome to **Cure Stone AI**.\n\nBefore we begin, I'd love to know you a little better.\n\nWhat is your **full name**?",
+    name: "Welcome to **Cure Stone Hospital**. To better assist you with our surgical and consultation services, may I know your name?",
     greeting: (name: string) => `Nice to meet you, **${name}**! 😊\n\nHow can I help you today?\n\nFeel free to ask me anything about kidney stones, RIRS surgery, treatments, or symptoms! 👇`,
-    phone: "Lastly, what is your **phone number** so our team can follow up if needed?",
+    phone: "To ensure your inquiry is prioritized by **Dr. Deepanshu Gupta**'s surgical team, please share your contact number. This allows us to coordinate your hospital visit efficiently.",
   },
   hi: {
-    name: "नमस्ते! 👋 **Cure Stone AI** में आपका स्वागत है।\n\nशुरू करने से पहले, मैं आपको थोड़ा जानना चाहता हूँ।\n\nआपका **पूरा नाम** क्या है?",
+    name: "**Cure Stone Hospital** में आपका स्वागत है। हमारी सर्जिकल और परामर्श सेवाओं को बेहतर ढंग से प्रदान करने के लिए, क्या मैं आपका नाम जान सकता हूँ?",
     greeting: (name: string) => `आपसे मिलकर खुशी हुई, **${name}**! 😊\n\nमैं आज आपकी कैसे मदद कर सकता हूँ?\n\nकिडनी स्टोन, RIRS सर्जरी, उपचार या लक्षणों के बारे में कुछ भी पूछें! 👇`,
-    phone: "अंत में, आपका **फ़ोन नंबर** क्या है ताकि हमारी टीम जरूरत पड़ने पर संपर्क कर सके?",
+    phone: "**डॉ. दीपांशु गुप्ता** की सर्जिकल टीम द्वारा आपकी पूछताछ को प्राथमिकता दी जाए, यह सुनिश्चित करने के लिए कृपया अपना संपर्क नंबर साझा करें। इससे हमें आपके अस्पताल के दौरे का कुशलतापूर्वक समन्वय करने में मदद मिलेगी।",
   },
 };
 
