@@ -34,10 +34,12 @@ export default function Navbar() {
 
   const navLinks = [
     { name: "Home", href: "/" },
-    { name: "Book Free Consultation ", href: "/book" },
-    { name: "Cure Stone AI", href: "/checker" },
-    { name: "Blog", href: "/blog" },
-    { name: "Patient Portal", href: "/portal" },
+    { name: "CureStone AI", href: "/checker", highlight: true },
+    { name: "RIRS", href: "/rirs" },
+    { name: "ESWL", href: "/eswl" },
+
+    { name: "URSL", href: "/ursl" },
+
   ];
 
   if (!mounted) return <nav className="fixed top-0 w-full h-20 z-50 bg-transparent" />;
@@ -76,12 +78,20 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative px-4 py-2 text-sm font-semibold rounded-full transition-all duration-200 ${isActive
-                      ? "text-primary bg-primary/10"
+                  className={`relative px-4 py-2 text-sm font-bold rounded-full transition-all duration-200 ${isActive
+                    ? "text-primary bg-primary/10"
+                    : link.highlight
+                      ? "text-primary bg-primary/10 border border-primary/20 hover:bg-primary/20 ring-4 ring-primary/5"
                       : "text-slate-600 hover:text-primary hover:bg-primary/5"
                     }`}
                 >
                   {link.name}
+                  {link.highlight && (
+                    <span className="absolute -top-1 -right-1 flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                    </span>
+                  )}
                 </Link>
               );
             })}
@@ -144,7 +154,11 @@ export default function Navbar() {
               key={link.href}
               href={link.href}
               onClick={() => setIsOpen(false)}
-              className={`block px-4 py-3 rounded-xl font-semibold transition-colors ${pathname === link.href ? "bg-primary/10 text-primary" : "text-slate-700 hover:bg-slate-50"
+              className={`block px-4 py-3 rounded-xl font-bold transition-colors ${pathname === link.href
+                ? "bg-primary/10 text-primary"
+                : link.highlight
+                  ? "bg-primary/5 text-primary border border-primary/10"
+                  : "text-slate-700 hover:bg-slate-50"
                 }`}
             >
               {link.name}

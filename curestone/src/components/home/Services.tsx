@@ -29,17 +29,17 @@ const Services = () => {
           <span className="inline-block px-4 py-1.5 mb-4 text-[10px] font-black tracking-widest text-primary bg-primary/5 border border-primary/10 rounded-full uppercase">
             Our Specialties
           </span>
-          <h2 className="text-3xl md:text-5xl font-black tracking-tight text-foreground">
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-foreground">
             Center of Excellence for <span className="text-primary">Kidney Stone</span> Treatment
           </h2>
-          <p className="mt-4 text-text-light font-medium max-w-2xl mx-auto">
+          <p className="mt-4 text-text-light font-medium max-w-2xl mx-auto text-sm sm:text-base">
             Specialised care across kidney stones, urology & gallbladder — all under one expert roof in Delhi NCR.
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, i) => (
-            <div key={i} className="group p-10 bg-white border border-border/50 rounded-3xl shadow-sm hover:shadow-2xl hover:border-primary/20 transition-all duration-500 flex flex-col items-center text-center">
+            <div key={i} className="group p-6 sm:p-10 bg-white border border-border/50 rounded-3xl shadow-sm hover:shadow-2xl hover:border-primary/20 transition-all duration-500 flex flex-col items-center text-center">
               <div className="w-16 h-16 bg-primary/5 rounded-2xl flex items-center justify-center text-3xl mb-8 group-hover:scale-110 group-hover:bg-primary transition-all duration-500 group-hover:text-white">
                 {service.icon}
               </div>

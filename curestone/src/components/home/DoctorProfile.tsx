@@ -71,21 +71,21 @@ const DoctorProfile = () => {
               Meet Your Specialist
             </span>
           </div>
-          <h2 className="text-4xl md:text-6xl font-black tracking-tight text-slate-900 leading-[1.1]">
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 leading-[1.1]">
             Global Standard Care by <br />
             <span className="bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent">
               Dr. Deepanshu Gupta
             </span>
           </h2>
-          <p className="mt-6 text-slate-600 font-medium max-w-2xl mx-auto text-lg leading-relaxed">
+          <p className="mt-6 text-slate-600 font-medium max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
             Combining 15+ years of clinical excellence with the world's most advanced laser technologies for kidney stone treatment.
           </p>
         </div>
 
         <div className="grid lg:grid-cols-12 gap-12 items-start">
           {/* LEFT: Profile Photo & Key Info */}
-          <div className="lg:col-span-5 relative animate-fade-in-up [animation-delay:200ms]">
-            <div className="relative group">
+          <div className="lg:col-span-12 xl:col-span-5 relative animate-fade-in-up [animation-delay:200ms]">
+            <div className="relative group max-w-2xl mx-auto xl:mx-0">
               {/* Photo Card */}
               <div className="relative aspect-[4/5] bg-white rounded-[3rem] overflow-hidden shadow-[0_32px_64px_-16px_rgba(43,92,230,0.15)] transition-all duration-700 group-hover:shadow-[0_48px_80px_-16px_rgba(43,92,230,0.2)]">
                 <Image 
@@ -106,12 +106,12 @@ const DoctorProfile = () => {
                     </div>
                     <span className="text-blue-100 text-xs font-bold tracking-wider uppercase">4.9 Patient Rating</span>
                   </div>
-                  <h3 className="text-3xl font-black text-white leading-tight mb-2">Dr. Deepanshu Gupta</h3>
+                  <h3 className="text-2xl sm:text-3xl font-black text-white leading-tight mb-2">Dr. Deepanshu Gupta</h3>
                   <div className="flex flex-col gap-1">
-                    <p className="text-blue-200 text-sm font-bold flex items-center gap-2">
+                    <p className="text-blue-200 text-xs sm:text-sm font-bold flex items-center gap-2">
                        Senior Urologist & Kidney Stone Specialist
                     </p>
-                    <p className="text-blue-200/60 text-[11px] font-medium leading-relaxed">
+                    <p className="text-blue-200/60 text-[10px] sm:text-[11px] font-medium leading-relaxed">
                       MBBS · MS (Gold Medalist) · MCh Urology (Rank 1)
                     </p>
                   </div>
@@ -119,21 +119,21 @@ const DoctorProfile = () => {
               </div>
 
               {/* Floatings Tags */}
-              <div className="absolute -top-6 -right-6 bg-white p-4 rounded-3xl shadow-xl flex items-center gap-3 border border-blue-50 animate-bounce-slow">
-                <div className="w-10 h-10 bg-green-50 rounded-2xl flex items-center justify-center">
-                  <CheckCircle2 className="text-green-500" size={20} />
+              <div className="absolute -top-4 -right-2 sm:-top-6 sm:-right-6 bg-white p-3 sm:p-4 rounded-2xl sm:rounded-3xl shadow-xl flex items-center gap-2 sm:gap-3 border border-blue-50 animate-bounce-slow">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-green-50 rounded-xl sm:rounded-2xl flex items-center justify-center text-green-500">
+                  <CheckCircle2 size={18} className="sm:w-5 sm:h-5" />
                 </div>
                 <div>
-                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Status</p>
-                  <p className="text-xs font-bold text-slate-900 mt-1">Accepting Patients</p>
+                  <p className="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Status</p>
+                  <p className="text-[11px] sm:text-xs font-bold text-slate-900 mt-1">Accepting Patients</p>
                 </div>
               </div>
             </div>
 
             {/* Quick Contact Card */}
-            <div className="mt-10 bg-white/70 backdrop-blur-md border border-white p-6 rounded-[2rem] shadow-sm">
+            <div className="mt-10 bg-white/70 backdrop-blur-md border border-white p-6 rounded-[2rem] shadow-sm max-w-2xl mx-auto xl:mx-0">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-blue-200">
+                <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-blue-200 shrink-0">
                   <MapPin size={24} />
                 </div>
                 <div>
@@ -145,7 +145,7 @@ const DoctorProfile = () => {
           </div>
 
           {/* RIGHT: Detailed Content */}
-          <div className="lg:col-span-7 flex flex-col gap-10 animate-slide-in-right [animation-delay:400ms]">
+          <div className="lg:col-span-12 xl:col-span-7 flex flex-col gap-10 animate-slide-in-right [animation-delay:400ms]">
             {/* Professional Summary */}
             <div className="relative">
               <div className="absolute -left-6 top-0 bottom-0 w-1.5 bg-gradient-to-b from-blue-600 to-indigo-500 rounded-full"></div>

@@ -19,20 +19,42 @@ export default function ESWLPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
-      <section className="relative pt-48 pb-32 bg-foreground overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(43,92,230,0.35),transparent_60%)]" />
+      <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 bg-slate-50 overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(43,92,230,0.1),transparent_60%)]" />
+        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
-          <div className="max-w-3xl">
-            <span className="inline-block px-4 py-1.5 mb-6 text-[10px] font-black tracking-widest text-primary bg-primary/10 border border-primary/20 rounded-full uppercase">Non-Invasive Treatment</span>
-            <h1 className="text-5xl md:text-7xl font-black tracking-tight text-white leading-[1.05] mb-6">
-              ESWL <span className="text-primary italic">Lithotripsy</span>
-            </h1>
-            <p className="text-xl text-white/60 font-medium leading-relaxed mb-10">
-              Extracorporeal Shock Wave Lithotripsy — shock waves delivered from outside the body to shatter kidney stones without any cuts or surgery.
-            </p>
-            <Link href="/book" className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-white font-black rounded-2xl shadow-xl shadow-primary/30 hover:bg-primary-dark hover:scale-105 transition-all">
-              Book ESWL Consultation →
-            </Link>
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <div className="max-w-3xl">
+              <span className="inline-block px-4 py-1.5 mb-6 text-[10px] font-black tracking-widest text-primary bg-primary/10 border border-primary/20 rounded-full uppercase">Non-Invasive Treatment</span>
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight text-slate-900 leading-[1.1] md:leading-[1.05] mb-6">
+                ESWL <span className="text-primary italic">Lithotripsy</span>
+              </h1>
+              <p className="text-lg md:text-xl text-slate-600 font-medium leading-relaxed max-w-2xl mb-10">
+                Extracorporeal Shock Wave Lithotripsy — shock waves delivered from outside the body to shatter kidney stones without any cuts or surgery.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link href="/book" className="px-8 py-4 bg-primary text-white font-black rounded-2xl shadow-xl shadow-primary/30 hover:bg-primary-dark hover:scale-105 transition-all text-center">
+                  Book ESWL Consultation →
+                </Link>
+                <Link href="/checker" className="px-8 py-4 bg-white border border-slate-200 text-slate-900 font-black rounded-2xl hover:bg-slate-50 transition-all shadow-sm text-center">
+                  Check My Symptoms
+                </Link>
+              </div>
+            </div>
+
+            <div className="relative aspect-video rounded-[2rem] overflow-hidden shadow-[0_32px_80px_-20px_rgba(43,92,230,0.3)] border-8 border-white bg-white group hover:scale-[1.02] transition-transform duration-500">
+              <iframe
+                width="100%"
+                height="100%"
+                src="https://www.youtube.com/embed/cQMDYm__gHM?si=-L4YukvgqyoQ6foJ"
+                title="ESWL Procedure Video"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+                className="absolute inset-0"
+              ></iframe>
+            </div>
           </div>
         </div>
       </section>
@@ -87,12 +109,12 @@ export default function ESWLPage() {
             </div>
           </div>
 
-          <div className="bg-foreground rounded-[2rem] p-12 text-center relative overflow-hidden">
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(43,92,230,0.2),transparent)]" />
+          <div className="bg-slate-50 border border-slate-100 rounded-[2rem] p-8 md:p-12 text-center relative overflow-hidden shadow-lg">
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(43,92,230,0.05),transparent)]" />
             <div className="relative z-10">
-              <h2 className="text-3xl md:text-4xl font-black text-white mb-4">Is ESWL Right for Your Stone?</h2>
-              <p className="text-white/60 font-medium mb-8 max-w-lg mx-auto">Dr. Kalla will review your CT KUB and determine the best treatment — ESWL, RIRS or PCNL — for your specific case.</p>
-              <Link href="/book" className="inline-flex items-center gap-2 px-10 py-4 bg-primary text-white font-black rounded-2xl shadow-xl shadow-primary/30 hover:bg-primary-dark hover:scale-105 transition-all">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 mb-4">Is ESWL Right for Your Stone?</h2>
+              <p className="text-sm sm:text-base text-slate-600 font-medium mb-8 max-w-lg mx-auto">Dr. Kalla will review your CT KUB and determine the best treatment — ESWL, RIRS or PCNL — for your specific case.</p>
+              <Link href="/book" className="inline-flex items-center gap-2 px-8 sm:px-10 py-4 bg-primary text-white font-black rounded-2xl shadow-xl shadow-primary/30 hover:bg-primary-dark hover:scale-105 transition-all text-center">
                 Get Expert Opinion →
               </Link>
             </div>

@@ -103,7 +103,7 @@ export default function AppointmentForm() {
               <span className="inline-block px-4 py-1.5 text-[10px] font-black tracking-widest text-primary bg-primary/10 border border-primary/20 rounded-full uppercase">
                 Priority Booking
               </span>
-              <h2 className="text-4xl md:text-6xl font-black text-slate-900 leading-[1.1] tracking-tight">
+              <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 leading-[1.1] tracking-tight">
                 Experience <br />
                 <span className="text-primary italic">World-Class</span> Care.
               </h2>

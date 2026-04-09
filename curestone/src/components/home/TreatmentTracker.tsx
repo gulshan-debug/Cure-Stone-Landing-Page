@@ -74,27 +74,27 @@ const TreatmentTracker = () => {
   return (
     <section className="py-24 bg-white" id="treatment-tracker">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-black tracking-tight text-foreground">
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-foreground leading-tight px-4">
             Track Your <span className="text-primary tracking-tighter">Treatment</span>
           </h2>
-          <p className="mt-4 text-text-light font-medium max-w-2xl mx-auto italic">
+          <p className="mt-4 text-text-light font-medium max-w-2xl mx-auto italic text-sm sm:text-base px-6">
             Compared to traditional shockwave therapy (ESWL) and PCNL, Fans-RIRS offers unmatched precision and safety.
           </p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 items-stretch">
           {/* Tracker Card */}
-          <div className="bg-background-alt p-10 rounded-[2.5rem] border border-border/50 shadow-sm flex flex-col space-y-10">
+          <div className="bg-background-alt p-6 sm:p-10 rounded-[2rem] sm:rounded-[2.5rem] border border-border/50 shadow-sm flex flex-col space-y-8 sm:space-y-10">
             <div className="space-y-1">
-              <h3 className="text-2xl font-black text-foreground uppercase tracking-tight">Treatment Tracker</h3>
-              <p className="text-[10px] font-black text-text-light uppercase tracking-[0.2em]">Digital Self-Assessment</p>
+              <h3 className="text-xl sm:text-2xl font-black text-foreground uppercase tracking-tight">Treatment Tracker</h3>
+              <p className="text-[9px] sm:text-[10px] font-black text-text-light uppercase tracking-[0.2em]">Digital Self-Assessment</p>
             </div>
 
             {/* Stone Size Slider */}
             <div className="space-y-4">
               <div className="flex justify-between items-center">
-                <span className="text-[11px] font-black text-text-mid uppercase tracking-widest">Estimated Stone Size</span>
+                <span className="text-[10px] sm:text-[11px] font-black text-text-mid uppercase tracking-widest">Stone Size (Est.)</span>
                 <span className="text-sm font-black text-primary bg-primary/10 px-3 py-1 rounded-lg">{size} mm</span>
               </div>
               <input 
@@ -103,28 +103,25 @@ const TreatmentTracker = () => {
                 max="30" 
                 value={size} 
                 onChange={(e) => setSize(parseInt(e.target.value))}
-                className="w-full h-2 bg-border rounded-lg appearance-none cursor-pointer accent-primary"
+                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-primary"
               />
             </div>
 
             {/* Pain Level Buttons */}
             <div className="space-y-4">
-              <span className="text-[11px] font-black text-text-mid uppercase tracking-widest">Current Pain Level</span>
-              <div className="flex gap-2 flex-wrap">
+              <span className="text-[10px] sm:text-[11px] font-black text-text-mid uppercase tracking-widest">Pain Level</span>
+              <div className="grid grid-cols-5 gap-2">
                 {[1, 3, 5, 8, 10].map((level) => (
                   <button 
                     key={level}
                     onClick={() => setPain(level)}
-                    className={`flex-1 min-w-[70px] py-4 rounded-2xl border-2 transition-all font-black text-sm ${
+                    className={`py-3 sm:py-4 rounded-xl sm:rounded-2xl border-2 transition-all font-black text-xs sm:text-sm ${
                       pain === level 
                         ? "bg-primary border-primary text-white shadow-lg shadow-primary/20 scale-105" 
                         : "bg-white border-border/50 text-text-mid hover:border-primary/30"
                     }`}
                   >
                     {level}
-                    <span className="block text-[8px] opacity-70 mt-1 uppercase tracking-tighter">
-                      {level === 1 ? 'Mild' : level === 3 ? 'Uncomfortable' : level === 5 ? 'Severe' : level === 8 ? 'Extreme' : 'Unbearable'}
-                    </span>
                   </button>
                 ))}
               </div>
@@ -133,8 +130,8 @@ const TreatmentTracker = () => {
             {/* Water Intake Slider */}
             <div className="space-y-4">
               <div className="flex justify-between items-center">
-                <span className="text-[11px] font-black text-text-mid uppercase tracking-widest">Daily Water Intake</span>
-                <span className="text-sm font-black text-warning bg-warning/10 px-3 py-1 rounded-lg">{water} Liters</span>
+                <span className="text-[10px] sm:text-[11px] font-black text-text-mid uppercase tracking-widest">Water Intake</span>
+                <span className="text-sm font-black text-amber-600 bg-amber-50 px-3 py-1 rounded-lg">{water}L</span>
               </div>
               <input 
                 type="range" 
@@ -143,78 +140,94 @@ const TreatmentTracker = () => {
                 step="0.1"
                 value={water} 
                 onChange={(e) => setWater(parseFloat(e.target.value))}
-                className="w-full h-2 bg-border rounded-lg appearance-none cursor-pointer accent-warning"
+                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-amber-500"
               />
             </div>
 
             {/* Recovery Mode Toggle */}
-            <div className="flex items-center justify-between p-4 bg-white rounded-2xl border border-border/50 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
-               <span className="text-xs font-bold text-text-mid italic">I already had surgery (Recovery Mode)</span>
+            <div className="flex items-center justify-between p-4 bg-white rounded-[1.5rem] border border-border/50 shadow-sm">
+               <span className="text-[10px] sm:text-xs font-bold text-text-mid italic">Recovery Mode (Post-Surgery)</span>
                <label className="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" className="sr-only peer" checked={isRecovery} onChange={(e) => setIsRecovery(e.target.checked)} />
-                <div className="w-11 h-6 bg-border peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div className="w-10 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
           </div>
 
           {/* Insight Card */}
-          <div className="bg-white border-2 border-border/50 p-10 rounded-[2.5rem] shadow-xl flex flex-col space-y-8 relative overflow-hidden">
+          <div className="bg-white border-2 border-border/10 p-6 sm:p-10 rounded-[2rem] sm:rounded-[2.5rem] shadow-xl flex flex-col space-y-6 sm:space-y-8 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-[60px] rounded-full -mr-16 -mt-16" />
             
             <div className="flex justify-between items-start">
                <div className="space-y-1">
-                  <p className="text-[10px] font-black text-text-light uppercase tracking-[0.2em]">Health Insight</p>
-                  <p className="text-xs font-bold text-foreground">Recommendations based on clinical models</p>
+                  <p className="text-[9px] sm:text-[10px] font-black text-text-light uppercase tracking-[0.2em]">Health Insight</p>
+                  <p className="text-[11px] font-bold text-foreground">Clinical Assessment</p>
                </div>
-               <div className={`px-4 py-1.5 rounded-full text-[10px] font-black border uppercase tracking-widest ${insight.riskClass}`}>
+               <div className={`px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[9px] sm:text-[10px] font-black border uppercase tracking-widest ${insight.riskClass}`}>
                   {insight.risk}
                </div>
             </div>
 
-            <div className="space-y-4 p-8 rounded-3xl bg-primary/5 border border-primary/10 relative">
-               <div className="flex items-center justify-between gap-4 mb-2">
-                  <p className="text-xl font-black text-foreground tracking-tight">{insight.title}</p>
-                  <span className={`px-3 py-1 rounded-lg text-[8px] font-black border uppercase tracking-widest whitespace-nowrap ${insight.tagClass}`}>
+            <div className="space-y-3 sm:space-y-4 p-6 sm:p-8 rounded-2xl sm:rounded-3xl bg-primary/5 border border-primary/10 relative">
+               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+                  <p className="text-lg sm:text-xl font-black text-foreground tracking-tight">{insight.title}</p>
+                  <span className={`inline-block w-fit px-3 py-1 rounded-lg text-[8px] font-black border uppercase tracking-widest ${insight.tagClass}`}>
                     {insight.tag}
                   </span>
                </div>
-               <p className="text-sm text-text-mid font-medium leading-relaxed">
+               <p className="text-xs sm:text-sm text-text-mid font-medium leading-relaxed">
                   {insight.text}
                </p>
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-5">
                <div className="flex items-center justify-between">
                   <div className="flex items-end gap-2">
-                    <span className="text-4xl font-black text-foreground tracking-tighter leading-none">{insight.hydrationPct}%</span>
-                    <span className="text-[10px] font-black text-text-light mb-1 uppercase tracking-widest">Hydration Status</span>
+                    <span className="text-3xl sm:text-4xl font-black text-foreground tracking-tighter leading-none">{insight.hydrationPct}%</span>
+                    <span className="text-[9px] sm:text-[10px] font-black text-text-light mb-1 uppercase tracking-widest">Hydration</span>
                   </div>
-                  <span className="text-[9px] font-black text-primary uppercase tracking-[0.2em] bg-primary/5 px-3 py-1 rounded-lg border border-primary/10">3.5L Goal</span>
+                  <span className="text-[9px] font-black text-primary uppercase tracking-[0.1em] bg-primary/5 px-2 py-0.5 rounded border border-primary/10">3.5L Goal</span>
                </div>
-               <div className="w-full h-3 bg-border rounded-full overflow-hidden">
+               <div className="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
                   <div 
                     className={`h-full transition-all duration-700 ${insight.hydrationColor}`} 
                     style={{ width: `${insight.hydrationPct}%` }}
                   />
                </div>
-               <p className={`text-xs font-black uppercase tracking-wide italic flex items-center gap-2`}>
-                  <span className={`w-2 h-2 rounded-full ${insight.hydrationColor} animate-pulse`} />
+               <p className={`text-[10px] font-black uppercase tracking-wide italic flex items-center gap-2`}>
+                  <span className={`w-1.5 h-1.5 rounded-full ${insight.hydrationColor} animate-pulse`} />
                   {insight.hydrationStatus}
                </p>
             </div>
 
-            <p className="mt-auto pt-6 text-[10px] text-text-light italic leading-relaxed border-t border-border/50">
-              Note: This tracker provides general guidance based on clinical standards. Always consult a urologist like Dr. Deepanshu Gupta for a formal diagnosis via ultrasound or CT scan.
+            <p className="mt-auto pt-6 text-[9px] sm:text-[10px] text-text-light italic leading-relaxed border-t border-border/50">
+              Note: This tracker provides general guidance. Always consult Dr. Deepanshu Gupta for a formal diagnosis.
             </p>
 
-            <div className="flex gap-4">
-               <button className="flex-1 px-8 py-4 bg-foreground text-white font-black rounded-2xl shadow-xl hover:bg-black transition-all hover:-translate-y-1 active:scale-95">
-                  Confirm with Specialist
+            <div className="flex flex-col sm:flex-row gap-3">
+               <button className="flex-1 px-8 py-4 bg-foreground text-white font-black rounded-xl sm:rounded-2xl shadow-xl hover:bg-black transition-all hover:-translate-y-1 active:scale-95 text-sm">
+                  Consult Specialist
                </button>
-               <button onClick={reset} className="px-6 py-4 border-2 border-border text-[10px] font-black rounded-2xl hover:bg-background-alt transition-all">
-                  RESET
+               <button onClick={reset} className="px-6 py-4 border-2 border-border text-[9px] font-black rounded-xl sm:rounded-2xl hover:bg-background-alt transition-all uppercase">
+                  Reset
                </button>
             </div>
+          </div>
+        </div>
+
+        {/* Sticky Mobile Result Indicator */}
+        <div className={`fixed bottom-6 inset-x-6 z-50 lg:hidden transition-all duration-500 transform ${insight.risk ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"}`}>
+          <div className={`p-4 rounded-2xl shadow-2xl border backdrop-blur-md flex items-center justify-between gap-4 ${insight.riskClass} bg-white/90`}>
+            <div className="flex flex-col">
+              <span className="text-[9px] font-black uppercase tracking-widest opacity-60">Current Assessment</span>
+              <span className="text-sm font-black whitespace-nowrap">{insight.risk}</span>
+            </div>
+            <button 
+              onClick={() => document.getElementById('treatment-tracker')?.scrollIntoView({ behavior: 'smooth' })}
+              className="px-4 py-2 bg-slate-900 text-white text-[10px] font-black rounded-lg shadow-lg uppercase tracking-wider"
+            >
+              View Report
+            </button>
           </div>
         </div>
       </div>

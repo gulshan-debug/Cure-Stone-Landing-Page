@@ -49,7 +49,7 @@ export default function GlobalReach() {
               <span className="text-xs font-black uppercase tracking-[0.2em]">Beyond Boundaries</span>
             </div>
 
-            <h2 className="text-5xl lg:text-7xl font-black tracking-tighter leading-[0.95]">
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tighter leading-[0.95]">
               Leading Kidney Stone<br />
               <span className="text-blue-200/80">Treatment in</span><br />
               South-East Asia
@@ -66,14 +66,14 @@ export default function GlobalReach() {
           </div>
 
           {/* Right Content: Photo-Collage Map */}
-          <div className="relative group">
-            <div className="relative z-10  transition-transform duration-1000">
+          <div className="relative group overflow-visible">
+            <div className="relative z-10 transition-transform duration-1000">
               <Image 
                 src="/Website World Map Cropped.png" 
                 alt="Global Reach Patient Stories Collage Map" 
                 width={1000} 
                 height={800} 
-                className="w-full h-auto drop-shadow-[0_20px_50px_rgba(0,0,0,0.3)] saturate-[1.1] scale-140"
+                className="w-full h-auto drop-shadow-[0_20px_50px_rgba(0,0,0,0.3)] saturate-[1.1] scale-110 lg:scale-125 xl:scale-140 transition-transform"
                 priority
               />
             </div>
@@ -90,7 +90,7 @@ export default function GlobalReach() {
 <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center justify-items-center">
   {STATS.map((stat, idx) => (
     <div key={idx} className="space-y-1">
-      <div className="text-4xl lg:text-5xl font-black text-white tracking-tighter">
+      <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tighter">
         {stat.value}
       </div>
       <div className="text-sm font-bold text-blue-100/60 uppercase tracking-widest">

@@ -1,5 +1,6 @@
 "use client";
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, useMemo } from "react";
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
 
 interface Scene {
   id: number;
@@ -45,18 +46,26 @@ const SCENES: Scene[] = [
   }
 ];
 
-const FRAME_COUNT = 120; // Total frames (ezgif-frame-001.jpg to ezgif-frame-120.jpg)
+const FRAME_COUNT = 120;
 
 export default function ScrollCanvasHero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const targetProgress = useRef(0);
-  const currentProgress = useRef(0);
-  
   const [images, setImages] = useState<HTMLImageElement[]>([]);
   const [loadedCount, setLoadedCount] = useState(0);
-  const [activeScene, setActiveScene] = useState<Scene | null>(SCENES[0]);
-  const [opacity, setOpacity] = useState(0);
+
+  // Framer Motion for Apple-style Smoothing
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
+
+  // Spring physics for that "heavy" fluid feel
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
   // Preload images
   useEffect(() => {
@@ -65,7 +74,6 @@ export default function ScrollCanvasHero() {
 
     for (let i = 1; i <= FRAME_COUNT; i++) {
       const img = new Image();
-      // Using new directory and naming format
       const framePath = `/ezgif-213ab7655818cce8-jpg/ezgif-frame-${i.toString().padStart(3, '0')}.jpg`;
       img.src = framePath;
       img.onload = () => {
@@ -79,20 +87,19 @@ export default function ScrollCanvasHero() {
     }
   }, []);
 
-  const renderFrame = useCallback((index: number) => {
+  const renderFrame = useCallback((prog: number) => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
     if (!canvas || !ctx || images.length < FRAME_COUNT) return;
 
-    const frame = images[index];
+    const frameIndex = Math.floor(prog * (FRAME_COUNT - 1));
+    const frame = images[Math.max(0, Math.min(frameIndex, FRAME_COUNT - 1))];
     if (!frame) return;
 
-    // Responsive Canvas Resizing
     const rect = canvas.getBoundingClientRect();
     canvas.width = rect.width * window.devicePixelRatio;
     canvas.height = rect.height * window.devicePixelRatio;
 
-    // Object-fit 'cover' emulation for canvas
     const imgRatio = frame.width / frame.height;
     const canvasRatio = canvas.width / canvas.height;
     
@@ -116,145 +123,144 @@ export default function ScrollCanvasHero() {
     ctx.drawImage(frame, offsetX, offsetY, drawWidth, drawHeight);
   }, [images]);
 
+  // Sync Smooth Progress with Canvas Rendering
   useEffect(() => {
-    const update = () => {
-      if (!containerRef.current) return;
+    const unsubscribe = smoothProgress.on("change", (latest) => {
+      renderFrame(latest);
+    });
+    return () => unsubscribe();
+  }, [smoothProgress, renderFrame]);
 
-      const rect = containerRef.current.getBoundingClientRect();
-      const scrollY = -rect.top;
-      const maxScroll = containerRef.current.scrollHeight - window.innerHeight;
-      targetProgress.current = Math.min(Math.max(scrollY / maxScroll, 0), 1);
-
-      // Lerp for smooth transition
-      const lerpFactor = 0.04;
-      currentProgress.current += (targetProgress.current - currentProgress.current) * lerpFactor;
-
-      // Update frame index (0 to FRAME_COUNT - 1)
-      const frameIndex = Math.floor(currentProgress.current * (FRAME_COUNT - 1));
-      renderFrame(Math.max(0, Math.min(frameIndex, FRAME_COUNT - 1)));
-
-      // Update scenes and opacity
-      const prog = currentProgress.current;
-      let currentScene = null;
-      let currentOpacity = 0;
-
+  // Active Scene Logic
+  const [activeScene, setActiveScene] = useState<Scene | null>(SCENES[0]);
+  useEffect(() => {
+    const unsubscribe = smoothProgress.on("change", (v) => {
+      let current = null;
       for (const scene of SCENES) {
-        if (prog >= scene.start && prog <= scene.end) {
-          currentScene = scene;
-          const range = scene.end - scene.start;
-          const sceneProg = (prog - scene.start) / range;
-          currentOpacity = Math.sin(sceneProg * Math.PI);
+        if (v >= scene.start - 0.05 && v <= scene.end + 0.05) {
+          current = scene;
           break;
         }
       }
-
-      setActiveScene(currentScene);
-      setOpacity(currentOpacity);
-
-      requestAnimationFrame(update);
-    };
-
-    const handleResize = () => {
-      const frameIndex = Math.floor(currentProgress.current * (FRAME_COUNT - 1));
-      renderFrame(Math.max(0, Math.min(frameIndex, FRAME_COUNT - 1)));
-    };
-
-    const rafId = requestAnimationFrame(update);
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      cancelAnimationFrame(rafId);
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [renderFrame]);
+      setActiveScene(current);
+    });
+    return () => unsubscribe();
+  }, [smoothProgress]);
 
   const loadingProgress = Math.round((loadedCount / FRAME_COUNT) * 100);
 
   return (
-    <div ref={containerRef} className="relative h-[600vh] bg-black">
+    <div ref={containerRef} className="relative h-[600vh] bg-slate-50">
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         
         {/* Loading Overlay */}
         {loadedCount < FRAME_COUNT && (
-          <div className="absolute inset-0 z-[60] bg-black flex flex-col items-center justify-center text-white space-y-4">
-             <div className="w-64 h-1 bg-white/10 rounded-full overflow-hidden">
+          <div className="absolute inset-0 z-[60] bg-slate-50 flex flex-col items-center justify-center text-slate-900 space-y-4">
+             <div className="w-64 h-1 bg-slate-200 rounded-full overflow-hidden">
                 <div className="h-full bg-primary transition-all duration-300" style={{ width: `${loadingProgress}%` }} />
              </div>
              <p className="text-[10px] font-black tracking-widest uppercase opacity-50">Initializing Medical Engine · {loadingProgress}%</p>
           </div>
         )}
 
-        {/* Progress Bar (Visual aid) */}
-        <div className="absolute top-0 left-0 h-1 bg-primary/40 z-50 transition-all duration-75" style={{ width: `${targetProgress.current * 100}%` }} />
+        {/* Dynamic Canvas Background */}
+        <div className="absolute inset-0 z-0 bg-slate-950">
+          <canvas
+            ref={canvasRef}
+            className="w-full h-full object-cover opacity-60 transition-opacity duration-1000"
+          />
+          {/* Dark Ambient Vignette for readability */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/20 to-black/80 pointer-events-none" />
+        </div>
 
-        {/* Canvas Layer */}
-        <canvas
-          ref={canvasRef}
-          className="w-full h-full object-cover opacity-70"
+        {/* Animated Text Scenes */}
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-6 pointer-events-none">
+          <AnimatePresence mode="wait">
+            {activeScene && (
+              <motion.div
+                key={activeScene.id}
+                initial={{ opacity: 0, y: 30, filter: "blur(10px)", scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
+                exit={{ opacity: 0, y: -30, filter: "blur(10px)", scale: 0.95 }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }} // Apple-style cubic bezier
+                className="max-w-4xl space-y-6"
+              >
+                {activeScene.badge && (
+                  <motion.span 
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.3 }}
+                    className="inline-block px-4 py-1.5 mb-4 text-[10px] font-black tracking-widest text-primary bg-primary/20 border border-primary/30 rounded-full uppercase"
+                  >
+                    {activeScene.badge}
+                  </motion.span>
+                )}
+                <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-white leading-[1.1] tracking-tight [text-wrap:balance]">
+                  {activeScene.title}
+                </h1>
+                <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/70 font-medium max-w-2xl mx-auto leading-relaxed">
+                  {activeScene.subtitle}
+                </p>
+                
+                {activeScene.id === 4 && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                    className="pt-8 pointer-events-auto"
+                  >
+                    <button 
+                      onClick={() => {
+                        const element = document.getElementById('appointment-section');
+                        if (element) {
+                          element.scrollIntoView({ behavior: 'smooth' });
+                        } else {
+                          window.location.href = '/book';
+                        }
+                      }}
+                      className="px-10 py-5 bg-primary text-white font-black rounded-2xl shadow-2xl shadow-primary/40 hover:bg-primary-dark transition-all hover:scale-105 active:scale-95"
+                    >
+                      📅 BOOK FREE CONSULTATION
+                    </button>
+                  </motion.div>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Global Progress Indicators (Apple-style) */}
+        <motion.div 
+          className="absolute top-0 left-0 h-1 bg-primary/60 z-50 transition-all duration-75 origin-left"
+          style={{ scaleX: smoothProgress }}
         />
 
-        {/* Overlay Darkening */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/80 pointer-events-none" />
-
-        {/* Text Scenes Overlay */}
-        <div 
-          className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 transition-all duration-150 pointer-events-none"
-          style={{ 
-            opacity: opacity,
-            transform: `translateY(${(1 - opacity) * 40}px)`
-          }}
-        >
-          {activeScene && (
-            <div className="max-w-4xl space-y-6">
-              {activeScene.badge && (
-                <span className="inline-block px-4 py-1.5 mb-4 text-[10px] font-black tracking-widest text-primary bg-primary/10 border border-primary/20 rounded-full uppercase">
-                  {activeScene.badge}
-                </span>
-              )}
-              <h1 className="text-4xl md:text-8xl font-black text-white leading-[1.1] tracking-tight">
-                {activeScene.title}
-              </h1>
-              <p className="text-lg md:text-2xl text-white/70 font-medium max-w-2xl mx-auto leading-relaxed">
-                {activeScene.subtitle}
-              </p>
-              
-              {activeScene.id === 4 && (
-                <div className="pt-8 pointer-events-auto">
-                   <button 
-                    onClick={() => {
-                      const element = document.getElementById('appointment-section');
-                      if (element) {
-                        element.scrollIntoView({ behavior: 'smooth' });
-                      } else {
-                        window.location.href = '/book';
-                      }
-                    }}
-                    className="px-10 py-5 bg-primary text-white font-black rounded-2xl shadow-2xl shadow-primary/40 hover:bg-primary-dark transition-all hover:scale-105 active:scale-95"
-                   >
-                      📅 BOOK FREE CONSULTATION
-                   </button>
-                </div>
-              )}
-            </div>
-          )}
+        <div className={`absolute top-1/2 left-12 -translate-y-1/2 vertical-text hidden lg:block transition-all duration-1000`}>
+           <p className="text-[10px] font-black text-white opacity-20 uppercase tracking-[1em] whitespace-nowrap">SCROLL TO ANALYZE • FANS-RIRS</p>
         </div>
 
-        {/* Fixed Side Label */}
-        <div className={`absolute top-1/2 left-12 -translate-y-1/2 vertical-text hidden lg:block transition-opacity duration-1000 ${targetProgress.current > 0.05 ? 'opacity-20' : 'opacity-0'}`}>
-           <p className="text-[10px] font-black text-white uppercase tracking-[1em] whitespace-nowrap">SCROLL TO ANALYZE • FANS-RIRS</p>
-        </div>
-
-        {/* Footer Info */}
-        <div className={`absolute bottom-12 left-12 right-12 flex justify-between items-end transition-all duration-1000 ${targetProgress.current > 0.1 ? 'opacity-20 translate-y-4' : 'opacity-100 translate-y-0'}`}>
+        {/* Bottom Info Bar */}
+        <div className={`absolute bottom-12 left-12 right-12 flex justify-between items-end`}>
            <div className="space-y-1">
-              <p className="text-[10px] font-black text-white/40 uppercase tracking-widest">Procedural Visualization</p>
-              <p className="text-sm font-bold text-white/80 italic">Advanced Laser Precision Engine</p>
+              <p className="text-[10px] font-black text-white/30 uppercase tracking-widest">Procedural Visualization</p>
+              <p className="text-sm font-bold text-white/50 italic">Advanced Laser Precision Engine</p>
            </div>
-           <div className="flex flex-col items-end gap-2">
-              <div className="w-1 h-12 bg-white/10 rounded-full overflow-hidden">
-                 <div className="w-full bg-primary transition-all duration-300" style={{ height: `${targetProgress.current * 100}%` }} />
+           
+           <div className="flex flex-col items-center gap-4">
+              <motion.div 
+                animate={{ y: [0, 10, 0] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                className="text-[10px] font-black text-primary/80 uppercase tracking-widest"
+              >
+                Scroll ↓
+              </motion.div>
+              <div className="w-1 h-12 bg-white/10 rounded-full overflow-hidden relative">
+                 <motion.div 
+                   className="absolute bottom-0 w-full bg-primary transition-all duration-300 origin-bottom"
+                   style={{ height: "100%", scaleY: smoothProgress }}
+                 />
               </div>
-              <p className="text-[10px] font-bold text-white/50 tracking-widest uppercase">Explore ↕</p>
+              <p className="text-[10px] font-bold text-white/30 tracking-widest uppercase">Explore ↕</p>
            </div>
         </div>
       </div>

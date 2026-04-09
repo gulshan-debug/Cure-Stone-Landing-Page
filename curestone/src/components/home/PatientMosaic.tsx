@@ -95,7 +95,7 @@ export default function PatientMosaic() {
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-10 lg:mb-12 gap-6 lg:gap-8">
           <div className="max-w-2xl">
-            <h2 className="text-3xl sm:text-5xl lg:text-7xl font-bold text-slate-900 tracking-tight leading-[1]">
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-slate-900 tracking-tight leading-[1]">
               Real Patients.{" "}
               <span className="text-blue-600 italic">Real Voices.</span>
             </h2>
