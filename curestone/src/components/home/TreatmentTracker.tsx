@@ -10,7 +10,7 @@ const TreatmentTracker = () => {
   const insight = useMemo(() => {
     const goal = 3.5;
     const hydrationPct = Math.min(Math.round((water / goal) * 100), 100);
-    
+
     let risk = "MODERATE RISK";
     let riskClass = "bg-warning/10 text-warning border-warning/20";
     let title = "Fans-RIRS Laser Standard";
@@ -97,11 +97,11 @@ const TreatmentTracker = () => {
                 <span className="text-[10px] sm:text-[11px] font-black text-text-mid uppercase tracking-widest">Stone Size (Est.)</span>
                 <span className="text-sm font-black text-primary bg-primary/10 px-3 py-1 rounded-lg">{size} mm</span>
               </div>
-              <input 
-                type="range" 
-                min="1" 
-                max="30" 
-                value={size} 
+              <input
+                type="range"
+                min="1"
+                max="30"
+                value={size}
                 onChange={(e) => setSize(parseInt(e.target.value))}
                 className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-primary"
               />
@@ -112,14 +112,13 @@ const TreatmentTracker = () => {
               <span className="text-[10px] sm:text-[11px] font-black text-text-mid uppercase tracking-widest">Pain Level</span>
               <div className="grid grid-cols-5 gap-2">
                 {[1, 3, 5, 8, 10].map((level) => (
-                  <button 
+                  <button
                     key={level}
                     onClick={() => setPain(level)}
-                    className={`py-3 sm:py-4 rounded-xl sm:rounded-2xl border-2 transition-all font-black text-xs sm:text-sm ${
-                      pain === level 
-                        ? "bg-primary border-primary text-white shadow-lg shadow-primary/20 scale-105" 
+                    className={`py-3 sm:py-4 rounded-xl sm:rounded-2xl border-2 transition-all font-black text-xs sm:text-sm ${pain === level
+                        ? "bg-primary border-primary text-white shadow-lg shadow-primary/20 scale-105"
                         : "bg-white border-border/50 text-text-mid hover:border-primary/30"
-                    }`}
+                      }`}
                   >
                     {level}
                   </button>
@@ -133,12 +132,12 @@ const TreatmentTracker = () => {
                 <span className="text-[10px] sm:text-[11px] font-black text-text-mid uppercase tracking-widest">Water Intake</span>
                 <span className="text-sm font-black text-amber-600 bg-amber-50 px-3 py-1 rounded-lg">{water}L</span>
               </div>
-              <input 
-                type="range" 
-                min="0.5" 
-                max="5" 
+              <input
+                type="range"
+                min="0.5"
+                max="5"
                 step="0.1"
-                value={water} 
+                value={water}
                 onChange={(e) => setWater(parseFloat(e.target.value))}
                 className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-amber-500"
               />
@@ -146,8 +145,8 @@ const TreatmentTracker = () => {
 
             {/* Recovery Mode Toggle */}
             <div className="flex items-center justify-between p-4 bg-white rounded-[1.5rem] border border-border/50 shadow-sm">
-               <span className="text-[10px] sm:text-xs font-bold text-text-mid italic">Recovery Mode (Post-Surgery)</span>
-               <label className="relative inline-flex items-center cursor-pointer">
+              <span className="text-[10px] sm:text-xs font-bold text-text-mid italic">Recovery Mode (Post-Surgery)</span>
+              <label className="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" className="sr-only peer" checked={isRecovery} onChange={(e) => setIsRecovery(e.target.checked)} />
                 <div className="w-10 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
               </label>
@@ -157,47 +156,47 @@ const TreatmentTracker = () => {
           {/* Insight Card */}
           <div className="bg-white border-2 border-border/10 p-6 sm:p-10 rounded-[2rem] sm:rounded-[2.5rem] shadow-xl flex flex-col space-y-6 sm:space-y-8 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-[60px] rounded-full -mr-16 -mt-16" />
-            
+
             <div className="flex justify-between items-start">
-               <div className="space-y-1">
-                  <p className="text-[9px] sm:text-[10px] font-black text-text-light uppercase tracking-[0.2em]">Health Insight</p>
-                  <p className="text-[11px] font-bold text-foreground">Clinical Assessment</p>
-               </div>
-               <div className={`px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[9px] sm:text-[10px] font-black border uppercase tracking-widest ${insight.riskClass}`}>
-                  {insight.risk}
-               </div>
+              <div className="space-y-1">
+                <p className="text-[9px] sm:text-[10px] font-black text-text-light uppercase tracking-[0.2em]">Health Insight</p>
+                <p className="text-[11px] font-bold text-foreground">Clinical Assessment</p>
+              </div>
+              <div className={`px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[9px] sm:text-[10px] font-black border uppercase tracking-widest ${insight.riskClass}`}>
+                {insight.risk}
+              </div>
             </div>
 
             <div className="space-y-3 sm:space-y-4 p-6 sm:p-8 rounded-2xl sm:rounded-3xl bg-primary/5 border border-primary/10 relative">
-               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
-                  <p className="text-lg sm:text-xl font-black text-foreground tracking-tight">{insight.title}</p>
-                  <span className={`inline-block w-fit px-3 py-1 rounded-lg text-[8px] font-black border uppercase tracking-widest ${insight.tagClass}`}>
-                    {insight.tag}
-                  </span>
-               </div>
-               <p className="text-xs sm:text-sm text-text-mid font-medium leading-relaxed">
-                  {insight.text}
-               </p>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+                <p className="text-lg sm:text-xl font-black text-foreground tracking-tight">{insight.title}</p>
+                <span className={`inline-block w-fit px-3 py-1 rounded-lg text-[8px] font-black border uppercase tracking-widest ${insight.tagClass}`}>
+                  {insight.tag}
+                </span>
+              </div>
+              <p className="text-xs sm:text-sm text-text-mid font-medium leading-relaxed">
+                {insight.text}
+              </p>
             </div>
 
             <div className="space-y-5">
-               <div className="flex items-center justify-between">
-                  <div className="flex items-end gap-2">
-                    <span className="text-3xl sm:text-4xl font-black text-foreground tracking-tighter leading-none">{insight.hydrationPct}%</span>
-                    <span className="text-[9px] sm:text-[10px] font-black text-text-light mb-1 uppercase tracking-widest">Hydration</span>
-                  </div>
-                  <span className="text-[9px] font-black text-primary uppercase tracking-[0.1em] bg-primary/5 px-2 py-0.5 rounded border border-primary/10">3.5L Goal</span>
-               </div>
-               <div className="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
-                  <div 
-                    className={`h-full transition-all duration-700 ${insight.hydrationColor}`} 
-                    style={{ width: `${insight.hydrationPct}%` }}
-                  />
-               </div>
-               <p className={`text-[10px] font-black uppercase tracking-wide italic flex items-center gap-2`}>
-                  <span className={`w-1.5 h-1.5 rounded-full ${insight.hydrationColor} animate-pulse`} />
-                  {insight.hydrationStatus}
-               </p>
+              <div className="flex items-center justify-between">
+                <div className="flex items-end gap-2">
+                  <span className="text-3xl sm:text-4xl font-black text-foreground tracking-tighter leading-none">{insight.hydrationPct}%</span>
+                  <span className="text-[9px] sm:text-[10px] font-black text-text-light mb-1 uppercase tracking-widest">Hydration</span>
+                </div>
+                <span className="text-[9px] font-black text-primary uppercase tracking-[0.1em] bg-primary/5 px-2 py-0.5 rounded border border-primary/10">3.5L Goal</span>
+              </div>
+              <div className="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
+                <div
+                  className={`h-full transition-all duration-700 ${insight.hydrationColor}`}
+                  style={{ width: `${insight.hydrationPct}%` }}
+                />
+              </div>
+              <p className={`text-[10px] font-black uppercase tracking-wide italic flex items-center gap-2`}>
+                <span className={`w-1.5 h-1.5 rounded-full ${insight.hydrationColor} animate-pulse`} />
+                {insight.hydrationStatus}
+              </p>
             </div>
 
             <p className="mt-auto pt-6 text-[9px] sm:text-[10px] text-text-light italic leading-relaxed border-t border-border/50">
@@ -205,31 +204,18 @@ const TreatmentTracker = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3">
-               <button className="flex-1 px-8 py-4 bg-foreground text-white font-black rounded-xl sm:rounded-2xl shadow-xl hover:bg-black transition-all hover:-translate-y-1 active:scale-95 text-sm">
-                  Consult Specialist
-               </button>
-               <button onClick={reset} className="px-6 py-4 border-2 border-border text-[9px] font-black rounded-xl sm:rounded-2xl hover:bg-background-alt transition-all uppercase">
-                  Reset
-               </button>
+              <button className="flex-1 px-8 py-4 bg-foreground text-white font-black rounded-xl sm:rounded-2xl shadow-xl hover:bg-black transition-all hover:-translate-y-1 active:scale-95 text-sm">
+                Consult Specialist
+              </button>
+              <button onClick={reset} className="px-6 py-4 border-2 border-border text-[9px] font-black rounded-xl sm:rounded-2xl hover:bg-background-alt transition-all uppercase">
+                Reset
+              </button>
             </div>
           </div>
         </div>
 
         {/* Sticky Mobile Result Indicator */}
-        <div className={`fixed bottom-6 inset-x-6 z-50 lg:hidden transition-all duration-500 transform ${insight.risk ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"}`}>
-          <div className={`p-4 rounded-2xl shadow-2xl border backdrop-blur-md flex items-center justify-between gap-4 ${insight.riskClass} bg-white/90`}>
-            <div className="flex flex-col">
-              <span className="text-[9px] font-black uppercase tracking-widest opacity-60">Current Assessment</span>
-              <span className="text-sm font-black whitespace-nowrap">{insight.risk}</span>
-            </div>
-            <button 
-              onClick={() => document.getElementById('treatment-tracker')?.scrollIntoView({ behavior: 'smooth' })}
-              className="px-4 py-2 bg-slate-900 text-white text-[10px] font-black rounded-lg shadow-lg uppercase tracking-wider"
-            >
-              View Report
-            </button>
-          </div>
-        </div>
+
       </div>
     </section>
   );
