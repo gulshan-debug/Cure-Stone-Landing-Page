@@ -12,37 +12,16 @@ type Message = {
   timestamp: Date;
 };
 
-type OnboardingStep = "name" | "state" | "problem" | "phone" | "done";
-
-interface UserInfo {
-  name: string;
-  state: string;
-  problem: string;
-  phone: string;
-}
-
 const ONBOARDING = {
   en: {
     name: "Hello! 👋 Welcome to **Cure Stone AI**.\n\nBefore we begin, I'd love to know you a little better.\n\nWhat is your **full name**?",
-    state: (name: string) =>
-      `Nice to meet you, **${name}**! 😊\n\nWhich **city or state** are you from?`,
-    problem:
-      "Got it! Now, can you briefly describe your **main problem or concern**?\n\n_(e.g. kidney stone pain, blood in urine, scan reports, etc.)_",
-    phone:
-      "Thank you for sharing that. 🙏\n\nLastly, what is your **phone number** so our team can follow up if needed?",
-    done: (info: UserInfo) =>
-      `Perfect! Here's a quick summary:\n\n• **Name:** ${info.name}\n• **Location:** ${info.state}\n• **Problem:** ${info.problem}\n• **Phone:** ${info.phone}\n\nOur team has been notified. Now, how can I help you today?\n\nFeel free to ask me anything about kidney stones, RIRS surgery, treatments, or symptoms! 👇`,
+    greeting: (name: string) => `Nice to meet you, **${name}**! 😊\n\nHow can I help you today?\n\nFeel free to ask me anything about kidney stones, RIRS surgery, treatments, or symptoms! 👇`,
+    phone: "Lastly, what is your **phone number** so our team can follow up if needed?",
   },
   hi: {
     name: "नमस्ते! 👋 **Cure Stone AI** में आपका स्वागत है।\n\nशुरू करने से पहले, मैं आपको थोड़ा जानना चाहता हूँ।\n\nआपका **पूरा नाम** क्या है?",
-    state: (name: string) =>
-      `आपसे मिलकर खुशी हुई, **${name}**! 😊\n\nआप किस **शहर या राज्य** से हैं?`,
-    problem:
-      "समझ गया! अब, क्या आप अपनी **मुख्य समस्या या चिंता** संक्षेप में बता सकते हैं?\n\n_(जैसे किडनी स्टोन दर्द, पेशाब में खून, स्कैन रिपोर्ट, आदि)_",
-    phone:
-      "साझा करने के लिए धन्यवाद। 🙏\n\nअंत में, आपका **फ़ोन नंबर** क्या है ताकि हमारी टीम जरूरत पड़ने पर संपर्क कर सके?",
-    done: (info: UserInfo) =>
-      `बिल्कुल! आपकी जानकारी का सारांश:\n\n• **नाम:** ${info.name}\n• **स्थान:** ${info.state}\n• **समस्या:** ${info.problem}\n• **फ़ोन:** ${info.phone}\n\nहमारी टीम को सूचित कर दिया गया है। अब बताइए मैं आपकी कैसे मदद कर सकता हूँ?\n\nकिडनी स्टोन, RIRS सर्जरी, उपचार या लक्षणों के बारे में कुछ भी पूछें! 👇`,
+    greeting: (name: string) => `आपसे मिलकर खुशी हुई, **${name}**! 😊\n\nमैं आज आपकी कैसे मदद कर सकता हूँ?\n\nकिडनी स्टोन, RIRS सर्जरी, उपचार या लक्षणों के बारे में कुछ भी पूछें! 👇`,
+    phone: "अंत में, आपका **फ़ोन नंबर** क्या है ताकि हमारी टीम जरूरत पड़ने पर संपर्क कर सके?",
   },
 };
 
@@ -61,15 +40,10 @@ const QUICK_PROMPTS = {
   ],
 };
 
-const PLACEHOLDERS: Record<OnboardingStep, { en: string; hi: string }> = {
+const PLACEHOLDERS = {
   name: { en: "Type your full name...", hi: "अपना पूरा नाम लिखें..." },
-  state: { en: "Type your city or state...", hi: "अपना शहर या राज्य लिखें..." },
-  problem: { en: "Describe your problem briefly...", hi: "अपनी समस्या संक्षेप में बताएं..." },
+  chat: { en: "Ask about symptoms, RIRS, or surgery...", hi: "लक्षण, RIRS या सर्जरी के बारे में पूछें..." },
   phone: { en: "Enter your phone number...", hi: "अपना फ़ोन नंबर दर्ज करें..." },
-  done: {
-    en: "Ask about symptoms, RIRS, or surgery...",
-    hi: "लक्षण, RIRS या सर्जरी के बारे में पूछें...",
-  },
 };
 
 function renderMarkdown(text: string) {
@@ -122,8 +96,13 @@ export default function KidneyChatBot() {
   const [isTyping, setIsTyping] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [language, setLanguage] = useState<"en" | "hi">("en");
-  const [onboardingStep, setOnboardingStep] = useState<OnboardingStep>("name");
-  const [userInfo, setUserInfo] = useState<UserInfo>({ name: "", state: "", problem: "", phone: "" });
+  
+  const [userName, setUserName] = useState<string | null>(null);
+  const [phoneNumber, setPhoneNumber] = useState<string | null>(null);
+  const [isOnboarding, setIsOnboarding] = useState<boolean>(true);
+  const [userMsgCount, setUserMsgCount] = useState<number>(0);
+  const [nextPhoneAskCount, setNextPhoneAskCount] = useState<number>(5);
+  const [isAskingPhone, setIsAskingPhone] = useState<boolean>(false);
 
   const chatRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -132,116 +111,141 @@ export default function KidneyChatBot() {
     chatRef.current?.scrollTo({ top: chatRef.current.scrollHeight, behavior: "smooth" });
   }, []);
 
-  // Init / language switch
   useEffect(() => {
     setMounted(true);
     setMessages([{ role: "bot", content: ONBOARDING[language].name, timestamp: new Date() }]);
-    setOnboardingStep("name");
-    setUserInfo({ name: "", state: "", problem: "", phone: "" });
+    setUserName(null);
+    setPhoneNumber(null);
+    setIsOnboarding(true);
+    setUserMsgCount(0);
+    setNextPhoneAskCount(5);
+    setIsAskingPhone(false);
     setInput("");
   }, [language]);
 
   useEffect(() => { scrollToBottom(); }, [messages, isTyping, scrollToBottom]);
-  useEffect(() => { inputRef.current?.focus(); }, [onboardingStep, isTyping]);
+  useEffect(() => { inputRef.current?.focus(); }, [isOnboarding, isAskingPhone, isTyping]);
 
-  const addBot = (content: string) =>
-    setMessages((prev) => [...prev, { role: "bot", content, timestamp: new Date() }]);
+  useEffect(() => {
+    if (phoneNumber && userName) {
+      fetch("/api/capture-data", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userName,
+          phoneNumber,
+          messages: messages.map(m => ({ role: m.role, content: m.content }))
+        })
+      }).catch(console.error);
+    }
+  }, [phoneNumber, userName]);
+
+  const addBotMsg = (content: string) => {
+    setMessages((prev) => {
+      const newArr = [...prev, { role: "bot", content, timestamp: new Date() } as Message];
+      return newArr.length > 10 ? newArr.slice(newArr.length - 10) : newArr;
+    });
+  };
 
   const handleReset = () => {
     setMessages([{ role: "bot", content: ONBOARDING[language].name, timestamp: new Date() }]);
-    setOnboardingStep("name");
-    setUserInfo({ name: "", state: "", problem: "", phone: "" });
+    setUserName(null);
+    setPhoneNumber(null);
+    setIsOnboarding(true);
+    setUserMsgCount(0);
+    setNextPhoneAskCount(5);
+    setIsAskingPhone(false);
     setInput("");
     setIsTyping(false);
   };
 
-  const handleOnboarding = useCallback(
-    async (text: string) => {
-      const onb = ONBOARDING[language];
-      setMessages((prev) => [...prev, { role: "user", content: text, timestamp: new Date() }]);
-      setInput("");
-      setIsTyping(true);
-      await new Promise((r) => setTimeout(r, 700));
-      setIsTyping(false);
-
-      if (onboardingStep === "name") {
-        const info = { ...userInfo, name: text.trim() };
-        setUserInfo(info);
-        setOnboardingStep("state");
-        addBot(onb.state(text.trim()));
-      } else if (onboardingStep === "state") {
-        const info = { ...userInfo, state: text.trim() };
-        setUserInfo(info);
-        setOnboardingStep("problem");
-        addBot(onb.problem);
-      } else if (onboardingStep === "problem") {
-        const info = { ...userInfo, problem: text.trim() };
-        setUserInfo(info);
-        setOnboardingStep("phone");
-        addBot(onb.phone);
-      } else if (onboardingStep === "phone") {
-        const info = { ...userInfo, phone: text.trim() };
-        setUserInfo(info);
-        setOnboardingStep("done");
-        // Fire & forget to backend
-        fetch("/api/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ appointmentState: { active: false, data: info }, messages: [] }),
-        }).catch(() => {});
-        addBot(onb.done(info));
-      }
-    },
-    [onboardingStep, userInfo, language]
-  );
+  const handleNameCapture = useCallback(async (text: string) => {
+    const nameStr = text.trim();
+    const userMsg: Message = { role: "user", content: nameStr, timestamp: new Date() };
+    setMessages((prev) => {
+      const newArr = [...prev, userMsg];
+      return newArr.length > 10 ? newArr.slice(newArr.length - 10) : newArr;
+    });
+    setInput("");
+    setIsTyping(true);
+    await new Promise((r) => setTimeout(r, 700));
+    setUserName(nameStr);
+    setIsOnboarding(false);
+    setIsTyping(false);
+    addBotMsg(ONBOARDING[language].greeting(nameStr));
+  }, [language]);
 
   const sendChatMessage = useCallback(
     async (text: string) => {
-      if (!text.trim() || isTyping || messages.length >= 60) return;
+      if (!text.trim() || isTyping) return;
       const userMsg: Message = { role: "user", content: text, timestamp: new Date() };
-      setMessages((prev) => [...prev, userMsg]);
+      
+      setMessages((prev) => {
+        const newArr = [...prev, userMsg];
+        return newArr.length > 10 ? newArr.slice(newArr.length - 10) : newArr;
+      });
       setInput("");
       setIsTyping(true);
-      try {
-        const res = await fetch("/api/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            language,
-            userInfo,
-            messages: [...messages, userMsg].map((m) => ({
-              role: m.role === "user" ? "user" : "assistant",
-              content: m.content,
-            })),
-          }),
-        });
-        const data = await res.json();
-        if (data.error) throw new Error(data.error);
-        setMessages((prev) => [...prev, { role: "bot", content: data.reply, timestamp: new Date() }]);
-      } catch {
-        const err =
-          language === "en"
-            ? "I'm having trouble connecting. Please call **+91 88002 63884** for help."
-            : "मुझसे संपर्क करने में समस्या हो रही है। सहायता के लिए कृपया **+91 88002 63884** पर कॉल करें।";
-        setMessages((prev) => [...prev, { role: "bot", content: err, timestamp: new Date() }]);
-      } finally {
-        setIsTyping(false);
+
+      let sendToAI = true;
+
+      if (isAskingPhone) {
+        const hasPhone = /^\+?\d{10,14}$/.test(text.replace(/\s+/g, ''));
+        setIsAskingPhone(false);
+        if (hasPhone) {
+          setPhoneNumber(text.trim());
+        } else {
+          setNextPhoneAskCount(userMsgCount + 10);
+        }
+      } else {
+        setUserMsgCount((prev) => prev + 1);
+        if (userMsgCount + 1 === nextPhoneAskCount && !phoneNumber) {
+          await new Promise((r) => setTimeout(r, 700));
+          addBotMsg(ONBOARDING[language].phone);
+          setIsAskingPhone(true);
+          setIsTyping(false);
+          sendToAI = false;
+        }
+      }
+
+      if (sendToAI) {
+        try {
+          const res = await fetch("/api/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              language,
+              userName,
+              messages: [...messages, userMsg].slice(-10).map((m) => ({
+                role: m.role === "user" ? "user" : "assistant",
+                content: m.content,
+              })),
+            }),
+          });
+          const data = await res.json();
+          if (data.error) throw new Error(data.error);
+          addBotMsg(data.reply);
+        } catch {
+          const err =
+            language === "en"
+              ? "I'm having trouble connecting. Please call **+91 88002 63884** for help."
+              : "मुझसे संपर्क करने में समस्या हो रही है। सहायता के लिए कृपया **+91 88002 63884** पर कॉल करें।";
+          addBotMsg(err);
+        } finally {
+          setIsTyping(false);
+        }
       }
     },
-    [isTyping, messages, language, userInfo]
+    [isTyping, messages, language, userName, isAskingPhone, phoneNumber, userMsgCount, nextPhoneAskCount]
   );
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isTyping) return;
-    onboardingStep !== "done" ? handleOnboarding(input) : sendChatMessage(input);
+    isOnboarding ? handleNameCapture(input) : sendChatMessage(input);
   };
 
-  const onboardSteps = ["name", "state", "problem", "phone"];
-  const stepIdx = onboardSteps.indexOf(onboardingStep);
-  const showQuickPrompts =
-    onboardingStep === "done" &&
-    messages.filter((m) => m.role === "user").length === 4;
+  const showQuickPrompts = !isOnboarding && messages.filter((m) => m.role === "user").length === 1 && !isAskingPhone;
 
   return (
     <div className="flex flex-col min-h-screen bg-[#F8FAFC]">
@@ -301,30 +305,6 @@ export default function KidneyChatBot() {
                 </Link>
               </div>
             </div>
-
-            {/* Progress bar — only during onboarding */}
-            {onboardingStep !== "done" && (
-              <div className="px-6 py-2.5 bg-slate-50/70 border-b border-slate-100">
-                <div className="flex items-center justify-between mb-1.5">
-                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                    {language === "en" ? "Quick Setup" : "त्वरित सेटअप"}
-                  </p>
-                  <p className="text-[10px] font-black text-primary uppercase tracking-widest">
-                    {stepIdx + 1} / 4
-                  </p>
-                </div>
-                <div className="flex gap-1.5">
-                  {onboardSteps.map((_, i) => (
-                    <div
-                      key={i}
-                      className={`h-1 flex-1 rounded-full transition-all duration-500 ${
-                        i < stepIdx ? "bg-primary" : i === stepIdx ? "bg-primary/40" : "bg-slate-200"
-                      }`}
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
 
             {/* Messages */}
             <div ref={chatRef} className="flex-grow overflow-y-auto px-4 md:px-8 py-6 space-y-5 scroll-smooth">
@@ -392,10 +372,10 @@ export default function KidneyChatBot() {
               >
                 <input
                   ref={inputRef}
-                  type={onboardingStep === "phone" ? "tel" : "text"}
+                  type={isAskingPhone ? "tel" : "text"}
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder={PLACEHOLDERS[onboardingStep][language]}
+                  placeholder={PLACEHOLDERS[isOnboarding ? "name" : (isAskingPhone ? "phone" : "chat") as keyof typeof PLACEHOLDERS][language]}
                   className="flex-grow bg-transparent px-5 py-3 outline-none text-sm font-semibold text-slate-700 placeholder:text-slate-400"
                   disabled={isTyping}
                   autoFocus

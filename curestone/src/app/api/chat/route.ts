@@ -12,7 +12,7 @@ const redis = new Redis({
 
 const ratelimit = new Ratelimit({
   redis: redis,
-  limiter: Ratelimit.slidingWindow(5, "1m"), 
+  limiter: Ratelimit.slidingWindow(5, "1m"),
   analytics: true,
 });
 
@@ -33,15 +33,15 @@ export async function POST(req: NextRequest) {
   if (!success) {
     return NextResponse.json(
       { reply: "Slow down! You've sent too many messages. Please wait a minute." },
-      { 
-        status: 429, 
-        headers: { "X-RateLimit-Limit": limit.toString(), "X-RateLimit-Reset": reset.toString() } 
+      {
+        status: 429,
+        headers: { "X-RateLimit-Limit": limit.toString(), "X-RateLimit-Reset": reset.toString() }
       }
     );
   }
 
   try {
-    const { messages, appointmentState, language } = await req.json();
+    const { messages, appointmentState, language, userName } = await req.json();
     const lastMsg = messages[messages.length - 1]?.content?.toLowerCase() || "";
 
     // --- APPOINTMENT BOOKING LOGIC ---
@@ -94,9 +94,14 @@ export async function POST(req: NextRequest) {
       parts: [{ text: m.content }],
     }));
 
+    let finalSystemPrompt = SYSTEM_PROMPT;
+    if (userName) {
+      finalSystemPrompt = `You are talking to the user named **${userName}**.\n\n${finalSystemPrompt}`;
+    }
+
     const model = genAI.getGenerativeModel({
-      model: "gemini-2.5-flash-lite", 
-      systemInstruction: language === 'hi' ? `${SYSTEM_PROMPT} Respond in Hindi.` : SYSTEM_PROMPT
+      model: "gemini-2.5-flash-lite",
+      systemInstruction: language === 'hi' ? `${finalSystemPrompt} Respond in Hindi.` : finalSystemPrompt
     });
 
     const result = await model.generateContent({
