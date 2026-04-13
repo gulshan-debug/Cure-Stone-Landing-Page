@@ -4,6 +4,7 @@ import Footer from "@/components/layout/Footer";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Metadata } from "next";
+import Image from "next/image";
 
 interface Props {
   params: Promise<{ slug: string }>;

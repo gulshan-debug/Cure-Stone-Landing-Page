@@ -690,14 +690,16 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     id: 45,
-    slug: "foods-for-prostate-health",
-    title: "Top 12 Foods For Prostate Health",
-    category: "Urological Problems",
-    excerpt: "Integrating Lycopene and Selenium into your diet for long-term prostate wellness.",
-    date: "December 03, 2024",
-    readTime: "10 min read",
+    slug: "expect-during-kidney-stone-tests",
+    title: "What To Expect During Your Kidney Stone Tests?",
+    category: "Kidney Stones",
+    excerpt: "Walkthrough of Blood tests, Urinalysis, and NCCT Scans for stone diagnosis.",
+    date: "December 06, 2024",
+    readTime: "7 min read",
     author: "Dr. Deepanshu Gupta",
-    language: "en"
+    language: "en",
+    image: "/assets/blog/placeholder.jpg",
+    content: "<p>Detailed article content coming soon...</p>"
   },
   {
     id: 46,
