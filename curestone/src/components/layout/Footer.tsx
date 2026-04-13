@@ -7,11 +7,9 @@ const Footer = () => {
     {
       title: "Services",
       links: [
-        { label: "Kidney Stone Treatment", href: "/book" },
-        { label: "Urology & Andrology", href: "/book" },
-        { label: "IVF Treatment", href: "/book" },
-        { label: "Renal Transplant", href: "/book" },
-        { label: "General Surgery", href: "/book" },
+        { label: "Kidney Stone Treatment", href: "/specialties/kidney-stone-treatment" },
+        { label: "Urology & Andrology", href: "/specialties/urology-and-andrology" },
+        { label: "Gallbladder Stone Treatment", href: "/specialties/gallbladder-stone-treatment" },
       ],
     },
     {
@@ -29,9 +27,7 @@ const Footer = () => {
       links: [
         { label: "Cure Stone AI", href: "/checker" },
         { label: "Book Free Consultation ", href: "/book" },
-        { label: "Patient Portal", href: "/portal" },
         { label: "Health Blog", href: "/blog" },
-        { label: "Admin Login", href: "/admin" },
       ],
     },
   ];
@@ -43,7 +39,7 @@ const Footer = () => {
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/10 blur-[100px] rounded-full -ml-32 -mb-32 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
-        <div className="grid lg:grid-cols-[2fr_1fr_1fr_1fr] gap-16 mb-20">
+        <div className="grid lg:grid-cols-[1.5fr_1fr_1fr_1fr_1.5fr] gap-12 lg:gap-16 mb-20">
 
           {/* Brand Col */}
           <div className="space-y-8">
@@ -53,15 +49,14 @@ const Footer = () => {
                   src="https://theCurestone.com/wp-content/uploads/2021/05/PNG-Black-e1664728676618.png"
                   alt="Cure Stone Logo"
                   fill
-                  // Added brightness-0 invert to make the black logo pure white for the dark footer
                   className="object-contain object-left brightness-0 invert"
                   unoptimized
                 />
               </div>
             </Link>
 
-            <p className="text-white/60 font-medium leading-relaxed max-w-sm">
-              Pioneering excellence in urology and kidney stone care across Delhi NCR. Advanced treatment, compassionate service, and transparent pricing.
+            <p className="text-white/60 font-medium leading-relaxed">
+              Pioneering excellence in urology and kidney stone care across Delhi NCR.
             </p>
 
             <div className="flex gap-4">
@@ -91,6 +86,27 @@ const Footer = () => {
               </ul>
             </div>
           ))}
+
+          {/* Map Section */}
+          <div className="space-y-8">
+            <h4 className="text-[11px] font-black text-white/40 uppercase tracking-[0.2em]">
+              Visit Our Center
+            </h4>
+            <div className="rounded-2xl overflow-hidden border border-white/10  opacity-80    transition-all duration-500 shadow-2xl">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3508.3183934021354!2d77.06771327549376!3d28.439816975770583!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d19559d21f213%3A0xa736733167a5023b!2sCure%20Stone!5e0!3m2!1sen!2sin!4v1776060126904!5m2!1sen!2sin"
+                width="100%"
+                height="160"
+                style={{ border: 0 }}
+                allowFullScreen={true}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
+            <p className="text-[10px] font-bold text-white/40 leading-relaxed uppercase tracking-widest">
+              Sector 46, Gurgaon, <br /> Haryana 122003
+            </p>
+          </div>
         </div>
 
         {/* Bottom Bar */}

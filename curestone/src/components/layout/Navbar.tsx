@@ -5,31 +5,35 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
+// Social Media Icons
+const SocialIcons = {
+  Instagram: () => (
+    <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37zM17.5 6.5h.01" /></svg>
+  ),
+  Facebook: () => (
+    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
+  ),
+  Youtube: () => (
+    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" /></svg>
+  )
+};
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
 
-  // Handle Hydration and Scroll
   useEffect(() => {
     setMounted(true);
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
-    if (typeof document !== "undefined") {
-      document.body.style.overflow = isOpen ? "hidden" : "";
-    }
-    return () => {
-      if (typeof document !== "undefined") document.body.style.overflow = "";
-    };
+    document.body.style.overflow = isOpen ? "hidden" : "unset";
   }, [isOpen]);
 
   const navLinks = [
@@ -37,142 +41,115 @@ export default function Navbar() {
     { name: "CureStone AI", href: "/checker", highlight: true },
     { name: "RIRS", href: "/rirs" },
     { name: "ESWL", href: "/eswl" },
-
     { name: "URSL", href: "/ursl" },
-
   ];
 
   if (!mounted) return <nav className="fixed top-0 w-full h-20 z-50 bg-transparent" />;
 
   return (
     <>
-      <nav
-        className={`fixed top-0 left-0 right-0 z-[60] transition-all duration-300 ease-in-out bg-white/95 backdrop-blur-xl shadow-sm border-b border-slate-100 ${scrolled ? "h-16" : "h-20"
-          }`}
-      >
+      <nav className={`fixed top-0 left-0 right-0 z-[60] transition-all duration-300 bg-white/95 backdrop-blur-xl border-b border-slate-100 ${scrolled ? "h-16 shadow-md" : "h-20"}`}>
         <div className="max-w-7xl mx-auto h-full px-6 md:px-10 flex items-center justify-between">
 
-          {/* Logo Section */}
-          <Link href="/" className="flex items-center gap-3 group no-underline shrink-0 z-[70]">
-            <div className="relative flex items-center shrink-0">
-              <div className={`relative transition-all duration-300 ${scrolled ? "w-28 h-10" : "w-32 h-12"
-                }`}>
-                <Image
-                  src="https://theCurestone.com/wp-content/uploads/2021/05/PNG-Black-e1664728676618.png"
-                  alt="Cure Stone Logo"
-                  fill
-                  // Using object-left ensures it stays aligned with the start of the nav
-                  className="object-contain object-left"
-                  priority
-                  unoptimized
-                />
-              </div>
+          <Link href="/" className="flex items-center shrink-0 z-[70]">
+            <div className={`relative transition-all duration-300 ${scrolled ? "w-28 h-10" : "w-32 h-12"}`}>
+              <Image src="https://theCurestone.com/wp-content/uploads/2021/05/PNG-Black-e1664728676618.png" alt="Cure Stone Logo" fill className="object-contain object-left" priority unoptimized />
             </div>
           </Link>
 
-          {/* Desktop Nav Links */}
-          <div className="hidden lg:flex items-center gap-1">
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href;
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`relative px-4 py-2 text-sm font-bold rounded-full transition-all duration-200 ${isActive
-                    ? "text-primary bg-primary/10"
-                    : link.highlight
-                      ? "text-primary bg-primary/10 border border-primary/20 hover:bg-primary/20 ring-4 ring-primary/5"
-                      : "text-slate-600 hover:text-primary hover:bg-primary/5"
-                    }`}
-                >
-                  {link.name}
-                  {link.highlight && (
-                    <span className="absolute -top-1 -right-1 flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+          {/* Desktop Links */}
+          <div className="hidden lg:flex items-center gap-2">
+            {navLinks.map((link) => (
+              <Link key={link.href} href={link.href} className={`relative px-4 py-2 group ${link.highlight ? "" : "font-bold text-slate-600 hover:text-primary text-sm"}`}>
+                {link.highlight ? (
+                  <div className="relative">
+                    {/* Pulsing Highlight Border for CureStone AI */}
+                    <div className="absolute inset-0 rounded-full border-2 border-primary animate-pulse" />
+                    <div className="absolute inset-[-4px] rounded-full border border-primary/20" />
+                    <span className="relative px-4 py-1.5 flex items-center gap-2 text-sm font-black text-primary uppercase">
+                      {link.name}
                     </span>
-                  )}
-                </Link>
-              );
-            })}
+                  </div>
+                ) : link.name}
+              </Link>
+            ))}
           </div>
 
-          {/* Right Actions */}
-          <div className="hidden md:flex items-center gap-3 shrink-0">
-            <a
-              href="tel:+918800263884"
-              className="flex items-center gap-2 text-xs font-bold px-4 py-2.5 rounded-full border text-slate-700 bg-slate-50 border-slate-200 hover:border-primary/40 hover:text-primary transition-all"
-            >
-              <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z" />
-              </svg>
-              +91 88002 63884
-            </a>
+          {/* Right Section: Socials + Phone + Book Button */}
+          <div className="hidden md:flex items-center gap-5">
+            <div className="flex items-center gap-3 pr-4 border-r border-slate-200">
+              <a href="https://www.youtube.com/@cure_stone" target="_blank" className="text-slate-400 hover:text-[#FF0000] transition-colors"><SocialIcons.Youtube /></a>
+              <a href="#" className="text-slate-400 hover:text-primary transition-colors"><SocialIcons.Instagram /></a>
+              <a href="#" className="text-slate-400 hover:text-primary transition-colors"><SocialIcons.Facebook /></a>
+            </div>
 
-            <Link
-              href="/book"
-              className="px-6 py-2.5 rounded-full text-sm font-bold text-white bg-primary hover:bg-primary-dark transition-all shadow-lg shadow-primary/20"
-            >
-              Book Now
+            <a href="tel:+918800263884" className="text-sm font-black text-slate-700 hover:text-primary whitespace-nowrap">+91 88002 63884</a>
+
+            <Link href="/book" className="group relative px-7 py-2.5 bg-primary text-white font-black text-xs rounded-full uppercase tracking-widest shadow-lg shadow-primary/30">
+              {/* Thick Outer Highlight Border */}
+              <div className="absolute inset-[-3px] rounded-full border-2 border-primary group-hover:border-primary-dark transition-colors" />
+              <span className="relative">BOOK NOW</span>
             </Link>
           </div>
 
-          {/* Hamburger Menu */}
-          <button
-            className="lg:hidden w-10 h-10 flex flex-col items-center justify-center gap-[5px] z-[70]"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            <span className={`block w-5 h-[2px] rounded-full transition-all bg-slate-800 ${isOpen ? "rotate-45 translate-y-[7px]" : ""}`} />
-            <span className={`block w-5 h-[2px] rounded-full transition-all bg-slate-800 ${isOpen ? "opacity-0" : ""}`} />
-            <span className={`block w-5 h-[2px] rounded-full transition-all bg-slate-800 ${isOpen ? "-rotate-45 -translate-y-[7px]" : ""}`} />
+          {/* Mobile Menu Button */}
+          <button className="lg:hidden p-2 text-primary" onClick={() => setIsOpen(true)}>
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16" /></svg>
           </button>
         </div>
       </nav>
 
-      {/* Mobile Drawer Overlay */}
-      <div
-        className={`fixed inset-0 z-[54] bg-slate-900/40 backdrop-blur-sm lg:hidden transition-opacity duration-300 ${isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-          }`}
-        onClick={() => setIsOpen(false)}
-      />
+      {/* MOBILE MENU OVERLAY */}
+      <div className={`fixed inset-0 z-[100] bg-white transition-all duration-500 ease-in-out ${isOpen ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full"}`}>
 
-      {/* Mobile Sidebar */}
-      <div
-        className={`fixed top-0 right-0 h-full w-[280px] z-[65] bg-white shadow-2xl lg:hidden flex flex-col transition-transform duration-400 ease-out ${isOpen ? "translate-x-0" : "translate-x-full"
-          }`}
-      >
-        <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100">
-          {/* Mobile Sidebar - Text Logo also removed here */}
-          <button onClick={() => setIsOpen(false)} className="text-slate-400 p-2">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+        {/* Mobile Header with Close Button */}
+        <div className="flex items-center justify-between px-6 h-20 border-b border-slate-100">
+          <div className="relative w-28 h-10">
+            <Image src="https://theCurestone.com/wp-content/uploads/2021/05/PNG-Black-e1664728676618.png" alt="Logo" fill className="object-contain" unoptimized />
+          </div>
+          <button onClick={() => setIsOpen(false)} className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-900 text-white">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" /></svg>
           </button>
         </div>
 
-        <div className="flex-grow py-6 px-4 space-y-1">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={() => setIsOpen(false)}
-              className={`block px-4 py-3 rounded-xl font-bold transition-colors ${pathname === link.href
-                ? "bg-primary/10 text-primary"
-                : link.highlight
-                  ? "bg-primary/5 text-primary border border-primary/10"
-                  : "text-slate-700 hover:bg-slate-50"
-                }`}
-            >
-              {link.name}
-            </Link>
-          ))}
-        </div>
+        <div className="flex flex-col h-[calc(100vh-80px)]">
+          <div className="p-6 space-y-3">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setIsOpen(false)}
+                className={`block w-full p-4 rounded-xl text-lg font-black transition-all ${link.highlight
+                    ? "bg-primary text-white border-b-4 border-primary-dark shadow-xl"
+                    : "text-slate-800 hover:bg-slate-50 border border-transparent"
+                  }`}
+              >
+                {link.name}
+              </Link>
+            ))}
+          </div>
 
-        <div className="p-6 border-t border-slate-100 space-y-3">
-          <a href="tel:+918800263884" className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-slate-50 text-slate-700 font-bold text-sm">
-            Call +91 88002 63884
-          </a>
-          <Link href="/book" onClick={() => setIsOpen(false)} className="block w-full py-3 bg-primary text-white text-center rounded-xl font-bold text-sm shadow-lg shadow-primary/20">
-            Book Free Consultation
-          </Link>
+          {/* Mobile Footer: Socials & Phone */}
+          <div className="mt-auto p-8 bg-slate-900 text-white rounded-t-[40px] space-y-6">
+            <div className="flex justify-between items-center">
+              <div>
+                <p className="text-[10px] font-bold text-primary uppercase tracking-widest">Call Expert</p>
+                <a href="tel:+918800263884" className="text-xl font-black">+91 88002 63884</a>
+              </div>
+              <div className="flex gap-3">
+                <a href="https://www.youtube.com/@cure_stone" className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-[#FF0000]"><SocialIcons.Youtube /></a>
+                <a href="#" className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-primary"><SocialIcons.Instagram /></a>
+              </div>
+            </div>
+
+            <Link
+              href="/book"
+              onClick={() => setIsOpen(false)}
+              className="block w-full py-5 bg-primary text-white text-center rounded-2xl font-black text-lg shadow-2xl shadow-primary/40 border-b-4 border-primary-dark"
+            >
+              BOOK CONSULTATION
+            </Link>
+          </div>
         </div>
       </div>
     </>

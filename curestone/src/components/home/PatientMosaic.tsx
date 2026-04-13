@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
+
 interface Testimonial {
   id: number;
   title: string;
@@ -19,33 +20,33 @@ const TESTIMONIALS: Testimonial[] = [
     title: "15mm Kidney Stone RIRS",
     name: "Rahul Agarwal",
     category: "RIRS Surgery",
-    thumbnail: "/kGwihRRAyFg-HD.jpg",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
+    thumbnail: "/6Tj_fWRvCpo-HD.jpg",
+    videoUrl: "https://www.youtube.com/embed/4FE-zSpLWPQ?si=oIQ3JlWAWHeJWGAs&amp;controls=0",
     isTall: true,
   },
   {
     id: 2,
-    title: "Bilateral Stone Removal",
+    title: "11mm Kidney Stone Removal",
     name: "Baby Bhavika",
     category: "Pediatric Care",
-    thumbnail: "/6Tj_fWRvCpo-HD.jpg",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
+    thumbnail: "/testimonials/11mm.jpg",
+    videoUrl: "https://www.youtube.com/embed/4FE-zSpLWPQ?si=oIQ3JlWAWHeJWGAs&amp;controls=0",
   },
   {
     id: 3,
-    title: "Zero Pain Recovery",
+    title: "Assam To Cure Stone",
     name: "Ms Sakshi",
     category: "Stone-Free",
-    thumbnail: "/6Tj_fWRvCpo-HD.jpg",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
+    thumbnail: "/testimonials/11mm.png",
+    videoUrl: "https://www.youtube.com/embed/4FE-zSpLWPQ?si=oIQ3JlWAWHeJWGAs&amp;controls=0",
   },
   {
     id: 4,
-    title: "Advanced Prostate Care",
+    title: "14mm Ureter Stone",
     name: "Mr. Devender Singh",
     category: "Laser Surgery",
-    thumbnail: "/6Tj_fWRvCpo-HD.jpg",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
+    thumbnail: "/testimonials/14mm.jpg",
+    videoUrl: "https://www.youtube.com/embed/4FE-zSpLWPQ?si=oIQ3JlWAWHeJWGAs&amp;controls=0",
   },
   {
     id: 5,
@@ -53,32 +54,32 @@ const TESTIMONIALS: Testimonial[] = [
     name: "Madhav Choudhary",
     category: "Urology",
     thumbnail: "/6Tj_fWRvCpo-HD.jpg",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
+    videoUrl: "https://www.youtube.com/embed/4FE-zSpLWPQ?si=oIQ3JlWAWHeJWGAs&amp;controls=0",
     isTall: true,
   },
   {
     id: 6,
-    title: "Successful RIRS",
-    name: "Dr. Abhilasha Agarwal",
+    title: "RIRS Live OT",
+    name: "Dr. Deepanshu Gupta",
     category: "Post-Op",
-    thumbnail: "/6Tj_fWRvCpo-HD.jpg",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
+    thumbnail: "/testimonials/20mm.jpg",
+    videoUrl: "https://www.youtube.com/embed/4FE-zSpLWPQ?si=oIQ3JlWAWHeJWGAs&amp;controls=0",
   },
   {
     id: 7,
-    title: "Complex ESWL Case",
+    title: "Live OT",
     name: "Vikram Sharma",
     category: "Laser Treatment",
-    thumbnail: "/6Tj_fWRvCpo-HD.jpg",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
+    thumbnail: "/testimonials/Live OT - Part 4.jpg",
+    videoUrl: "https://www.youtube.com/embed/4FE-zSpLWPQ?si=oIQ3JlWAWHeJWGAs&amp;controls=0",
   },
   {
     id: 8,
-    title: "100% Stone-Free",
+    title: "Lower Pole",
     name: "Sunita Choudhary",
     category: "Patient Story",
-    thumbnail: "/6Tj_fWRvCpo-HD.jpg",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
+    thumbnail: "/testimonials/Lower Pole.jpg",
+    videoUrl: "https://www.youtube.com/embed/4FE-zSpLWPQ?si=oIQ3JlWAWHeJWGAs&amp;controls=0",
   },
 ];
 
@@ -92,7 +93,7 @@ export default function PatientMosaic() {
   return (
     <section className="py-16 sm:py-20 lg:py-24 bg-[#F8FAFC] overflow-hidden">
       <div className="max-w-[1440px] mx-auto">
-        
+
         {/* Header - Horizontal Padding kept here */}
         <div className="px-4 sm:px-6 flex flex-col lg:flex-row lg:items-end justify-between mb-10 lg:mb-12 gap-6 lg:gap-8">
           <div className="max-w-2xl">
@@ -139,10 +140,10 @@ export default function PatientMosaic() {
 
         {/* Mobile Auto-Scroll Carousel (Infinite Marquee) */}
         <div className="sm:hidden relative">
-          <motion.div 
+          <motion.div
             className="flex gap-4 px-4 pr-10"
             animate={{ x: ["0%", "-50%"] }}
-            transition={{ 
+            transition={{
               duration: 30, // Adjust speed here
               ease: "linear",
               repeat: Infinity
@@ -162,7 +163,7 @@ export default function PatientMosaic() {
               </div>
             ))}
           </motion.div>
-          
+
           {/* Edge Gradients for smooth fade */}
           <div className="absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-[#F8FAFC] to-transparent z-10 pointer-events-none" />
           <div className="absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-[#F8FAFC] to-transparent z-10 pointer-events-none" />
@@ -180,7 +181,7 @@ export default function PatientMosaic() {
               className="absolute inset-0 bg-slate-950/70 backdrop-blur-xl"
               onClick={() => setActiveVideo(null)}
             />
-            <motion.div 
+            <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}

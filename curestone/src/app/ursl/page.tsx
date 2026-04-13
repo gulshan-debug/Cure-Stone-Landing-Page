@@ -29,7 +29,7 @@ export default function URSLPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
-      
+
       {/* Hero */}
       <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 bg-slate-50 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(16,163,74,0.1),transparent_60%)]" />
@@ -74,7 +74,7 @@ export default function URSLPage() {
       {/* Stats Bar */}
       <div className="bg-primary py-8 px-6">
         <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-white">
-          {[["95%+", "Success Rate"], ["24 Hrs", "Typical Stay"], ["0", "Incisions"], ["30,000+", "Lives Touched"]].map(([val, lab], i) => (
+          {[["95%+", "Success Rate"], ["24 Hrs", "Typical Stay"], ["0", "Incisions"], ["10,000+", "Lives Touched"]].map(([val, lab], i) => (
             <div key={i}>
               <p className="text-3xl md:text-4xl font-black tracking-tight">{val}</p>
               <p className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-white/60 mt-2">{lab}</p>

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
-import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, AnimatePresence, useAnimationFrame } from "framer-motion";
 
 interface Scene {
   id: number;
@@ -52,86 +52,137 @@ export default function ScrollCanvasHero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [images, setImages] = useState<HTMLImageElement[]>([]);
-  const [loadedCount, setLoadedCount] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [loadingProgress, setLoadingProgress] = useState(0);
 
-  // Framer Motion for Apple-style Smoothing
+  // Motion progress
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
   });
 
-  // Spring physics for that "heavy" fluid feel
+  // Apple-style heavy smooth spring
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
+    stiffness: 45,
+    damping: 35,
+    restDelta: 0.0001
   });
 
-  // Preload images
-  useEffect(() => {
-    const loadedImages: HTMLImageElement[] = [];
-    let loaded = 0;
+  const lastFrameIndex = useRef<number>(-1);
+  const canvasSize = useRef({ width: 0, height: 0 });
 
-    for (let i = 1; i <= FRAME_COUNT; i++) {
-      const img = new Image();
-      const framePath = `/ezgif-213ab7655818cce8-jpg/ezgif-frame-${i.toString().padStart(3, '0')}.jpg`;
-      img.src = framePath;
-      img.onload = () => {
-        loaded++;
-        setLoadedCount(loaded);
-        if (loaded === FRAME_COUNT) {
-          setImages(loadedImages);
-        }
-      };
-      loadedImages.push(img);
-    }
-  }, []);
-
+  // 1. High-Performance render call
   const renderFrame = useCallback((prog: number) => {
     const canvas = canvasRef.current;
-    const ctx = canvas?.getContext("2d");
-    if (!canvas || !ctx || images.length < FRAME_COUNT) return;
+    if (!canvas || images.length < FRAME_COUNT) return;
+    
+    // Core optimization: opaque context for better GPU throughput
+    const ctx = canvas.getContext("2d", { alpha: false });
+    if (!ctx) return;
 
-    const frameIndex = Math.floor(prog * (FRAME_COUNT - 1));
-    const frame = images[Math.max(0, Math.min(frameIndex, FRAME_COUNT - 1))];
+    const frameIndex = Math.max(0, Math.min(Math.floor(prog * (FRAME_COUNT - 1)), FRAME_COUNT - 1));
+    
+    // Guard: Prevent redundant main-thread calls
+    if (frameIndex === lastFrameIndex.current) return;
+    lastFrameIndex.current = frameIndex;
+
+    const frame = images[frameIndex];
     if (!frame) return;
 
-    const rect = canvas.getBoundingClientRect();
-    canvas.width = rect.width * window.devicePixelRatio;
-    canvas.height = rect.height * window.devicePixelRatio;
+    const { width, height } = canvasSize.current;
+    if (width === 0 || height === 0) return;
 
+    // Draw Logic
     const imgRatio = frame.width / frame.height;
-    const canvasRatio = canvas.width / canvas.height;
-    
+    const canvasRatio = width / height;
     let drawWidth, drawHeight, offsetX, offsetY;
 
     if (imgRatio > canvasRatio) {
-      drawHeight = canvas.height;
-      drawWidth = canvas.height * imgRatio;
-      offsetX = (canvas.width - drawWidth) / 2;
+      drawHeight = height;
+      drawWidth = height * imgRatio;
+      offsetX = (width - drawWidth) / 2;
       offsetY = 0;
     } else {
-      drawWidth = canvas.width;
-      drawHeight = canvas.width / imgRatio;
+      drawWidth = width;
+      drawHeight = width / imgRatio;
       offsetX = 0;
-      offsetY = (canvas.height - drawHeight) / 2;
+      offsetY = (height - drawHeight) / 2;
     }
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // High performance draw
     ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = "high";
+    ctx.imageSmoothingQuality = "medium"; // Balanced
     ctx.drawImage(frame, offsetX, offsetY, drawWidth, drawHeight);
   }, [images]);
 
-  // Sync Smooth Progress with Canvas Rendering
-  useEffect(() => {
-    const unsubscribe = smoothProgress.on("change", (latest) => {
-      renderFrame(latest);
-    });
-    return () => unsubscribe();
-  }, [smoothProgress, renderFrame]);
+  // 2. Hardware-Accelerated Animation Loop (Decoupled from Scroll)
+  useAnimationFrame(() => {
+    if (isLoaded) {
+      renderFrame(smoothProgress.get());
+    }
+  });
 
-  // Active Scene Logic
+  // 3. Adaptive Canvas Resizer (Capped resolution)
+  useEffect(() => {
+    const updateSize = () => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      const rect = canvas.getBoundingClientRect();
+      
+      // Performance Cap: Limit pixel density to 1.5x to avoid massive VRAM usage while staying sharp
+      const dpr = Math.min(window.devicePixelRatio, 1.5);
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      canvasSize.current = { width: canvas.width, height: canvas.height };
+      
+      if (isLoaded) renderFrame(smoothProgress.get());
+    };
+
+    updateSize();
+    window.addEventListener("resize", updateSize);
+    return () => window.removeEventListener("resize", updateSize);
+  }, [renderFrame, smoothProgress, isLoaded]);
+
+  // 4. Advanced GPU Pre-Warming (Image pre-decoding)
+  useEffect(() => {
+    let active = true;
+    const preloadImages = async () => {
+      const loadedImages: HTMLImageElement[] = [];
+      let loaded = 0;
+
+      const promises = Array.from({ length: FRAME_COUNT }).map((_, i) => {
+        return new Promise<HTMLImageElement>((resolve) => {
+          const img = new Image();
+          const framePath = `/ezgif-213ab7655818cce8-jpg/ezgif-frame-${(i + 1).toString().padStart(3, '0')}.jpg`;
+          img.src = framePath;
+          
+          img.onload = async () => {
+            // "Apple level" optimization: Force GPU decompression before use
+            try {
+              if (img.decode) await img.decode();
+            } catch (e) {
+              console.warn("Decoding failed for frame", i);
+            }
+            loaded++;
+            if (active) setLoadingProgress(Math.round((loaded / FRAME_COUNT) * 100));
+            resolve(img);
+          };
+          loadedImages[i] = img;
+        });
+      });
+
+      const allImages = await Promise.all(promises);
+      if (active) {
+        setImages(allImages);
+        setIsLoaded(true);
+      }
+    };
+
+    preloadImages();
+    return () => { active = false; };
+  }, []);
+
+  // 5. Active Scene Orchestration
   const [activeScene, setActiveScene] = useState<Scene | null>(SCENES[0]);
   useEffect(() => {
     const unsubscribe = smoothProgress.on("change", (v) => {
@@ -147,19 +198,29 @@ export default function ScrollCanvasHero() {
     return () => unsubscribe();
   }, [smoothProgress]);
 
-  const loadingProgress = Math.round((loadedCount / FRAME_COUNT) * 100);
-
   return (
-    <div ref={containerRef} className="relative h-[600vh] bg-slate-50">
+    <div ref={containerRef} className="relative h-[800vh] bg-slate-950">
       <div className="sticky top-0 h-screen w-full overflow-hidden">
-        
+
         {/* Loading Overlay */}
-        {loadedCount < FRAME_COUNT && (
-          <div className="absolute inset-0 z-[60] bg-slate-50 flex flex-col items-center justify-center text-slate-900 space-y-4">
-             <div className="w-64 h-1 bg-slate-200 rounded-full overflow-hidden">
-                <div className="h-full bg-primary transition-all duration-300" style={{ width: `${loadingProgress}%` }} />
-             </div>
-             <p className="text-[10px] font-black tracking-widest uppercase opacity-50">Initializing Medical Engine · {loadingProgress}%</p>
+        {!isLoaded && (
+          <div className="absolute inset-0 z-[60] bg-slate-950 flex flex-col items-center justify-center text-white space-y-6">
+            <div className="relative w-64 h-1.5 bg-white/5 rounded-full overflow-hidden">
+              <motion.div 
+                className="absolute inset-y-0 left-0 bg-primary"
+                initial={{ width: 0 }}
+                animate={{ width: `${loadingProgress}%` }}
+                transition={{ type: "spring", stiffness: 50, damping: 15 }}
+              />
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <p className="text-[10px] font-black tracking-[0.3em] uppercase text-primary animate-pulse">
+                Calibrating Digital OT
+              </p>
+              <p className="text-[9px] font-bold text-white/20 uppercase tracking-widest leading-none">
+                Hardware Decryption · {loadingProgress}%
+              </p>
+            </div>
           </div>
         )}
 
@@ -167,10 +228,11 @@ export default function ScrollCanvasHero() {
         <div className="absolute inset-0 z-0 bg-slate-950">
           <canvas
             ref={canvasRef}
-            className="w-full h-full object-cover opacity-60 transition-opacity duration-1000"
+            className={`w-full h-full object-cover transition-opacity duration-1000 ${isLoaded ? 'opacity-70' : 'opacity-0'}`}
           />
-          {/* Dark Ambient Vignette for readability */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/20 to-black/80 pointer-events-none" />
+          {/* Pro Vignette for Text Contrast */}
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-transparent to-slate-950 pointer-events-none opacity-80" />
+          <div className="absolute inset-0 bg-radial-gradient from-transparent to-slate-950/60 pointer-events-none" />
         </div>
 
         {/* Animated Text Scenes */}
@@ -179,37 +241,37 @@ export default function ScrollCanvasHero() {
             {activeScene && (
               <motion.div
                 key={activeScene.id}
-                initial={{ opacity: 0, y: 30, filter: "blur(10px)", scale: 0.95 }}
+                initial={{ opacity: 0, y: 40, filter: "blur(20px)", scale: 0.9 }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
-                exit={{ opacity: 0, y: -30, filter: "blur(10px)", scale: 0.95 }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }} // Apple-style cubic bezier
-                className="max-w-4xl space-y-6"
+                exit={{ opacity: 0, y: -40, filter: "blur(20px)", scale: 0.9 }}
+                transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }} 
+                className="max-w-5xl space-y-8"
               >
                 {activeScene.badge && (
-                  <motion.span 
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.3 }}
-                    className="inline-block px-4 py-1.5 mb-4 text-[10px] font-black tracking-widest text-primary bg-primary/20 border border-primary/30 rounded-full uppercase"
+                  <motion.span
+                    initial={{ opacity: 0, letterSpacing: "0.5em" }}
+                    animate={{ opacity: 1, letterSpacing: "0.25em" }}
+                    transition={{ delay: 0.4, duration: 1 }}
+                    className="inline-block px-5 py-2 mb-4 text-[11px] font-black text-primary bg-primary/10 border border-primary/20 rounded-full uppercase"
                   >
                     {activeScene.badge}
                   </motion.span>
                 )}
-                <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-white leading-[1.1] tracking-tight [text-wrap:balance]">
+                <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black text-white leading-[0.95] tracking-tight [text-wrap:balance]">
                   {activeScene.title}
                 </h1>
-                <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/70 font-medium max-w-2xl mx-auto leading-relaxed">
+                <p className="text-base sm:text-xl md:text-2xl text-white/50 font-medium max-w-2xl mx-auto leading-relaxed">
                   {activeScene.subtitle}
                 </p>
-                
+
                 {activeScene.id === 4 && (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 }}
-                    className="pt-8 pointer-events-auto"
+                    transition={{ delay: 0.8 }}
+                    className="pt-10 pointer-events-auto"
                   >
-                    <button 
+                    <button
                       onClick={() => {
                         const element = document.getElementById('appointment-section');
                         if (element) {
@@ -218,9 +280,10 @@ export default function ScrollCanvasHero() {
                           window.location.href = '/book';
                         }
                       }}
-                      className="px-10 py-5 bg-primary text-white font-black rounded-2xl shadow-2xl shadow-primary/40 hover:bg-primary-dark transition-all hover:scale-105 active:scale-95"
+                      className="group relative px-12 py-6 bg-primary text-white font-black rounded-2xl overflow-hidden shadow-2xl transition-all hover:scale-105 active:scale-95"
                     >
-                      📅 BOOK FREE CONSULTATION
+                      <span className="relative z-10">BOOK FREE CONSULTATION →</span>
+                      <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
                     </button>
                   </motion.div>
                 )}
@@ -229,46 +292,39 @@ export default function ScrollCanvasHero() {
           </AnimatePresence>
         </div>
 
-        {/* Global Progress Indicators (Apple-style) */}
-        <motion.div 
-          className="absolute top-0 left-0 h-1 bg-primary/60 z-50 transition-all duration-75 origin-left"
-          style={{ scaleX: smoothProgress }}
-        />
+        {/* Minimal Scroll Progression */}
+        <div className="absolute bottom-12 left-12 right-12 flex justify-between items-end">
+          <div className="hidden md:block">
+            <p className="text-[10px] font-black text-white/20 uppercase tracking-[0.4em] mb-2">Clinical Protocol</p>
+            <div className="flex gap-2">
+              {[0, 1, 2, 3].map((i) => (
+                <div key={i} className={`h-1 w-8 rounded-full transition-all duration-700 ${activeScene?.id === i + 1 ? 'bg-primary w-12' : 'bg-white/10'}`} />
+              ))}
+            </div>
+          </div>
 
-        <div className={`absolute top-1/2 left-12 -translate-y-1/2 vertical-text hidden lg:block transition-all duration-1000`}>
-           <p className="text-[10px] font-black text-white opacity-20 uppercase tracking-[1em] whitespace-nowrap">SCROLL TO ANALYZE • FANS-RIRS</p>
-        </div>
-
-        {/* Bottom Info Bar */}
-        <div className={`absolute bottom-12 left-12 right-12 flex justify-between items-end`}>
-           <div className="space-y-1">
-              <p className="text-[10px] font-black text-white/30 uppercase tracking-widest">Procedural Visualization</p>
-              <p className="text-sm font-bold text-white/50 italic">Advanced Laser Precision Engine</p>
-           </div>
-           
-           <div className="flex flex-col items-center gap-4">
-              <motion.div 
-                animate={{ y: [0, 10, 0] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                className="text-[10px] font-black text-primary/80 uppercase tracking-widest"
-              >
-                Scroll ↓
-              </motion.div>
-              <div className="w-1 h-12 bg-white/10 rounded-full overflow-hidden relative">
-                 <motion.div 
-                   className="absolute bottom-0 w-full bg-primary transition-all duration-300 origin-bottom"
-                   style={{ height: "100%", scaleY: smoothProgress }}
-                 />
-              </div>
-              <p className="text-[10px] font-bold text-white/30 tracking-widest uppercase">Explore ↕</p>
-           </div>
+          <div className="flex flex-col items-center gap-4">
+            <motion.div
+              animate={{ opacity: [0.2, 0.5, 0.2] }}
+              transition={{ duration: 3, repeat: Infinity }}
+              className="text-[9px] font-black text-white/40 uppercase tracking-[0.5em] mb-2 vertical-text"
+            >
+              Discover
+            </motion.div>
+            <div className="w-[2px] h-20 bg-white/5 rounded-full relative overflow-hidden">
+              <motion.div
+                className="absolute top-0 w-full bg-primary/60 origin-top"
+                style={{ height: "100%", scaleY: smoothProgress }}
+              />
+            </div>
+          </div>
         </div>
       </div>
-      
+
       <style jsx>{`
         .vertical-text {
           writing-mode: vertical-rl;
-          transform: translateY(-50%) rotate(180deg);
+          text-orientation: mixed;
         }
       `}</style>
     </div>

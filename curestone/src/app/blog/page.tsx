@@ -2,94 +2,23 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Link from "next/link";
 import type { Metadata } from "next";
+import Image from "next/image";
+import { BLOG_POSTS } from "@/constants/blogs";
 
 export const metadata: Metadata = {
   title: "Health Blog | Cure Stone — Kidney Stone & Urology Insights",
   description: "Expert articles on kidney stones, RIRS surgery, diet, prevention and urological health from Dr. Deepanshu Gupta's team.",
 };
 
-const posts = [
-  {
-    id: 1,
-    category: "RIRS Surgery",
-    tag: "Featured",
-    title: "What Is RIRS? India's Most Advanced Kidney Stone Surgery Explained",
-    excerpt: "Retrograde Intrarenal Surgery (RIRS) uses a flexible ureteroscope to reach stones inside the kidney without any cuts. Here's everything you need to know.",
-    author: "Dr. Deepanshu Gupta",
-    date: "April 2, 2025",
-    readTime: "8 min read",
-    slug: "#",
-    color: "from-blue-500 to-indigo-600",
-  },
-  {
-    id: 2,
-    category: "Prevention",
-    tag: "Popular",
-    title: "7 Dietary Changes That Drastically Reduce Kidney Stone Risk",
-    excerpt: "Oxalate-rich foods, insufficient hydration, and excess sodium are among the top contributors to stone formation. Learn how to eat smarter.",
-    author: "Dr. Deepanshu Gupta",
-    date: "March 18, 2025",
-    readTime: "6 min read",
-    slug: "#",
-    color: "from-emerald-500 to-teal-600",
-  },
-  {
-    id: 3,
-    category: "Treatment",
-    tag: "Guide",
-    title: "RIRS vs ESWL vs PCNL: Which Kidney Stone Treatment Is Right for You?",
-    excerpt: "A comprehensive comparison of the three main kidney stone procedures — stone size, recovery time, success rate, and who each is ideal for.",
-    author: "Dr. Deepanshu Gupta",
-    date: "March 5, 2025",
-    readTime: "10 min read",
-    slug: "#",
-    color: "from-violet-500 to-purple-600",
-  },
-  {
-    id: 4,
-    category: "Symptoms",
-    tag: "Quick Read",
-    title: "Blood in Urine After Stone Treatment: When Is It Normal?",
-    excerpt: "Haematuria (blood in urine) is common after kidney stone procedures. We break down what's expected and when to call your doctor immediately.",
-    author: "Dr. Deepanshu Gupta",
-    date: "February 20, 2025",
-    readTime: "5 min read",
-    slug: "#",
-    color: "from-rose-500 to-pink-600",
-  },
-  {
-    id: 5,
-    category: "Nutrition",
-    tag: "New",
-    title: "The Kidney Stone Diet: What to Eat and What to Avoid in 2025",
-    excerpt: "The right diet can prevent 80% of calcium oxalate stones. Here's the definitive evidence-based guide for patients and their families.",
-    author: "Dr. Deepanshu Gupta",
-    date: "April 1, 2025",
-    readTime: "7 min read",
-    slug: "#",
-    color: "from-orange-500 to-amber-500",
-  },
-  {
-    id: 6,
-    category: "Prostate",
-    tag: "Guide",
-    title: "HoLEP vs TURP: What's the Best Prostate Surgery in India?",
-    excerpt: "Holmium Laser Enucleation of the Prostate (HoLEP) is rapidly replacing TURP as the gold-standard BPH treatment. Here's why.",
-    author: "Dr. Deepanshu Gupta",
-    date: "January 30, 2025",
-    readTime: "9 min read",
-    slug: "#",
-    color: "from-cyan-500 to-blue-500",
-  },
-];
+const posts = BLOG_POSTS;
 
-const categories = ["All", "RIRS Surgery", "Prevention", "Treatment", "Symptoms", "Nutrition", "Prostate"];
+const categories = ["All", "Kidney Stones", "Treatment Option", "Kidney", "Urological Problems", "Diet", "Staghorn"];
 const tagColors: Record<string, string> = {
   Featured: "bg-primary/10 text-primary border-primary/20",
-  Popular: "bg-green-500/10 text-green-700 border-green-200",
+  Essential: "bg-green-500/10 text-green-700 border-green-200",
   Guide: "bg-violet-500/10 text-violet-700 border-violet-200",
-  "Quick Read": "bg-amber-500/10 text-amber-700 border-amber-200",
-  New: "bg-rose-500/10 text-rose-700 border-rose-200",
+  "Patient Guide": "bg-amber-500/10 text-amber-700 border-amber-200",
+  Popular: "bg-rose-500/10 text-rose-700 border-rose-200",
 };
 
 export default function BlogPage() {
@@ -115,7 +44,7 @@ export default function BlogPage() {
               placeholder="Search articles — RIRS, diet, symptoms..."
               className="w-full px-6 py-4 pl-12 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-white/40 font-medium outline-none focus:bg-white/15 focus:border-primary transition-all backdrop-blur-sm"
             />
-            <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
           </div>
         </div>
       </section>
@@ -135,24 +64,36 @@ export default function BlogPage() {
           {/* Featured Post */}
           <div className="mb-16 group cursor-pointer">
             <div className="grid md:grid-cols-2 gap-0 bg-white rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shadow-xl border border-border/30 hover:shadow-2xl hover:border-primary/20 transition-all duration-500">
-              <div className={`bg-gradient-to-br ${posts[0].color} p-8 md:p-12 flex flex-col justify-end min-h-[250px] md:min-h-64`}>
-                <span className={`self-start px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border mb-4 bg-white/20 text-white border-white/20`}>{posts[0].tag}</span>
-                <p className="text-[10px] font-black uppercase tracking-widest text-white/60 mb-2">{posts[0].category}</p>
-                <h2 className="text-xl md:text-2xl lg:text-3xl font-black text-white leading-tight">{posts[0].title}</h2>
+              <div className="relative h-64 md:h-full overflow-hidden bg-slate-900 flex flex-col justify-center p-8 md:p-12">
+                {posts[0].image ? (
+                  <>
+                    <Image
+                      src={posts[0].image}
+                      alt={posts[0].title}
+                      fill
+                      className="object-cover opacity-60 group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent" />
+                  </>
+                ) : (
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent opacity-50" />
+                )}
+                <p className="text-[10px] font-black uppercase tracking-widest text-white/60 mb-2 relative z-10">{posts[0].category}</p>
+                <h2 className="text-xl md:text-2xl lg:text-3xl font-black text-white leading-tight relative z-10">{posts[0].title}</h2>
               </div>
               <div className="p-8 md:p-10 flex flex-col justify-between">
                 <div>
                   <p className="text-sm md:text-base text-slate-500 font-medium leading-relaxed mb-6">{posts[0].excerpt}</p>
                   <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-bold text-slate-400">
-                    <span className="flex items-center gap-1.5">✍️ {posts[0].author}</span>
+                    <span className="flex items-center gap-1.5">{posts[0].author}</span>
                     <span className="hidden xs:inline">·</span>
-                    <span className="flex items-center gap-1.5">📅 {posts[0].date}</span>
+                    <span className="flex items-center gap-1.5"> {posts[0].date}</span>
                     <span className="hidden xs:inline">·</span>
-                    <span className="flex items-center gap-1.5">⏱ {posts[0].readTime}</span>
+                    <span className="flex items-center gap-1.5"> {posts[0].readTime}</span>
                   </div>
                 </div>
-                <Link href={posts[0].slug} className="inline-flex items-center gap-2 mt-8 text-primary font-black text-xs md:text-sm uppercase tracking-widest hover:gap-3 transition-all">
-                  Read Article <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                <Link href={`/blog/${posts[0].slug}`} className="inline-flex items-center gap-2 mt-8 text-primary font-black text-xs md:text-sm uppercase tracking-widest hover:gap-3 transition-all">
+                  Read Article <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
                 </Link>
               </div>
             </div>
@@ -162,19 +103,31 @@ export default function BlogPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {posts.slice(1).map(post => (
               <article key={post.id} className="group bg-white rounded-3xl overflow-hidden border border-border/30 shadow-sm hover:shadow-xl hover:border-primary/20 transition-all duration-400 flex flex-col">
-                <div className={`bg-gradient-to-br ${post.color} h-44 p-6 flex flex-col justify-end`}>
-                  <span className={`self-start px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border ${tagColors[post.tag]}`}>{post.tag}</span>
+                <div className="relative h-48 bg-slate-100 overflow-hidden">
+                  {post.image ? (
+                    <Image
+                      src={post.image}
+                      alt={post.title}
+                      fill
+                      className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center">
+                       <span className="text-slate-200 font-bold tracking-widest uppercase text-[10px]">No Thumbnail</span>
+                    </div>
+                  )}
+                  {post.tag && <span className={`absolute top-4 left-4 z-10 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border ${tagColors[post.tag] || 'bg-slate-100'}`}>{post.tag}</span>}
                 </div>
                 <div className="p-6 flex flex-col flex-grow">
                   <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">{post.category}</p>
                   <h3 className="text-lg font-black text-slate-900 leading-tight mb-3 group-hover:text-primary transition-colors">{post.title}</h3>
-                  <p className="text-sm text-slate-500 font-medium leading-relaxed mb-4 flex-grow">{post.excerpt}</p>
+                  <p className="text-sm text-slate-500 font-medium leading-relaxed mb-4 flex-grow line-clamp-3">{post.excerpt}</p>
                   <div className="flex items-center justify-between pt-4 border-t border-border/30">
                     <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
                       <span>{post.date}</span><span>·</span><span>{post.readTime}</span>
                     </div>
-                    <Link href={post.slug} className="text-primary text-xs font-black uppercase tracking-widest hover:tracking-[0.2em] transition-all flex items-center gap-1">
-                      Read <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                    <Link href={`/blog/${post.slug}`} className="text-primary text-xs font-black uppercase tracking-widest hover:tracking-[0.2em] transition-all flex items-center gap-1">
+                      Read <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
                     </Link>
                   </div>
                 </div>

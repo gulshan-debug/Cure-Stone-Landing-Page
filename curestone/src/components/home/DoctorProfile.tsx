@@ -1,13 +1,13 @@
 import React from 'react';
 import Image from 'next/image';
-import { 
-  Users, 
-  BookOpen, 
-  Award, 
-  History, 
-  CheckCircle2, 
-  Stethoscope, 
-  MapPin, 
+import {
+  Users,
+  BookOpen,
+  Award,
+  History,
+  CheckCircle2,
+  Stethoscope,
+  MapPin,
   Star,
   MessageCircle,
   CalendarCheck2,
@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 const DoctorProfile = () => {
   const stats = [
-    { label: "Patients Treated", value: "30K+", icon: Users, color: "text-blue-600", bg: "bg-blue-50" },
+    { label: "Patients Treated", value: "10K+", icon: Users, color: "text-blue-600", bg: "bg-blue-50" },
     { label: "Publications", value: "200+", icon: BookOpen, color: "text-indigo-600", bg: "bg-indigo-50" },
     { label: "Awards Won", value: "22+", icon: Trophy, color: "text-amber-500", bg: "bg-amber-50" },
     { label: "Years Experience", value: "15+", icon: History, color: "text-emerald-600", bg: "bg-emerald-50" },
@@ -34,25 +34,25 @@ const DoctorProfile = () => {
   ];
 
   const achievements = [
-    { 
-      icon: ShieldCheck, 
-      text: "Pioneer of Fans-RIRS in North India", 
-      subtext: "Leading North India's first Fluoroscopy-free (Radiation-free) laser program." 
+    {
+      icon: ShieldCheck,
+      text: "Pioneer of Fans-RIRS in North India",
+      subtext: "Leading North India's first Fluoroscopy-free (Radiation-free) laser program."
     },
-    { 
-      icon: GraduationCap, 
-      text: "1st Rank Holder in MCh Urology", 
-      subtext: "VMMC & Safdarjung Hospital (RML), New Delhi" 
+    {
+      icon: GraduationCap,
+      text: "1st Rank Holder in MCh Urology",
+      subtext: "VMMC & Safdarjung Hospital (RML), New Delhi"
     },
-    { 
-      icon: Award, 
-      text: "MS General Surgery (Gold Medalist)", 
-      subtext: "PGIMS Rohtak — Haryana's premier medical institute." 
+    {
+      icon: Award,
+      text: "1st Ever to start Fans-RIRS in North India.",
+      subtext: "By - Dr. Deepanshu Gupta"
     },
-    { 
-      icon: Star, 
-      text: "4.9/5 Patient Satisfaction", 
-      subtext: "Based on 1,000+ verified patient reviews on Google & Practo" 
+    {
+      icon: Star,
+      text: "4.9/5 Patient Satisfaction",
+      subtext: "Based on 1,000+ verified patient reviews on Google & Practo"
     },
   ];
 
@@ -61,7 +61,7 @@ const DoctorProfile = () => {
       {/* Decorative Background Elements */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] -mr-64 -mt-64 opacity-50"></div>
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-400/10 rounded-full blur-[100px] -ml-48 -mb-48 opacity-30"></div>
-      
+
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
         {/* Header Section */}
         <div className="text-center mb-20 animate-fade-in-up">
@@ -88,16 +88,16 @@ const DoctorProfile = () => {
             <div className="relative group max-w-2xl mx-auto xl:mx-0">
               {/* Photo Card */}
               <div className="relative aspect-[4/5] bg-white rounded-[3rem] overflow-hidden shadow-[0_32px_64px_-16px_rgba(43,92,230,0.15)] transition-all duration-700 group-hover:shadow-[0_48px_80px_-16px_rgba(43,92,230,0.2)]">
-                <Image 
+                <Image
                   src="/assets/doctor.png"
                   alt="Dr. Deepanshu Gupta"
                   fill
                   className="object-cover object-top group-hover:scale-105 transition-transform duration-1000 ease-out"
                 />
-                
+
                 {/* Visual Overlays */}
                 <div className="absolute inset-0 bg-gradient-to-t from-blue-950/90 via-blue-900/20 to-transparent"></div>
-                
+
                 {/* Bottom Overlay Content */}
                 <div className="absolute bottom-0 inset-x-0 p-8 md:p-10">
                   <div className="flex items-center gap-2 mb-3">
@@ -109,7 +109,7 @@ const DoctorProfile = () => {
                   <h3 className="text-2xl sm:text-3xl font-black text-white leading-tight mb-2">Dr. Deepanshu Gupta</h3>
                   <div className="flex flex-col gap-1">
                     <p className="text-blue-200 text-xs sm:text-sm font-bold flex items-center gap-2">
-                       Senior Urologist & Kidney Stone Specialist
+                      Senior Urologist & Kidney Stone Specialist
                     </p>
                     <p className="text-blue-200/60 text-[10px] sm:text-[11px] font-medium leading-relaxed">
                       MBBS · MS (Gold Medalist) · MCh Urology (Rank 1)
@@ -151,7 +151,7 @@ const DoctorProfile = () => {
               <div className="absolute -left-6 top-0 bottom-0 w-1.5 bg-gradient-to-b from-blue-600 to-indigo-500 rounded-full"></div>
               <h4 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-3">
                 <Stethoscope className="text-blue-600" size={24} />
-                 Expert Overview
+                Expert Overview
               </h4>
               <p className="text-lg text-slate-600 leading-relaxed font-medium">
                 Dr. Deepanshu Gupta is one of North India's most trusted urologists — renowned for his precision surgeries and compassionate approach. He <strong className="text-blue-700 font-extrabold underline decoration-blue-200 decoration-4 underline-offset-4 uppercase">pioneered Fluoroscopy-free Fans-RIRS in North India</strong>, enabling kidney stone treatment without a single cut, scar, or harmful radiation exposure.
@@ -208,8 +208,8 @@ const DoctorProfile = () => {
                 <CalendarCheck2 size={20} />
                 Book Consultation Free
               </button>
-              <a 
-                href="https://wa.me/918800263884" 
+              <a
+                href="https://wa.me/918800263884"
                 target="_blank"
                 className="flex-1 px-8 py-5 bg-white border-2 border-blue-100 text-slate-800 font-black rounded-3xl hover:border-blue-400 hover:bg-blue-50 transition-all flex items-center justify-center gap-3 no-underline shadow-sm"
               >
