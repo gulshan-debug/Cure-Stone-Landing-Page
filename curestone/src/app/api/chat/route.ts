@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import Groq from "groq-sdk";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { NextRequest, NextResponse } from "next/server";
@@ -16,7 +16,8 @@ const ratelimit = new Ratelimit({
   analytics: true,
 });
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+// Initialize Groq
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 // 2. High-Conversion Professional System Prompt
 const SYSTEM_PROMPT = `### INSTITUTIONAL IDENTITY
@@ -110,31 +111,35 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ reply: steps[state.step - 1].q, appointmentState: state });
     }
 
-    // --- AI CHAT LOGIC (TOKEN OPTIMIZED) ---
-    const optimizedHistory = messages.slice(-4).map((m: any) => ({
-      role: m.role === "user" ? "user" : "model",
-      parts: [{ text: m.content }],
+    // --- AI CHAT LOGIC (GROQ POWERED) ---
+    // Extract history and format for Groq
+    const groqHistory = messages.slice(-10).map((m: any) => ({
+      role: m.role === "user" ? "user" : "assistant",
+      content: m.content,
     }));
 
     let finalSystemPrompt = SYSTEM_PROMPT;
     if (userName) {
       finalSystemPrompt = `You are talking to the user named **${userName}**.\n\n${finalSystemPrompt}`;
     }
+    
+    if (language === 'hi') {
+      finalSystemPrompt += "\n\nIMPORTANT: Respond in Hindi language only.";
+    }
 
-    const model = genAI.getGenerativeModel({
-      model: "gemini-2.5-flash-lite",
-      systemInstruction: language === 'hi' ? `${finalSystemPrompt} Respond in Hindi.` : finalSystemPrompt
+    const chatCompletion = await groq.chat.completions.create({
+      messages: [
+        { role: "system", content: finalSystemPrompt },
+        ...groqHistory
+      ],
+      model: "llama-3.3-70b-versatile",
+      temperature: 0.4,
+      max_tokens: 600,
+      top_p: 1,
+      stream: false,
     });
 
-    const result = await model.generateContent({
-      contents: optimizedHistory,
-      generationConfig: {
-        maxOutputTokens: 450,
-        temperature: 0.4,
-      }
-    });
-
-    return NextResponse.json({ reply: result.response.text() });
+    return NextResponse.json({ reply: chatCompletion.choices[0]?.message?.content || "" });
 
   } catch (error: any) {
     console.error("API Error:", error);
