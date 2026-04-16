@@ -57,14 +57,14 @@ const DoctorProfile = () => {
   ];
 
   return (
-    <section className="relative py-24 bg-[#EBF4FD] overflow-hidden">
+    <section className="relative py-16 bg-[#EBF4FD] overflow-hidden">
       {/* Decorative Background Elements */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] -mr-64 -mt-64 opacity-50"></div>
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-400/10 rounded-full blur-[100px] -ml-48 -mb-48 opacity-30"></div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
         {/* Header Section */}
-        <div className="text-center mb-20 animate-fade-in-up">
+        <div className="text-center mb-12 animate-fade-in-up">
           <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 bg-white/80 backdrop-blur-sm border border-blue-100 rounded-full shadow-sm">
             <span className="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></span>
             <span className="text-[11px] font-bold tracking-[0.1em] text-blue-700 uppercase">
@@ -82,7 +82,7 @@ const DoctorProfile = () => {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-12 gap-12 items-start">
+        <div className="grid lg:grid-cols-12 gap-8 items-start">
           {/* LEFT: Profile Photo & Key Info */}
           <div className="lg:col-span-12 xl:col-span-5 relative animate-fade-in-up [animation-delay:200ms]">
             <div className="relative group max-w-2xl mx-auto xl:mx-0">
@@ -131,7 +131,7 @@ const DoctorProfile = () => {
             </div>
 
             {/* Quick Contact Card */}
-            <div className="mt-10 bg-white/70 backdrop-blur-md border border-white p-6 rounded-[2rem] shadow-sm max-w-2xl mx-auto xl:mx-0">
+            <div className="mt-6 bg-white/70 backdrop-blur-md border border-white p-6 rounded-[2rem] shadow-sm max-w-2xl mx-auto xl:mx-0">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-blue-200 shrink-0">
                   <MapPin size={24} />
