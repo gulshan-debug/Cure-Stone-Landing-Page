@@ -137,7 +137,7 @@ export default function BlogPage() {
               <p className="text-slate-600 leading-relaxed mb-6">Recovery: Patients, in general, will be able to perform routine activities within a few days, mostly 2 or 3 days. Stents left temporarily to allow urine to flow may be mildly painful until removed. ​</p>
               <p className="text-slate-600 leading-relaxed mb-6">Procedure: Access and treatment of stones located inside the kidney are done using a flexible scope without any cuts being made.</p>
               <h2 className="text-2xl font-bold text-blue-900 mb-4 mt-10">2. Retrograde Intrarenal Surgery (RIRS)</h2>
-              <p className="text-slate-600 leading-relaxed mb-6">Recovery: includes a short-time hospitalization — with patients being sent home the same day or post one-night stay in the hospital. Return to normal activities is assumed to happen in a few days.</p>
+              <p className="text-slate-600 leading-relaxed mb-6">Recovery: includes a short-time hospitalization — with patients being sent home within 24 hours or post one-night stay in the hospital. Return to normal activities is assumed to happen in a few days.</p>
               <p className="text-slate-600 leading-relaxed mb-6">Procedure: A large or complex kidney stone will be removed through the back by making an incision in the body.</p>
               <p className="text-slate-600 leading-relaxed mb-6">Recovery: Hospitalization could be as short as one to two days, while full recovery will take two to four weeks. Patients should be advised that heavy lifting is prohibited during this time.</p>
               <h2 className="text-2xl font-bold text-blue-900 mb-4 mt-10">3. Percutaneous Nephrolithotomy (PCNL)</h2>
